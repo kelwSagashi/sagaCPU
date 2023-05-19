@@ -152,7 +152,7 @@ That is, 02 is the output instruction, and the rest are instruction complements.
 
 Let's see another example that happens:
 
-**Load pair** These follow instructions loads at register F or rgister G 16-bits value:
+**Load pair** These follow instructions loads at register F or register G any 16-bits value:
 
 **Load pair at f**, can be written in the following ways.
 
