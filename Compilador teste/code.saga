@@ -1,0 +1,3 @@
+MAIN:
+    add byte b, 0x01
+:END

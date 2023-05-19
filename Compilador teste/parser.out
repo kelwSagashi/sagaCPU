@@ -1,0 +1,123 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> lista_instrucoes
+Rule 2     programa -> lista_instrucoes LABEL
+Rule 3     lista_instrucoes -> lista_instrucoes instrucao
+Rule 4     lista_instrucoes -> instrucao
+Rule 5     instrucao -> INSTRUCTION VAR ADDRESS
+Rule 6     instrucao -> INSTRUCTION VAR VAR
+
+Terminals, with rules where they appear
+
+ADDRESS              : 5
+INSTRUCTION          : 5 6
+LABEL                : 2
+VAR                  : 5 6 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+instrucao            : 3 4
+lista_instrucoes     : 1 2 3
+programa             : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . lista_instrucoes
+    (2) programa -> . lista_instrucoes LABEL
+    (3) lista_instrucoes -> . lista_instrucoes instrucao
+    (4) lista_instrucoes -> . instrucao
+    (5) instrucao -> . INSTRUCTION VAR ADDRESS
+    (6) instrucao -> . INSTRUCTION VAR VAR
+
+    INSTRUCTION     shift and go to state 4
+
+    programa                       shift and go to state 1
+    lista_instrucoes               shift and go to state 2
+    instrucao                      shift and go to state 3
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> lista_instrucoes .
+    (2) programa -> lista_instrucoes . LABEL
+    (3) lista_instrucoes -> lista_instrucoes . instrucao
+    (5) instrucao -> . INSTRUCTION VAR ADDRESS
+    (6) instrucao -> . INSTRUCTION VAR VAR
+
+    $end            reduce using rule 1 (programa -> lista_instrucoes .)
+    LABEL           shift and go to state 5
+    INSTRUCTION     shift and go to state 4
+
+    instrucao                      shift and go to state 6
+
+state 3
+
+    (4) lista_instrucoes -> instrucao .
+
+    LABEL           reduce using rule 4 (lista_instrucoes -> instrucao .)
+    INSTRUCTION     reduce using rule 4 (lista_instrucoes -> instrucao .)
+    $end            reduce using rule 4 (lista_instrucoes -> instrucao .)
+
+
+state 4
+
+    (5) instrucao -> INSTRUCTION . VAR ADDRESS
+    (6) instrucao -> INSTRUCTION . VAR VAR
+
+    VAR             shift and go to state 7
+
+
+state 5
+
+    (2) programa -> lista_instrucoes LABEL .
+
+    $end            reduce using rule 2 (programa -> lista_instrucoes LABEL .)
+
+
+state 6
+
+    (3) lista_instrucoes -> lista_instrucoes instrucao .
+
+    LABEL           reduce using rule 3 (lista_instrucoes -> lista_instrucoes instrucao .)
+    INSTRUCTION     reduce using rule 3 (lista_instrucoes -> lista_instrucoes instrucao .)
+    $end            reduce using rule 3 (lista_instrucoes -> lista_instrucoes instrucao .)
+
+
+state 7
+
+    (5) instrucao -> INSTRUCTION VAR . ADDRESS
+    (6) instrucao -> INSTRUCTION VAR . VAR
+
+    ADDRESS         shift and go to state 9
+    VAR             shift and go to state 8
+
+
+state 8
+
+    (6) instrucao -> INSTRUCTION VAR VAR .
+
+    LABEL           reduce using rule 6 (instrucao -> INSTRUCTION VAR VAR .)
+    INSTRUCTION     reduce using rule 6 (instrucao -> INSTRUCTION VAR VAR .)
+    $end            reduce using rule 6 (instrucao -> INSTRUCTION VAR VAR .)
+
+
+state 9
+
+    (5) instrucao -> INSTRUCTION VAR ADDRESS .
+
+    LABEL           reduce using rule 5 (instrucao -> INSTRUCTION VAR ADDRESS .)
+    INSTRUCTION     reduce using rule 5 (instrucao -> INSTRUCTION VAR ADDRESS .)
+    $end            reduce using rule 5 (instrucao -> INSTRUCTION VAR ADDRESS .)
+

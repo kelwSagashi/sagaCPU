@@ -1,0 +1,18 @@
+
+
+LXI B&C, 0x1234 //carrega o valor 1234 no par de registrador BC
+MOV F, B&C      //Copia o valor do par BC para o registrador F de 16 bits
+LXI D&E, 0x0001 //carrega o valor 0001 no par de registrador DE
+MOV G, D&E      //Copia o valor do par DE para o registrador G de 16 bits
+ADD16           //faz a operação de F + G e o valor é armazenado em F
+LXI W&A, 0x001c //carregando um endereço de memoria
+STO16           //guarda 16 bits diretamente na memoria 
+LXI W&A, 0x0006 //carregando um novo endereço de memoria para pular
+JMP             //pula para o endereço anteriormente informado
+
+VAR 0x000c: 0x0141  //Declaro uma variavel como o valor 0x0141 
+//                    e ela é colocada no bloco de memoria 0x000c
+LXI W&A, VAR        //carregando um novo endereço de memoria de onde vou printar
+OUT %d              //O %d diz ao decodificador que a saida é um numero
+LXI W&A, 0x0000     //carregando um novo endereço de memoria para pular
+JMP                 //pula para o inicio
