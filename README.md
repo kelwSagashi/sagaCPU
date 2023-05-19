@@ -205,6 +205,7 @@ Word storage consists of two characters in 1 block of memory, if there is a row 
 
 # Fibonacci algorithm
 
+```
 3600 3638 0200 0600 0601 5000 5900 1801
 
 1d02 3600 362c 0200 3600 3634 3e00 0203
@@ -220,6 +221,41 @@ Word storage consists of two characters in 1 block of memory, if there is a row 
 0000 0000 0000 0000 0001 0000 0000 0000
 
 4669 626f 6e61 6363 6900 0000 0000 0000
+```
+
+
+SAGA16 allows me to run an algorithm that calculates and prints the fibonacci sequence in the terminal.
+
+I'll try to explain the hex code above in the space bellow.
+
+## Code explanation
+
+<h3 style="color: yellow">3600 3638 Loads the stack address where the word "Fibonacci" is</h3>
+<h3 style="color: #40E0D0">0200 Prints characters to which the stack address is pointing</h3>
+<h3 style="color: #FFC0CB">0600 0601 Loads 1 at BC pair</h3>
+<h3 style="color: #FFA500">5000 MOV D, B
+                      <br/>5900 MOV E, C</h3>
+<h3 style="color: #FFFFFF">1801 Get the value of the DE pair to load into F
+                      <br/>1d02 Get the value of the HL pair to load into G</h3>
+<h3 style="color: yellow">3600 362c Loads the stack address where the word "\n" is</h3>
+<h3 style="color: #40E0D0">0200 Prints characters to which the stack address is pointing</h3>
+<h3 style="color: yellow">3600 3634 Loads the stack address where i'll store fibonacci number</h3>
+<h3 style="color: #00BFFF">3e00 Store fibonacci number</h3>
+<h3 style="color: #40E0D0">0203 Prints the stored fibonacci number</h3>
+<h3 style="color: #00FF00">2800 Add F+G</h3>
+<h3 style="color: #FFA500">6200 MOV H, D
+                      <br/>6b00 MOV L, E</h3>
+<h3 style="color: #FFA500">5000 MOV D, B
+                      <br/>5900 MOV E, C</h3>
+<h3 style="color: yellow">3600 3607 Loads the stack address where loop starts</h3>
+<h3 style="color: #9370DB">c300 Jump unconditionally to the stored address</h3>
+<h3 style="color: #A52A2A">0a00 "\n"<br/>4669 626f 6e61 6363 6900 0000 "Fibonacci"</h3>
+
+
+
+**Observation:** This form of language was defined by me and has nothing to do with any language nor does it try to imitate any known language. I think you can understand what this "programming" means.
+
+
 
 # Char table
 
