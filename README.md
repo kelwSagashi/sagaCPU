@@ -25,8 +25,7 @@ units:
 - Instruction register and control section
 ### Registers:
 
-The register section consists of a static RAM array
-organized into six 16-bit registers:
+The registers section consists of 8-bits registers and 16-bit registers:
 
 - Program counter (PC)
 
