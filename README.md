@@ -8,7 +8,7 @@ For future purposes, I intend to create an assembler code interpreter in python 
 
 ## Simulator used to build the CPU.
 
-[Loagisim Evolution](https://github.com/logisim-evolution/logisim-evolution)
+[Logisim Evolution](https://github.com/logisim-evolution/logisim-evolution)
 
 # Video of the process
 
@@ -142,34 +142,44 @@ Instructions like **OUT**, I thought I could write them like this:
 
 In hexadecimal the instructions would be: 
 
-- 02 + 13 => 0213 out -%d
-- 02 + 03 => 0203 out %d
-- 02 + 00 => 0200 out %s
+- 02 + 13 => 0213 - out ("-%d", number)
+- 02 + 03 => 0203 - out ("%d", number)
+- 02 + 00 => 0200 - out ("%s", string)
 
 **Obs: Remember that I'm not adding, just concatenating**
 
 That is, 02 is the output instruction, and the rest are instruction complements.
 
 Let's see another example that happens:
-**Load lsb pair at f**
-this instruction loads in register F, a value, and who says which pair to load is the complement of the instruction, so:
-**Load lsb pair at f**, can be written in the following ways.
+
+**Load pair** These follow instructions loads at register F or rgister G 16-bits value:
+
+**Load pair at f**, can be written in the following ways.
+
+### The 2 least significant bit of this instruction says which pair to load
+
 - 1800 -> Loads the pair BC.
 - 1801 -> Loads the DE pair.
 - 1802 -> Loads of HL pair.
 - 1803 -> Loads of the WZ pair.
 
-**Load lsb pair at G**, can be written in the following ways.
+**Load pair at G**, can be written in the following ways.
+
+### The 2 least significant bit of this instruction says which pair to load
+
 - 1d00 -> Loads the BC pair.
 - 1d01 -> Loads the DE pair.
 - 1d02 -> Loads the HL pair.
 - 1d03 -> Loads the WZ pair.
 
 **Add** Instruction:
+
+## The 2 least significant bit of this instruction says if is addition or subtraction
+
 - 2800 -> Addition x+y
 - 2801 -> Addition x+(-y)
 
-# images
+# Images
 
 ## How is the cpu seen from a further angle?
 
