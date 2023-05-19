@@ -174,7 +174,7 @@ Let's see another example that happens:
 
 **Add** Instruction:
 
-## The 2 least significant bits of this instruction says if is addition or subtraction
+### The 2 least significant bits of this instruction says if is addition or subtraction
 
 - 2800 -> Addition x+y
 - 2801 -> Addition x+(-y)
