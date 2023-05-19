@@ -242,7 +242,7 @@ I'll try to explain the hex code above in the space bellow.
 <p style="color: yellow">3600 3634 Loads the stack address where i'll store fibonacci number</p>
 <p style="color: #00BFFF">3e00 Store fibonacci number</p>
 <p style="color: #40E0D0">0203 Prints the stored fibonacci number</p>
-<p style="color: #00FF00">2800 Add F+G</p>
+<p style="color: #00FF00">2800 Add F+G. The result is stored in the BC pair automatically</p>
 <p style="color: #FFA500">6200 MOV H, D
                       <br/>6b00 MOV L, E</p>
 <p style="color: #FFA500">5000 MOV D, B
