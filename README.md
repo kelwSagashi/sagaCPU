@@ -15,14 +15,33 @@ For future purposes, I intend to create an assembler code interpreter in python 
 [Projetei a minha propria CPU no Logisim](https://youtu.be/KB68Z_t6xJ8)
 
 ## ARCHITECTURE OF THE SAGA16 CPU
+
+An important piece of information is that the cpu has two clocks, one with 1 pulse and the other with 2 pulses, which generates this table:
+
+|Clock 1|Clock 2|
+|--|--|
+|0 |0 |
+|0 |1 |
+|1 |0 |
+|1 |1 |
+
+The next instruction is started when the system clock 1 and 2 reaches 1 1.
+
+SAGA16 allows reading only one instruction at a time. As soon as the instruction is read, it is already being executed, hence the lack of an instruction register. Thus, it is impossible to implement a pipelined system on the cpu.
+The project contains some gaps in the instructions, which means that there is still room to increase the set of instructions on the cpu, being able to add functions of input of buttons or some keyboard, besides being able to increase the output system to an rgb screen available in logisim , but that would be hard and difficult work.
+
 The SAGA CPU consists of the following functional
 units:
 
-- Register array and address logic.
+- Register pairs, 8-bit registers, 16-bits registers, Accumulator.
 
-- Arithmetic and logic unit (ALU).
+- Arithmetic and logic unit (ALU) with flags.
 
-- Instruction register and control section
+- Instruction registrar and control unit section.
+  
+- BCD unit to ASCII output.
+  
+- Program counter register
 ### Registers:
 
 The registers section consists of 8-bits registers and 16-bit registers:
@@ -34,9 +53,9 @@ The registers section consists of 8-bits registers and 16-bit registers:
 - Six 8-bit general purpose registers arranged in pairs,
 referred to as B,C; D,E; and H,L
 
-- A temporary register pair called W,Z, who loads the address to the SP
+- A temporary register pair called W,Z, which also loads the address to the SP
 
-The program counter maintains the memory address of the current program instruction and is incremented automatically during every instruction fetch. The stack pointer maintains the address of the next available stack location in memory. The stack pointer can be initialized to use any portion of read-write memory as a stack.
+The program counter maintains the memory address of the current program instruction and is incremented automatically during every instruction fetch. The stack pointer contains an address of the location of some available stack in memory. The stack pointer can be initialized to read or write memory, it can also be used to load a character stack.
 
 ## INSTRUCTION SET
 
@@ -77,17 +96,17 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |LXI **B**| Load imediate from memory (only 1 byte at a time) register pair **B & C** |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
 |LXI **D**| Load imediate from memory (only 1 byte at a time) register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
 |LXI **H**| Load imediate from memory (only 1 byte at a time) register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
-|LXI **W** | Load imediate from memory (only 1 byte at a time) temporary register pair **W & A** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
+|LXI **W** | Load imediate from memory (only 1 byte at a time) temporary register pair **W & Z** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
 |LOAD PAIR at F| Load data from register pair temporary to F register |18+| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
 |LOAD PAIR at G| Load data from register pair temporary to G register |1d+| 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 |
-|ADD BYTE r| Add ACC plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
-|MULT BYTE r| Multiplies ACC with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
+|ADD BYTE r| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
+|MULT BYTE r| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
 |OPA BYTE| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |9-| 1 | 0 | 0 | 1 | 0 | S | S | S |
-|DIV BYTE r| Divide ACC with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
-|ANA BYTE r| And operation ACC with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
-|XRA BYTE r| Xor operation ACC with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
-|ORA BYTE r| Or operation ACC with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
-|MOD BYTE r| Give the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
+|DIV BYTE r| Divide A with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
+|ANA BYTE r| And operation A with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
+|XRA BYTE r| Xor operation A with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
+|ORA BYTE r| Or operation A with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
+|MOD BYTE r| Gives the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
 |ADD WORD| Add F <sub>(16)</sub> plus G <sub>(16)</sub> |28+| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
 |MULT WORD| Multiplies F <sub>(16)</sub> by G <sub>(16)</sub> |29| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 |
 |OPA WORD| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |2a| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 |
@@ -95,21 +114,21 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |ANA WORD| And operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2c| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 |
 |XRA WORD| Xor operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2d| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
 |ORA WORD| Or operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2e| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 0 |
-|MOD WORD| Give the remainder of dividing F <sub>(16)</sub> and G <sub>(16)</sub>|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
+|MOD WORD| Gives the remainder of dividing F <sub>(16)</sub> and G <sub>(16)</sub>|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
 |STW F| Store 16 bits F register direct on memory |3e| 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 |
 |JMP | Jump unconditional |c3| 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 |
 |JZ | Jump on zero |c0| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-|JNZ | Jump on no zero |c8| 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
+|JNZ | Jump if not zero |c8| 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
 |JM | Jump on minus |d0| 1 | 1 | 0 | 1 | 0 | 0 | 0 | 0 |
 |JP | Jump on positive |d8| 1 | 1 | 0 | 1 | 1 | 0 | 0 | 0 |
-|JG | Jump on grater, if A > B |e0| 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+|JG | Jump on greater, if A > B |e0| 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
 |JL | Jump on less, if A < B |e8| 1 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
 |JC | Jump on carry |f0| 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 |JNC | Jump on not carry |f8| 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
 |LDW var | Load value from memory block to HL register pair |c1| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 |OUT | Print number or char elements |02+| 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 
-# How does the instruction work?
+# How does instructions works?
 
 In the instruction set above, some instructions have a hexadecimal number with a + sign.
 
@@ -117,9 +136,9 @@ I'll explain so you don't have any doubts.
 
 Instructions like **OUT**, I thought I could write them like this:
 
-- out -%d to print signed numbers
-- out %d to print unsigned numbers
-- out %s string print characters
+- out -%d - To print signed numbers.
+- out %d - To print unsigned numbers.
+- out %s string - Print characters.
 
 In hexadecimal the instructions would be: 
 
@@ -162,13 +181,13 @@ Logisim allows you to customize the appearance of your integrated circuits. This
 
 ![CPU Appearence](./images/cpu_Appearance.png)
 
-## Registers of SAGA16
+## Registers of: SAGA16
 
 This is the cpu main registers scheme.
 
 ![Registers](./images/registers.png)
 
-## How "strings" works?
+## How strings works?
 
 Word storage consists of two characters in 1 block of memory, if there is a row of blocks containing characters, we will have a string, and who will mark the end of this string is 0x0000.
 
