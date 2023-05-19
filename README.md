@@ -12,7 +12,7 @@ For future purposes, I intend to create an assembler code interpreter in python 
 
 # Video of the process
 
-[Projetei a minha propria CPU no Logisim]()
+[Projetei a minha propria CPU no Logisim](https://youtu.be/KB68Z_t6xJ8)
 
 ## ARCHITECTURE OF THE SAGA16 CPU
 The SAGA CPU consists of the following functional
