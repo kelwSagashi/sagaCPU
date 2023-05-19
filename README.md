@@ -156,7 +156,7 @@ Let's see another example that happens:
 
 **Load pair at f**, can be written in the following ways.
 
-### The 2 least significant bit of this instruction says which pair to load
+### The 2 least significant bits of this instruction says which pair to load
 
 - 1800 -> Loads the pair BC.
 - 1801 -> Loads the DE pair.
@@ -165,7 +165,7 @@ Let's see another example that happens:
 
 **Load pair at G**, can be written in the following ways.
 
-### The 2 least significant bit of this instruction says which pair to load
+### The 2 least significant bits of this instruction says which pair to load
 
 - 1d00 -> Loads the BC pair.
 - 1d01 -> Loads the DE pair.
@@ -174,7 +174,7 @@ Let's see another example that happens:
 
 **Add** Instruction:
 
-## The 2 least significant bit of this instruction says if is addition or subtraction
+## The 2 least significant bits of this instruction says if is addition or subtraction
 
 - 2800 -> Addition x+y
 - 2801 -> Addition x+(-y)
