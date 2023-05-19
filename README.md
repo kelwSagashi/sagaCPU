@@ -235,8 +235,8 @@ I'll try to explain the hex code above in the space bellow.
 <p style="color: #FFC0CB">0600 0601 Loads 1 at BC pair</p>
 <p style="color: #FFA500">5000 MOV D, B
                       <br/>5900 MOV E, C</p>
-<p style="color: #FFFFFF">1801 Get the value of the DE pair to load into F
-                      <br/>1d02 Get the value of the HL pair to load into G</p>
+<p style="color: #FFFFFF">1801 Gets the value of the DE pair to load into F
+                      <br/>1d02 Gets the value of the HL pair to load into G</p>
 <p style="color: yellow">3600 362c Loads the stack address where the word "\n" is</p>
 <p style="color: #40E0D0">0200 Prints characters to which the stack address is pointing</p>
 <p style="color: yellow">3600 3634 Loads the stack address where i'll store fibonacci number</p>
