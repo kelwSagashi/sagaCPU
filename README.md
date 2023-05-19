@@ -175,7 +175,7 @@ Word storage consists of two characters in 1 block of memory, if there is a row 
 
 ![word storage](./images/strings.png)
 
-# Fibonacii algorithm
+# Fibonacci algorithm
 
 3600 3638 0200 0600 0601 5000 5900 1801
 
