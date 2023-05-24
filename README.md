@@ -92,7 +92,6 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |MVI **<sub>r</sub>** | The value read from r is copied to Accumulator |7-| 0 | 1 | 1 | 1 | 1 | S | S | S |
 |MVI M | The value read from Memory is copied to Accumulator |7e| 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
 |MOV **<sub>r</sub>**, A| The value of Accumulator is copied to <sub>r</sub> |0-| 0 | 0 | 0 | 0 | 1 | D | D | D |
-|MOV **M**, A| The value of **M** is copied to Accumulator |0e| 0 | 0 | 0 | 0 | 1 | 1 | 1 | 0 |
 |LXI **B**| Load imediate from memory (only 1 byte at a time) register pair **B & C** |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
 |LXI **D**| Load imediate from memory (only 1 byte at a time) register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
 |LXI **H**| Load imediate from memory (only 1 byte at a time) register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
