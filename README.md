@@ -75,7 +75,7 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |-------|-------|-----------|
 |From   |SSS|3 Bits responsible for selecting where some information will come from|
 |To     |DDD    |3 Bits responsible for selecting the destination of some data|
-|Memory Data|M|8-lsb (least significant bits) Data from memory |
+|Memory Data|M|Data from memory |
 |Register|r|Any register|
 |Register Pair|r&r|Matches any of the 4 pairs of registers|
 |Accumulator|A|Almost all manipulated data in ALU will be stored in this register and replaced by another one, as it is a temporary register|
@@ -96,8 +96,8 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |MOVP pdx, M| Load imediate from memory (only 1 byte at a time) register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
 |MOVP phx, M| Load imediate from memory (only 1 byte at a time) register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
 |MOVP pwx, M| Load imediate from memory (only 1 byte at a time) temporary register pair **W & Z** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
-|MOVP eax| Load data from register pair temporary to F register |18+| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
-|MOVP ebx| Load data from register pair temporary to G register |1d+| 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 |
+|MOVP eax, r&r| Load data from register pair temporary to F register |18+| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
+|MOVP ebx, r&r| Load data from register pair temporary to G register |1d+| 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 |
 |ADD8| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
 |MUL8| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
 |OPA BYTE| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |9-| 1 | 0 | 0 | 1 | 0 | S | S | S |
@@ -114,7 +114,7 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |XRA16| Xor operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2d| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
 |ORA16| Or operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2e| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 0 |
 |MOD16| Gives the remainder of dividing F <sub>(16)</sub> and G <sub>(16)</sub>|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
-|STW F| Store 16 bits F register direct on memory |3e| 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 |
+|STORE [var]| Store 16 bits F register direct on memory |3e| 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 |
 |JMP | Jump unconditional |c3| 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 |
 |JZ | Jump on zero |c0| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
 |JNZ | Jump if not zero |c8| 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
@@ -124,7 +124,7 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |JL | Jump on less, if A < B |e8| 1 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
 |JC | Jump on carry |f0| 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 |JNC | Jump on not carry |f8| 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
-|LDW var | Load value from memory block to HL register pair |c1| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+|LOAD [var] | Load value from memory block direct to HL register pair |c1| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 |OUT | Print number or char elements |02+| 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 
 # How does instructions works?

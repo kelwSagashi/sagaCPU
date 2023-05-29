@@ -79,7 +79,7 @@ def t_LXI(t):
     r'(LXI|lxi|Lxi)'
     return t
 def t_LOAD(t):
-    r'(LW|lw|Lw|LB|lb|Lb)'
+    r'(LOAD|load|Load)'
     return t
 def t_STORE(t):
     r'(STORE|store|Store)'
@@ -103,7 +103,7 @@ def t_CLOSEBRACKET(t):
     r'\]'
     return t
 def t_REGISTER(t):
-    r'(B|b|C|c|D|d|E|e|H|h|L|l)'
+    r'(B|b|C|c|D|d|E|e|H|h|L|l|eax|EAX|ebx|EBX)'
     return t
 def t_COMMENT(t):
     r'//.*'
@@ -301,7 +301,7 @@ parser = yacc.yacc()
 
 # Teste
 data = '''
-ldw [$a]
+load [$a]
 mov b, 0x00
 '''
 countLines(data)
