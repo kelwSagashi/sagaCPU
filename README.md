@@ -75,7 +75,7 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |-------|-------|-----------|
 |From   |SSS|3 Bits responsible for selecting where some information will come from|
 |To     |DDD    |3 Bits responsible for selecting the destination of some data|
-|Memory |M|Ram memory |
+|Memory Data|M|8-lsb (least significant bits) Data from memory |
 |Register|r|Any register|
 |Register Pair|r&r|Matches any of the 4 pairs of registers|
 |Accumulator|A|Almost all manipulated data in ALU will be stored in this register and replaced by another one, as it is a temporary register|
@@ -90,30 +90,30 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |MOV M, **<sub>r</sub>**| The value of <sub>r</sub> is written to M (memory) |7-| 0 | 1 | 1 | 1 | 0 | S | S | S |
 |MOV **<sub>r</sub>**, M | The value read from M is copied to <sub>r</sub> |--| 0 | 1 | D | D | D | 1 | 1 | 0 |
 |MVI **<sub>r</sub>** | The value read from r is copied to Accumulator |7-| 0 | 1 | 1 | 1 | 1 | S | S | S |
-|MVI M | The value read from Memory is copied to Accumulator |7e| 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
+|MVA M | The value read from Memory is copied to Accumulator |7e| 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
 |MOV **<sub>r</sub>**, A| The value of Accumulator is copied to <sub>r</sub> |0-| 0 | 0 | 0 | 0 | 1 | D | D | D |
-|LXI **B**| Load imediate from memory (only 1 byte at a time) register pair **B & C** |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
-|LXI **D**| Load imediate from memory (only 1 byte at a time) register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
-|LXI **H**| Load imediate from memory (only 1 byte at a time) register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
-|LXI **W** | Load imediate from memory (only 1 byte at a time) temporary register pair **W & Z** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
-|LOAD PAIR at F| Load data from register pair temporary to F register |18+| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
-|LOAD PAIR at G| Load data from register pair temporary to G register |1d+| 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 |
-|ADD BYTE r| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
-|MULT BYTE r| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
+|MOVP pbx, M| Load imediate from memory (only 1 byte at a time) register pair **B & C** |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
+|MOVP pdx, M| Load imediate from memory (only 1 byte at a time) register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
+|MOVP phx, M| Load imediate from memory (only 1 byte at a time) register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
+|MOVP pwx, M| Load imediate from memory (only 1 byte at a time) temporary register pair **W & Z** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
+|MOVP eax| Load data from register pair temporary to F register |18+| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
+|MOVP ebx| Load data from register pair temporary to G register |1d+| 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 |
+|ADD8| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
+|MUL8| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
 |OPA BYTE| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |9-| 1 | 0 | 0 | 1 | 0 | S | S | S |
-|DIV BYTE r| Divide A with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
-|ANA BYTE r| And operation A with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
-|XRA BYTE r| Xor operation A with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
-|ORA BYTE r| Or operation A with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
-|MOD BYTE r| Gives the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
-|ADD WORD| Add F <sub>(16)</sub> plus G <sub>(16)</sub> |28+| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
-|MULT WORD| Multiplies F <sub>(16)</sub> by G <sub>(16)</sub> |29| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 |
-|OPA WORD| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |2a| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 |
-|DIV WORD| Divide F <sub>(16)</sub> by G <sub>(16)</sub> |2b| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 |
-|ANA WORD| And operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2c| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 |
-|XRA WORD| Xor operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2d| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
-|ORA WORD| Or operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2e| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 0 |
-|MOD WORD| Gives the remainder of dividing F <sub>(16)</sub> and G <sub>(16)</sub>|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
+|DIV8| Divide A with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
+|ANA8| And operation A with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
+|XRA8| Xor operation A with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
+|ORA8| Or operation A with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
+|MOD8| Gives the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
+|ADD16| Add F <sub>(16)</sub> plus G <sub>(16)</sub> |28+| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
+|MUL16| Multiplies F <sub>(16)</sub> by G <sub>(16)</sub> |29| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 |
+|CMP16| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |2a| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 |
+|DIV16| Divide F <sub>(16)</sub> by G <sub>(16)</sub> |2b| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 |
+|ANA16| And operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2c| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 |
+|XRA16| Xor operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2d| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
+|ORA16| Or operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2e| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 0 |
+|MOD16| Gives the remainder of dividing F <sub>(16)</sub> and G <sub>(16)</sub>|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
 |STW F| Store 16 bits F register direct on memory |3e| 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 |
 |JMP | Jump unconditional |c3| 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 |
 |JZ | Jump on zero |c0| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |

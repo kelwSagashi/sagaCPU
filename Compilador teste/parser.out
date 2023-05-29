@@ -1,123 +1,1495 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
+Unused terminals:
+
+    COMMENT
+    DATAFORMAT
+
 Grammar
 
-Rule 0     S' -> programa
-Rule 1     programa -> lista_instrucoes
-Rule 2     programa -> lista_instrucoes LABEL
-Rule 3     lista_instrucoes -> lista_instrucoes instrucao
-Rule 4     lista_instrucoes -> instrucao
-Rule 5     instrucao -> INSTRUCTION VAR ADDRESS
-Rule 6     instrucao -> INSTRUCTION VAR VAR
+Rule 0     S' -> program
+Rule 1     program -> blocks
+Rule 2     blocks -> blocks block
+Rule 3     blocks -> blocks label_block
+Rule 4     blocks -> block
+Rule 5     label_block -> label_colon label_instruction
+Rule 6     label_instruction -> INDENT instructions DEDENT
+Rule 7     label_colon -> LABEL COLON
+Rule 8     block -> instructions
+Rule 9     instructions -> instructions instruction
+Rule 10    instructions -> instruction
+Rule 11    instruction -> mov_registers
+Rule 12    instruction -> mov_register_number
+Rule 13    instruction -> mva_number
+Rule 14    instruction -> lxi_register_number
+Rule 15    instruction -> load_variable_address
+Rule 16    instruction -> store_value
+Rule 17    instruction -> arithmeticb
+Rule 18    instruction -> out_format_var
+Rule 19    instruction -> jump
+Rule 20    instruction -> variable
+Rule 21    instruction -> empty
+Rule 22    mov_registers -> MOV REGISTER COMMA REGISTER
+Rule 23    mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE
+Rule 24    mov_register_number -> MOV REGISTER COMMA VARIABLE
+Rule 25    mva_number -> MVA HEX_NUMBER_BYTE
+Rule 26    lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD
+Rule 27    load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET
+Rule 28    load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+Rule 29    store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+Rule 30    store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+Rule 31    arithmeticb -> ARITHMETICB REGISTER
+Rule 32    out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+Rule 33    out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+Rule 34    out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS
+Rule 35    jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET
+Rule 36    jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+Rule 37    variable -> VARIABLE COLON HEX_NUMBER_WORD
+Rule 38    variable -> VARIABLE COLON STRING
+Rule 39    empty -> <empty>
 
 Terminals, with rules where they appear
 
-ADDRESS              : 5
-INSTRUCTION          : 5 6
-LABEL                : 2
-VAR                  : 5 6 6
+ARITHMETICB          : 31
+CLOSEBRACKET         : 27 28 29 30 35 36
+CLOSEPARENTHESIS     : 32 33 34
+COLON                : 7 37 38
+COMMA                : 22 23 24 26 29 30 32
+COMMENT              : 
+DATAFORMAT           : 
+DEDENT               : 6
+FORMAT               : 32
+HEX_NUMBER_BYTE      : 23 25
+HEX_NUMBER_WORD      : 26 28 30 36 37
+INDENT               : 6
+JUMP                 : 35 36
+LABEL                : 7 35
+LOAD                 : 27 28
+LXI                  : 26
+MOV                  : 22 23 24
+MVA                  : 25
+OPENBRACKET          : 27 28 29 30 35 36
+OPENPARENTHESIS      : 32 33 34
+OUT                  : 32 33 34
+REGISTER             : 22 22 23 24 26 29 30 31
+STORE                : 29 30
+STRING               : 33 38
+VARIABLE             : 24 27 29 32 37 38
 error                : 
 
 Nonterminals, with rules where they appear
 
-instrucao            : 3 4
-lista_instrucoes     : 1 2 3
-programa             : 0
+arithmeticb          : 17
+block                : 2 4
+blocks               : 1 2 3
+empty                : 21
+instruction          : 9 10
+instructions         : 6 8 9
+jump                 : 19
+label_block          : 3
+label_colon          : 5
+label_instruction    : 5
+load_variable_address : 15
+lxi_register_number  : 14
+mov_register_number  : 12
+mov_registers        : 11
+mva_number           : 13
+out_format_var       : 18
+program              : 0
+store_value          : 16
+variable             : 20
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . programa
-    (1) programa -> . lista_instrucoes
-    (2) programa -> . lista_instrucoes LABEL
-    (3) lista_instrucoes -> . lista_instrucoes instrucao
-    (4) lista_instrucoes -> . instrucao
-    (5) instrucao -> . INSTRUCTION VAR ADDRESS
-    (6) instrucao -> . INSTRUCTION VAR VAR
+    (0) S' -> . program
+    (1) program -> . blocks
+    (2) blocks -> . blocks block
+    (3) blocks -> . blocks label_block
+    (4) blocks -> . block
+    (8) block -> . instructions
+    (9) instructions -> . instructions instruction
+    (10) instructions -> . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mva_number
+    (14) instruction -> . lxi_register_number
+    (15) instruction -> . load_variable_address
+    (16) instruction -> . store_value
+    (17) instruction -> . arithmeticb
+    (18) instruction -> . out_format_var
+    (19) instruction -> . jump
+    (20) instruction -> . variable
+    (21) instruction -> . empty
+    (22) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (23) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (24) mov_register_number -> . MOV REGISTER COMMA VARIABLE
+    (25) mva_number -> . MVA HEX_NUMBER_BYTE
+    (26) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (27) load_variable_address -> . LOAD OPENBRACKET VARIABLE CLOSEBRACKET
+    (28) load_variable_address -> . LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (29) store_value -> . STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> . STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (31) arithmeticb -> . ARITHMETICB REGISTER
+    (32) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (33) out_format_var -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (34) out_format_var -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (35) jump -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (36) jump -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (37) variable -> . VARIABLE COLON HEX_NUMBER_WORD
+    (38) variable -> . VARIABLE COLON STRING
+    (39) empty -> .
 
-    INSTRUCTION     shift and go to state 4
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MVA resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETICB resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+    MOV             shift and go to state 17
+    MVA             shift and go to state 19
+    LXI             shift and go to state 20
+    LOAD            shift and go to state 21
+    STORE           shift and go to state 22
+    ARITHMETICB     shift and go to state 23
+    OUT             shift and go to state 24
+    JUMP            shift and go to state 25
+    VARIABLE        shift and go to state 18
+    LABEL           reduce using rule 39 (empty -> .)
+    $end            reduce using rule 39 (empty -> .)
 
-    programa                       shift and go to state 1
-    lista_instrucoes               shift and go to state 2
-    instrucao                      shift and go to state 3
+  ! MOV             [ reduce using rule 39 (empty -> .) ]
+  ! MVA             [ reduce using rule 39 (empty -> .) ]
+  ! LXI             [ reduce using rule 39 (empty -> .) ]
+  ! LOAD            [ reduce using rule 39 (empty -> .) ]
+  ! STORE           [ reduce using rule 39 (empty -> .) ]
+  ! ARITHMETICB     [ reduce using rule 39 (empty -> .) ]
+  ! OUT             [ reduce using rule 39 (empty -> .) ]
+  ! JUMP            [ reduce using rule 39 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 39 (empty -> .) ]
+
+    program                        shift and go to state 1
+    blocks                         shift and go to state 2
+    block                          shift and go to state 3
+    instructions                   shift and go to state 4
+    instruction                    shift and go to state 5
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mva_number                     shift and go to state 8
+    lxi_register_number            shift and go to state 9
+    load_variable_address          shift and go to state 10
+    store_value                    shift and go to state 11
+    arithmeticb                    shift and go to state 12
+    out_format_var                 shift and go to state 13
+    jump                           shift and go to state 14
+    variable                       shift and go to state 15
+    empty                          shift and go to state 16
 
 state 1
 
-    (0) S' -> programa .
+    (0) S' -> program .
 
 
 
 state 2
 
-    (1) programa -> lista_instrucoes .
-    (2) programa -> lista_instrucoes . LABEL
-    (3) lista_instrucoes -> lista_instrucoes . instrucao
-    (5) instrucao -> . INSTRUCTION VAR ADDRESS
-    (6) instrucao -> . INSTRUCTION VAR VAR
+    (1) program -> blocks .
+    (2) blocks -> blocks . block
+    (3) blocks -> blocks . label_block
+    (8) block -> . instructions
+    (5) label_block -> . label_colon label_instruction
+    (9) instructions -> . instructions instruction
+    (10) instructions -> . instruction
+    (7) label_colon -> . LABEL COLON
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mva_number
+    (14) instruction -> . lxi_register_number
+    (15) instruction -> . load_variable_address
+    (16) instruction -> . store_value
+    (17) instruction -> . arithmeticb
+    (18) instruction -> . out_format_var
+    (19) instruction -> . jump
+    (20) instruction -> . variable
+    (21) instruction -> . empty
+    (22) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (23) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (24) mov_register_number -> . MOV REGISTER COMMA VARIABLE
+    (25) mva_number -> . MVA HEX_NUMBER_BYTE
+    (26) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (27) load_variable_address -> . LOAD OPENBRACKET VARIABLE CLOSEBRACKET
+    (28) load_variable_address -> . LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (29) store_value -> . STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> . STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (31) arithmeticb -> . ARITHMETICB REGISTER
+    (32) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (33) out_format_var -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (34) out_format_var -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (35) jump -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (36) jump -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (37) variable -> . VARIABLE COLON HEX_NUMBER_WORD
+    (38) variable -> . VARIABLE COLON STRING
+    (39) empty -> .
 
-    $end            reduce using rule 1 (programa -> lista_instrucoes .)
-    LABEL           shift and go to state 5
-    INSTRUCTION     shift and go to state 4
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MVA resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETICB resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for LABEL resolved as shift
+  ! reduce/reduce conflict for $end resolved using rule 1 (program -> blocks .)
+    $end            reduce using rule 1 (program -> blocks .)
+    LABEL           shift and go to state 29
+    MOV             shift and go to state 17
+    MVA             shift and go to state 19
+    LXI             shift and go to state 20
+    LOAD            shift and go to state 21
+    STORE           shift and go to state 22
+    ARITHMETICB     shift and go to state 23
+    OUT             shift and go to state 24
+    JUMP            shift and go to state 25
+    VARIABLE        shift and go to state 18
 
-    instrucao                      shift and go to state 6
+  ! MOV             [ reduce using rule 39 (empty -> .) ]
+  ! MVA             [ reduce using rule 39 (empty -> .) ]
+  ! LXI             [ reduce using rule 39 (empty -> .) ]
+  ! LOAD            [ reduce using rule 39 (empty -> .) ]
+  ! STORE           [ reduce using rule 39 (empty -> .) ]
+  ! ARITHMETICB     [ reduce using rule 39 (empty -> .) ]
+  ! OUT             [ reduce using rule 39 (empty -> .) ]
+  ! JUMP            [ reduce using rule 39 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 39 (empty -> .) ]
+  ! LABEL           [ reduce using rule 39 (empty -> .) ]
+  ! $end            [ reduce using rule 39 (empty -> .) ]
+
+    block                          shift and go to state 26
+    label_block                    shift and go to state 27
+    instructions                   shift and go to state 4
+    label_colon                    shift and go to state 28
+    instruction                    shift and go to state 5
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mva_number                     shift and go to state 8
+    lxi_register_number            shift and go to state 9
+    load_variable_address          shift and go to state 10
+    store_value                    shift and go to state 11
+    arithmeticb                    shift and go to state 12
+    out_format_var                 shift and go to state 13
+    jump                           shift and go to state 14
+    variable                       shift and go to state 15
+    empty                          shift and go to state 16
 
 state 3
 
-    (4) lista_instrucoes -> instrucao .
+    (4) blocks -> block .
 
-    LABEL           reduce using rule 4 (lista_instrucoes -> instrucao .)
-    INSTRUCTION     reduce using rule 4 (lista_instrucoes -> instrucao .)
-    $end            reduce using rule 4 (lista_instrucoes -> instrucao .)
+    LABEL           reduce using rule 4 (blocks -> block .)
+    MOV             reduce using rule 4 (blocks -> block .)
+    MVA             reduce using rule 4 (blocks -> block .)
+    LXI             reduce using rule 4 (blocks -> block .)
+    LOAD            reduce using rule 4 (blocks -> block .)
+    STORE           reduce using rule 4 (blocks -> block .)
+    ARITHMETICB     reduce using rule 4 (blocks -> block .)
+    OUT             reduce using rule 4 (blocks -> block .)
+    JUMP            reduce using rule 4 (blocks -> block .)
+    VARIABLE        reduce using rule 4 (blocks -> block .)
+    $end            reduce using rule 4 (blocks -> block .)
 
 
 state 4
 
-    (5) instrucao -> INSTRUCTION . VAR ADDRESS
-    (6) instrucao -> INSTRUCTION . VAR VAR
+    (8) block -> instructions .
+    (9) instructions -> instructions . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mva_number
+    (14) instruction -> . lxi_register_number
+    (15) instruction -> . load_variable_address
+    (16) instruction -> . store_value
+    (17) instruction -> . arithmeticb
+    (18) instruction -> . out_format_var
+    (19) instruction -> . jump
+    (20) instruction -> . variable
+    (21) instruction -> . empty
+    (22) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (23) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (24) mov_register_number -> . MOV REGISTER COMMA VARIABLE
+    (25) mva_number -> . MVA HEX_NUMBER_BYTE
+    (26) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (27) load_variable_address -> . LOAD OPENBRACKET VARIABLE CLOSEBRACKET
+    (28) load_variable_address -> . LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (29) store_value -> . STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> . STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (31) arithmeticb -> . ARITHMETICB REGISTER
+    (32) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (33) out_format_var -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (34) out_format_var -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (35) jump -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (36) jump -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (37) variable -> . VARIABLE COLON HEX_NUMBER_WORD
+    (38) variable -> . VARIABLE COLON STRING
+    (39) empty -> .
 
-    VAR             shift and go to state 7
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MVA resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETICB resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MVA resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETICB resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! reduce/reduce conflict for LABEL resolved using rule 8 (block -> instructions .)
+  ! reduce/reduce conflict for $end resolved using rule 8 (block -> instructions .)
+    LABEL           reduce using rule 8 (block -> instructions .)
+    $end            reduce using rule 8 (block -> instructions .)
+    MOV             shift and go to state 17
+    MVA             shift and go to state 19
+    LXI             shift and go to state 20
+    LOAD            shift and go to state 21
+    STORE           shift and go to state 22
+    ARITHMETICB     shift and go to state 23
+    OUT             shift and go to state 24
+    JUMP            shift and go to state 25
+    VARIABLE        shift and go to state 18
 
+  ! MOV             [ reduce using rule 8 (block -> instructions .) ]
+  ! MVA             [ reduce using rule 8 (block -> instructions .) ]
+  ! LXI             [ reduce using rule 8 (block -> instructions .) ]
+  ! LOAD            [ reduce using rule 8 (block -> instructions .) ]
+  ! STORE           [ reduce using rule 8 (block -> instructions .) ]
+  ! ARITHMETICB     [ reduce using rule 8 (block -> instructions .) ]
+  ! OUT             [ reduce using rule 8 (block -> instructions .) ]
+  ! JUMP            [ reduce using rule 8 (block -> instructions .) ]
+  ! VARIABLE        [ reduce using rule 8 (block -> instructions .) ]
+  ! MOV             [ reduce using rule 39 (empty -> .) ]
+  ! MVA             [ reduce using rule 39 (empty -> .) ]
+  ! LXI             [ reduce using rule 39 (empty -> .) ]
+  ! LOAD            [ reduce using rule 39 (empty -> .) ]
+  ! STORE           [ reduce using rule 39 (empty -> .) ]
+  ! ARITHMETICB     [ reduce using rule 39 (empty -> .) ]
+  ! OUT             [ reduce using rule 39 (empty -> .) ]
+  ! JUMP            [ reduce using rule 39 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 39 (empty -> .) ]
+  ! LABEL           [ reduce using rule 39 (empty -> .) ]
+  ! $end            [ reduce using rule 39 (empty -> .) ]
+
+    instruction                    shift and go to state 30
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mva_number                     shift and go to state 8
+    lxi_register_number            shift and go to state 9
+    load_variable_address          shift and go to state 10
+    store_value                    shift and go to state 11
+    arithmeticb                    shift and go to state 12
+    out_format_var                 shift and go to state 13
+    jump                           shift and go to state 14
+    variable                       shift and go to state 15
+    empty                          shift and go to state 16
 
 state 5
 
-    (2) programa -> lista_instrucoes LABEL .
+    (10) instructions -> instruction .
 
-    $end            reduce using rule 2 (programa -> lista_instrucoes LABEL .)
+    MOV             reduce using rule 10 (instructions -> instruction .)
+    MVA             reduce using rule 10 (instructions -> instruction .)
+    LXI             reduce using rule 10 (instructions -> instruction .)
+    LOAD            reduce using rule 10 (instructions -> instruction .)
+    STORE           reduce using rule 10 (instructions -> instruction .)
+    ARITHMETICB     reduce using rule 10 (instructions -> instruction .)
+    OUT             reduce using rule 10 (instructions -> instruction .)
+    JUMP            reduce using rule 10 (instructions -> instruction .)
+    VARIABLE        reduce using rule 10 (instructions -> instruction .)
+    LABEL           reduce using rule 10 (instructions -> instruction .)
+    $end            reduce using rule 10 (instructions -> instruction .)
+    DEDENT          reduce using rule 10 (instructions -> instruction .)
 
 
 state 6
 
-    (3) lista_instrucoes -> lista_instrucoes instrucao .
+    (11) instruction -> mov_registers .
 
-    LABEL           reduce using rule 3 (lista_instrucoes -> lista_instrucoes instrucao .)
-    INSTRUCTION     reduce using rule 3 (lista_instrucoes -> lista_instrucoes instrucao .)
-    $end            reduce using rule 3 (lista_instrucoes -> lista_instrucoes instrucao .)
+    MOV             reduce using rule 11 (instruction -> mov_registers .)
+    MVA             reduce using rule 11 (instruction -> mov_registers .)
+    LXI             reduce using rule 11 (instruction -> mov_registers .)
+    LOAD            reduce using rule 11 (instruction -> mov_registers .)
+    STORE           reduce using rule 11 (instruction -> mov_registers .)
+    ARITHMETICB     reduce using rule 11 (instruction -> mov_registers .)
+    OUT             reduce using rule 11 (instruction -> mov_registers .)
+    JUMP            reduce using rule 11 (instruction -> mov_registers .)
+    VARIABLE        reduce using rule 11 (instruction -> mov_registers .)
+    LABEL           reduce using rule 11 (instruction -> mov_registers .)
+    $end            reduce using rule 11 (instruction -> mov_registers .)
+    DEDENT          reduce using rule 11 (instruction -> mov_registers .)
 
 
 state 7
 
-    (5) instrucao -> INSTRUCTION VAR . ADDRESS
-    (6) instrucao -> INSTRUCTION VAR . VAR
+    (12) instruction -> mov_register_number .
 
-    ADDRESS         shift and go to state 9
-    VAR             shift and go to state 8
+    MOV             reduce using rule 12 (instruction -> mov_register_number .)
+    MVA             reduce using rule 12 (instruction -> mov_register_number .)
+    LXI             reduce using rule 12 (instruction -> mov_register_number .)
+    LOAD            reduce using rule 12 (instruction -> mov_register_number .)
+    STORE           reduce using rule 12 (instruction -> mov_register_number .)
+    ARITHMETICB     reduce using rule 12 (instruction -> mov_register_number .)
+    OUT             reduce using rule 12 (instruction -> mov_register_number .)
+    JUMP            reduce using rule 12 (instruction -> mov_register_number .)
+    VARIABLE        reduce using rule 12 (instruction -> mov_register_number .)
+    LABEL           reduce using rule 12 (instruction -> mov_register_number .)
+    $end            reduce using rule 12 (instruction -> mov_register_number .)
+    DEDENT          reduce using rule 12 (instruction -> mov_register_number .)
 
 
 state 8
 
-    (6) instrucao -> INSTRUCTION VAR VAR .
+    (13) instruction -> mva_number .
 
-    LABEL           reduce using rule 6 (instrucao -> INSTRUCTION VAR VAR .)
-    INSTRUCTION     reduce using rule 6 (instrucao -> INSTRUCTION VAR VAR .)
-    $end            reduce using rule 6 (instrucao -> INSTRUCTION VAR VAR .)
+    MOV             reduce using rule 13 (instruction -> mva_number .)
+    MVA             reduce using rule 13 (instruction -> mva_number .)
+    LXI             reduce using rule 13 (instruction -> mva_number .)
+    LOAD            reduce using rule 13 (instruction -> mva_number .)
+    STORE           reduce using rule 13 (instruction -> mva_number .)
+    ARITHMETICB     reduce using rule 13 (instruction -> mva_number .)
+    OUT             reduce using rule 13 (instruction -> mva_number .)
+    JUMP            reduce using rule 13 (instruction -> mva_number .)
+    VARIABLE        reduce using rule 13 (instruction -> mva_number .)
+    LABEL           reduce using rule 13 (instruction -> mva_number .)
+    $end            reduce using rule 13 (instruction -> mva_number .)
+    DEDENT          reduce using rule 13 (instruction -> mva_number .)
 
 
 state 9
 
-    (5) instrucao -> INSTRUCTION VAR ADDRESS .
+    (14) instruction -> lxi_register_number .
 
-    LABEL           reduce using rule 5 (instrucao -> INSTRUCTION VAR ADDRESS .)
-    INSTRUCTION     reduce using rule 5 (instrucao -> INSTRUCTION VAR ADDRESS .)
-    $end            reduce using rule 5 (instrucao -> INSTRUCTION VAR ADDRESS .)
+    MOV             reduce using rule 14 (instruction -> lxi_register_number .)
+    MVA             reduce using rule 14 (instruction -> lxi_register_number .)
+    LXI             reduce using rule 14 (instruction -> lxi_register_number .)
+    LOAD            reduce using rule 14 (instruction -> lxi_register_number .)
+    STORE           reduce using rule 14 (instruction -> lxi_register_number .)
+    ARITHMETICB     reduce using rule 14 (instruction -> lxi_register_number .)
+    OUT             reduce using rule 14 (instruction -> lxi_register_number .)
+    JUMP            reduce using rule 14 (instruction -> lxi_register_number .)
+    VARIABLE        reduce using rule 14 (instruction -> lxi_register_number .)
+    LABEL           reduce using rule 14 (instruction -> lxi_register_number .)
+    $end            reduce using rule 14 (instruction -> lxi_register_number .)
+    DEDENT          reduce using rule 14 (instruction -> lxi_register_number .)
 
+
+state 10
+
+    (15) instruction -> load_variable_address .
+
+    MOV             reduce using rule 15 (instruction -> load_variable_address .)
+    MVA             reduce using rule 15 (instruction -> load_variable_address .)
+    LXI             reduce using rule 15 (instruction -> load_variable_address .)
+    LOAD            reduce using rule 15 (instruction -> load_variable_address .)
+    STORE           reduce using rule 15 (instruction -> load_variable_address .)
+    ARITHMETICB     reduce using rule 15 (instruction -> load_variable_address .)
+    OUT             reduce using rule 15 (instruction -> load_variable_address .)
+    JUMP            reduce using rule 15 (instruction -> load_variable_address .)
+    VARIABLE        reduce using rule 15 (instruction -> load_variable_address .)
+    LABEL           reduce using rule 15 (instruction -> load_variable_address .)
+    $end            reduce using rule 15 (instruction -> load_variable_address .)
+    DEDENT          reduce using rule 15 (instruction -> load_variable_address .)
+
+
+state 11
+
+    (16) instruction -> store_value .
+
+    MOV             reduce using rule 16 (instruction -> store_value .)
+    MVA             reduce using rule 16 (instruction -> store_value .)
+    LXI             reduce using rule 16 (instruction -> store_value .)
+    LOAD            reduce using rule 16 (instruction -> store_value .)
+    STORE           reduce using rule 16 (instruction -> store_value .)
+    ARITHMETICB     reduce using rule 16 (instruction -> store_value .)
+    OUT             reduce using rule 16 (instruction -> store_value .)
+    JUMP            reduce using rule 16 (instruction -> store_value .)
+    VARIABLE        reduce using rule 16 (instruction -> store_value .)
+    LABEL           reduce using rule 16 (instruction -> store_value .)
+    $end            reduce using rule 16 (instruction -> store_value .)
+    DEDENT          reduce using rule 16 (instruction -> store_value .)
+
+
+state 12
+
+    (17) instruction -> arithmeticb .
+
+    MOV             reduce using rule 17 (instruction -> arithmeticb .)
+    MVA             reduce using rule 17 (instruction -> arithmeticb .)
+    LXI             reduce using rule 17 (instruction -> arithmeticb .)
+    LOAD            reduce using rule 17 (instruction -> arithmeticb .)
+    STORE           reduce using rule 17 (instruction -> arithmeticb .)
+    ARITHMETICB     reduce using rule 17 (instruction -> arithmeticb .)
+    OUT             reduce using rule 17 (instruction -> arithmeticb .)
+    JUMP            reduce using rule 17 (instruction -> arithmeticb .)
+    VARIABLE        reduce using rule 17 (instruction -> arithmeticb .)
+    LABEL           reduce using rule 17 (instruction -> arithmeticb .)
+    $end            reduce using rule 17 (instruction -> arithmeticb .)
+    DEDENT          reduce using rule 17 (instruction -> arithmeticb .)
+
+
+state 13
+
+    (18) instruction -> out_format_var .
+
+    MOV             reduce using rule 18 (instruction -> out_format_var .)
+    MVA             reduce using rule 18 (instruction -> out_format_var .)
+    LXI             reduce using rule 18 (instruction -> out_format_var .)
+    LOAD            reduce using rule 18 (instruction -> out_format_var .)
+    STORE           reduce using rule 18 (instruction -> out_format_var .)
+    ARITHMETICB     reduce using rule 18 (instruction -> out_format_var .)
+    OUT             reduce using rule 18 (instruction -> out_format_var .)
+    JUMP            reduce using rule 18 (instruction -> out_format_var .)
+    VARIABLE        reduce using rule 18 (instruction -> out_format_var .)
+    LABEL           reduce using rule 18 (instruction -> out_format_var .)
+    $end            reduce using rule 18 (instruction -> out_format_var .)
+    DEDENT          reduce using rule 18 (instruction -> out_format_var .)
+
+
+state 14
+
+    (19) instruction -> jump .
+
+    MOV             reduce using rule 19 (instruction -> jump .)
+    MVA             reduce using rule 19 (instruction -> jump .)
+    LXI             reduce using rule 19 (instruction -> jump .)
+    LOAD            reduce using rule 19 (instruction -> jump .)
+    STORE           reduce using rule 19 (instruction -> jump .)
+    ARITHMETICB     reduce using rule 19 (instruction -> jump .)
+    OUT             reduce using rule 19 (instruction -> jump .)
+    JUMP            reduce using rule 19 (instruction -> jump .)
+    VARIABLE        reduce using rule 19 (instruction -> jump .)
+    LABEL           reduce using rule 19 (instruction -> jump .)
+    $end            reduce using rule 19 (instruction -> jump .)
+    DEDENT          reduce using rule 19 (instruction -> jump .)
+
+
+state 15
+
+    (20) instruction -> variable .
+
+    MOV             reduce using rule 20 (instruction -> variable .)
+    MVA             reduce using rule 20 (instruction -> variable .)
+    LXI             reduce using rule 20 (instruction -> variable .)
+    LOAD            reduce using rule 20 (instruction -> variable .)
+    STORE           reduce using rule 20 (instruction -> variable .)
+    ARITHMETICB     reduce using rule 20 (instruction -> variable .)
+    OUT             reduce using rule 20 (instruction -> variable .)
+    JUMP            reduce using rule 20 (instruction -> variable .)
+    VARIABLE        reduce using rule 20 (instruction -> variable .)
+    LABEL           reduce using rule 20 (instruction -> variable .)
+    $end            reduce using rule 20 (instruction -> variable .)
+    DEDENT          reduce using rule 20 (instruction -> variable .)
+
+
+state 16
+
+    (21) instruction -> empty .
+
+    MOV             reduce using rule 21 (instruction -> empty .)
+    MVA             reduce using rule 21 (instruction -> empty .)
+    LXI             reduce using rule 21 (instruction -> empty .)
+    LOAD            reduce using rule 21 (instruction -> empty .)
+    STORE           reduce using rule 21 (instruction -> empty .)
+    ARITHMETICB     reduce using rule 21 (instruction -> empty .)
+    OUT             reduce using rule 21 (instruction -> empty .)
+    JUMP            reduce using rule 21 (instruction -> empty .)
+    VARIABLE        reduce using rule 21 (instruction -> empty .)
+    LABEL           reduce using rule 21 (instruction -> empty .)
+    $end            reduce using rule 21 (instruction -> empty .)
+    DEDENT          reduce using rule 21 (instruction -> empty .)
+
+
+state 17
+
+    (22) mov_registers -> MOV . REGISTER COMMA REGISTER
+    (23) mov_register_number -> MOV . REGISTER COMMA HEX_NUMBER_BYTE
+    (24) mov_register_number -> MOV . REGISTER COMMA VARIABLE
+
+    REGISTER        shift and go to state 31
+
+
+state 18
+
+    (37) variable -> VARIABLE . COLON HEX_NUMBER_WORD
+    (38) variable -> VARIABLE . COLON STRING
+
+    COLON           shift and go to state 32
+
+
+state 19
+
+    (25) mva_number -> MVA . HEX_NUMBER_BYTE
+
+    HEX_NUMBER_BYTE shift and go to state 33
+
+
+state 20
+
+    (26) lxi_register_number -> LXI . REGISTER COMMA HEX_NUMBER_WORD
+
+    REGISTER        shift and go to state 34
+
+
+state 21
+
+    (27) load_variable_address -> LOAD . OPENBRACKET VARIABLE CLOSEBRACKET
+    (28) load_variable_address -> LOAD . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+
+    OPENBRACKET     shift and go to state 35
+
+
+state 22
+
+    (29) store_value -> STORE . REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> STORE . REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+
+    REGISTER        shift and go to state 36
+
+
+state 23
+
+    (31) arithmeticb -> ARITHMETICB . REGISTER
+
+    REGISTER        shift and go to state 37
+
+
+state 24
+
+    (32) out_format_var -> OUT . OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (33) out_format_var -> OUT . OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (34) out_format_var -> OUT . OPENPARENTHESIS CLOSEPARENTHESIS
+
+    OPENPARENTHESIS shift and go to state 38
+
+
+state 25
+
+    (35) jump -> JUMP . OPENBRACKET LABEL CLOSEBRACKET
+    (36) jump -> JUMP . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+
+    OPENBRACKET     shift and go to state 39
+
+
+state 26
+
+    (2) blocks -> blocks block .
+
+    LABEL           reduce using rule 2 (blocks -> blocks block .)
+    MOV             reduce using rule 2 (blocks -> blocks block .)
+    MVA             reduce using rule 2 (blocks -> blocks block .)
+    LXI             reduce using rule 2 (blocks -> blocks block .)
+    LOAD            reduce using rule 2 (blocks -> blocks block .)
+    STORE           reduce using rule 2 (blocks -> blocks block .)
+    ARITHMETICB     reduce using rule 2 (blocks -> blocks block .)
+    OUT             reduce using rule 2 (blocks -> blocks block .)
+    JUMP            reduce using rule 2 (blocks -> blocks block .)
+    VARIABLE        reduce using rule 2 (blocks -> blocks block .)
+    $end            reduce using rule 2 (blocks -> blocks block .)
+
+
+state 27
+
+    (3) blocks -> blocks label_block .
+
+    LABEL           reduce using rule 3 (blocks -> blocks label_block .)
+    MOV             reduce using rule 3 (blocks -> blocks label_block .)
+    MVA             reduce using rule 3 (blocks -> blocks label_block .)
+    LXI             reduce using rule 3 (blocks -> blocks label_block .)
+    LOAD            reduce using rule 3 (blocks -> blocks label_block .)
+    STORE           reduce using rule 3 (blocks -> blocks label_block .)
+    ARITHMETICB     reduce using rule 3 (blocks -> blocks label_block .)
+    OUT             reduce using rule 3 (blocks -> blocks label_block .)
+    JUMP            reduce using rule 3 (blocks -> blocks label_block .)
+    VARIABLE        reduce using rule 3 (blocks -> blocks label_block .)
+    $end            reduce using rule 3 (blocks -> blocks label_block .)
+
+
+state 28
+
+    (5) label_block -> label_colon . label_instruction
+    (6) label_instruction -> . INDENT instructions DEDENT
+
+    INDENT          shift and go to state 41
+
+    label_instruction              shift and go to state 40
+
+state 29
+
+    (7) label_colon -> LABEL . COLON
+
+    COLON           shift and go to state 42
+
+
+state 30
+
+    (9) instructions -> instructions instruction .
+
+    MOV             reduce using rule 9 (instructions -> instructions instruction .)
+    MVA             reduce using rule 9 (instructions -> instructions instruction .)
+    LXI             reduce using rule 9 (instructions -> instructions instruction .)
+    LOAD            reduce using rule 9 (instructions -> instructions instruction .)
+    STORE           reduce using rule 9 (instructions -> instructions instruction .)
+    ARITHMETICB     reduce using rule 9 (instructions -> instructions instruction .)
+    OUT             reduce using rule 9 (instructions -> instructions instruction .)
+    JUMP            reduce using rule 9 (instructions -> instructions instruction .)
+    VARIABLE        reduce using rule 9 (instructions -> instructions instruction .)
+    LABEL           reduce using rule 9 (instructions -> instructions instruction .)
+    $end            reduce using rule 9 (instructions -> instructions instruction .)
+    DEDENT          reduce using rule 9 (instructions -> instructions instruction .)
+
+
+state 31
+
+    (22) mov_registers -> MOV REGISTER . COMMA REGISTER
+    (23) mov_register_number -> MOV REGISTER . COMMA HEX_NUMBER_BYTE
+    (24) mov_register_number -> MOV REGISTER . COMMA VARIABLE
+
+    COMMA           shift and go to state 43
+
+
+state 32
+
+    (37) variable -> VARIABLE COLON . HEX_NUMBER_WORD
+    (38) variable -> VARIABLE COLON . STRING
+
+    HEX_NUMBER_WORD shift and go to state 44
+    STRING          shift and go to state 45
+
+
+state 33
+
+    (25) mva_number -> MVA HEX_NUMBER_BYTE .
+
+    MOV             reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    MVA             reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    LXI             reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    LOAD            reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    STORE           reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    ARITHMETICB     reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    OUT             reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    JUMP            reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    VARIABLE        reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    LABEL           reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    $end            reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+    DEDENT          reduce using rule 25 (mva_number -> MVA HEX_NUMBER_BYTE .)
+
+
+state 34
+
+    (26) lxi_register_number -> LXI REGISTER . COMMA HEX_NUMBER_WORD
+
+    COMMA           shift and go to state 46
+
+
+state 35
+
+    (27) load_variable_address -> LOAD OPENBRACKET . VARIABLE CLOSEBRACKET
+    (28) load_variable_address -> LOAD OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET
+
+    VARIABLE        shift and go to state 47
+    HEX_NUMBER_WORD shift and go to state 48
+
+
+state 36
+
+    (29) store_value -> STORE REGISTER . COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> STORE REGISTER . COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+
+    COMMA           shift and go to state 49
+
+
+state 37
+
+    (31) arithmeticb -> ARITHMETICB REGISTER .
+
+    MOV             reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    MVA             reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    LXI             reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    LOAD            reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    STORE           reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    ARITHMETICB     reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    OUT             reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    JUMP            reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    VARIABLE        reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    LABEL           reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    $end            reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+    DEDENT          reduce using rule 31 (arithmeticb -> ARITHMETICB REGISTER .)
+
+
+state 38
+
+    (32) out_format_var -> OUT OPENPARENTHESIS . FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (33) out_format_var -> OUT OPENPARENTHESIS . STRING CLOSEPARENTHESIS
+    (34) out_format_var -> OUT OPENPARENTHESIS . CLOSEPARENTHESIS
+
+    FORMAT          shift and go to state 50
+    STRING          shift and go to state 52
+    CLOSEPARENTHESIS shift and go to state 51
+
+
+state 39
+
+    (35) jump -> JUMP OPENBRACKET . LABEL CLOSEBRACKET
+    (36) jump -> JUMP OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET
+
+    LABEL           shift and go to state 53
+    HEX_NUMBER_WORD shift and go to state 54
+
+
+state 40
+
+    (5) label_block -> label_colon label_instruction .
+
+    LABEL           reduce using rule 5 (label_block -> label_colon label_instruction .)
+    MOV             reduce using rule 5 (label_block -> label_colon label_instruction .)
+    MVA             reduce using rule 5 (label_block -> label_colon label_instruction .)
+    LXI             reduce using rule 5 (label_block -> label_colon label_instruction .)
+    LOAD            reduce using rule 5 (label_block -> label_colon label_instruction .)
+    STORE           reduce using rule 5 (label_block -> label_colon label_instruction .)
+    ARITHMETICB     reduce using rule 5 (label_block -> label_colon label_instruction .)
+    OUT             reduce using rule 5 (label_block -> label_colon label_instruction .)
+    JUMP            reduce using rule 5 (label_block -> label_colon label_instruction .)
+    VARIABLE        reduce using rule 5 (label_block -> label_colon label_instruction .)
+    $end            reduce using rule 5 (label_block -> label_colon label_instruction .)
+
+
+state 41
+
+    (6) label_instruction -> INDENT . instructions DEDENT
+    (9) instructions -> . instructions instruction
+    (10) instructions -> . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mva_number
+    (14) instruction -> . lxi_register_number
+    (15) instruction -> . load_variable_address
+    (16) instruction -> . store_value
+    (17) instruction -> . arithmeticb
+    (18) instruction -> . out_format_var
+    (19) instruction -> . jump
+    (20) instruction -> . variable
+    (21) instruction -> . empty
+    (22) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (23) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (24) mov_register_number -> . MOV REGISTER COMMA VARIABLE
+    (25) mva_number -> . MVA HEX_NUMBER_BYTE
+    (26) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (27) load_variable_address -> . LOAD OPENBRACKET VARIABLE CLOSEBRACKET
+    (28) load_variable_address -> . LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (29) store_value -> . STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> . STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (31) arithmeticb -> . ARITHMETICB REGISTER
+    (32) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (33) out_format_var -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (34) out_format_var -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (35) jump -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (36) jump -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (37) variable -> . VARIABLE COLON HEX_NUMBER_WORD
+    (38) variable -> . VARIABLE COLON STRING
+    (39) empty -> .
+
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MVA resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETICB resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+    MOV             shift and go to state 17
+    MVA             shift and go to state 19
+    LXI             shift and go to state 20
+    LOAD            shift and go to state 21
+    STORE           shift and go to state 22
+    ARITHMETICB     shift and go to state 23
+    OUT             shift and go to state 24
+    JUMP            shift and go to state 25
+    VARIABLE        shift and go to state 18
+    DEDENT          reduce using rule 39 (empty -> .)
+
+  ! MOV             [ reduce using rule 39 (empty -> .) ]
+  ! MVA             [ reduce using rule 39 (empty -> .) ]
+  ! LXI             [ reduce using rule 39 (empty -> .) ]
+  ! LOAD            [ reduce using rule 39 (empty -> .) ]
+  ! STORE           [ reduce using rule 39 (empty -> .) ]
+  ! ARITHMETICB     [ reduce using rule 39 (empty -> .) ]
+  ! OUT             [ reduce using rule 39 (empty -> .) ]
+  ! JUMP            [ reduce using rule 39 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 39 (empty -> .) ]
+
+    instructions                   shift and go to state 55
+    instruction                    shift and go to state 5
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mva_number                     shift and go to state 8
+    lxi_register_number            shift and go to state 9
+    load_variable_address          shift and go to state 10
+    store_value                    shift and go to state 11
+    arithmeticb                    shift and go to state 12
+    out_format_var                 shift and go to state 13
+    jump                           shift and go to state 14
+    variable                       shift and go to state 15
+    empty                          shift and go to state 16
+
+state 42
+
+    (7) label_colon -> LABEL COLON .
+
+    INDENT          reduce using rule 7 (label_colon -> LABEL COLON .)
+
+
+state 43
+
+    (22) mov_registers -> MOV REGISTER COMMA . REGISTER
+    (23) mov_register_number -> MOV REGISTER COMMA . HEX_NUMBER_BYTE
+    (24) mov_register_number -> MOV REGISTER COMMA . VARIABLE
+
+    REGISTER        shift and go to state 56
+    HEX_NUMBER_BYTE shift and go to state 57
+    VARIABLE        shift and go to state 58
+
+
+state 44
+
+    (37) variable -> VARIABLE COLON HEX_NUMBER_WORD .
+
+    MOV             reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    MVA             reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    LXI             reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    LOAD            reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    STORE           reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    ARITHMETICB     reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    OUT             reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    JUMP            reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    VARIABLE        reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    LABEL           reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    $end            reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+    DEDENT          reduce using rule 37 (variable -> VARIABLE COLON HEX_NUMBER_WORD .)
+
+
+state 45
+
+    (38) variable -> VARIABLE COLON STRING .
+
+    MOV             reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    MVA             reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    LXI             reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    LOAD            reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    STORE           reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    ARITHMETICB     reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    OUT             reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    JUMP            reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    VARIABLE        reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    LABEL           reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    $end            reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+    DEDENT          reduce using rule 38 (variable -> VARIABLE COLON STRING .)
+
+
+state 46
+
+    (26) lxi_register_number -> LXI REGISTER COMMA . HEX_NUMBER_WORD
+
+    HEX_NUMBER_WORD shift and go to state 59
+
+
+state 47
+
+    (27) load_variable_address -> LOAD OPENBRACKET VARIABLE . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 60
+
+
+state 48
+
+    (28) load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 61
+
+
+state 49
+
+    (29) store_value -> STORE REGISTER COMMA . OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> STORE REGISTER COMMA . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+
+    OPENBRACKET     shift and go to state 62
+
+
+state 50
+
+    (32) out_format_var -> OUT OPENPARENTHESIS FORMAT . COMMA VARIABLE CLOSEPARENTHESIS
+
+    COMMA           shift and go to state 63
+
+
+state 51
+
+    (34) out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .
+
+    MOV             reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    MVA             reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    LXI             reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    LOAD            reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    STORE           reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    ARITHMETICB     reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    OUT             reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    JUMP            reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    VARIABLE        reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    LABEL           reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    $end            reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    DEDENT          reduce using rule 34 (out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+
+
+state 52
+
+    (33) out_format_var -> OUT OPENPARENTHESIS STRING . CLOSEPARENTHESIS
+
+    CLOSEPARENTHESIS shift and go to state 64
+
+
+state 53
+
+    (35) jump -> JUMP OPENBRACKET LABEL . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 65
+
+
+state 54
+
+    (36) jump -> JUMP OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 66
+
+
+state 55
+
+    (6) label_instruction -> INDENT instructions . DEDENT
+    (9) instructions -> instructions . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mva_number
+    (14) instruction -> . lxi_register_number
+    (15) instruction -> . load_variable_address
+    (16) instruction -> . store_value
+    (17) instruction -> . arithmeticb
+    (18) instruction -> . out_format_var
+    (19) instruction -> . jump
+    (20) instruction -> . variable
+    (21) instruction -> . empty
+    (22) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (23) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (24) mov_register_number -> . MOV REGISTER COMMA VARIABLE
+    (25) mva_number -> . MVA HEX_NUMBER_BYTE
+    (26) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (27) load_variable_address -> . LOAD OPENBRACKET VARIABLE CLOSEBRACKET
+    (28) load_variable_address -> . LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (29) store_value -> . STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (30) store_value -> . STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (31) arithmeticb -> . ARITHMETICB REGISTER
+    (32) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (33) out_format_var -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (34) out_format_var -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (35) jump -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (36) jump -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (37) variable -> . VARIABLE COLON HEX_NUMBER_WORD
+    (38) variable -> . VARIABLE COLON STRING
+    (39) empty -> .
+
+  ! shift/reduce conflict for DEDENT resolved as shift
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MVA resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETICB resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+    DEDENT          shift and go to state 67
+    MOV             shift and go to state 17
+    MVA             shift and go to state 19
+    LXI             shift and go to state 20
+    LOAD            shift and go to state 21
+    STORE           shift and go to state 22
+    ARITHMETICB     shift and go to state 23
+    OUT             shift and go to state 24
+    JUMP            shift and go to state 25
+    VARIABLE        shift and go to state 18
+
+  ! DEDENT          [ reduce using rule 39 (empty -> .) ]
+  ! MOV             [ reduce using rule 39 (empty -> .) ]
+  ! MVA             [ reduce using rule 39 (empty -> .) ]
+  ! LXI             [ reduce using rule 39 (empty -> .) ]
+  ! LOAD            [ reduce using rule 39 (empty -> .) ]
+  ! STORE           [ reduce using rule 39 (empty -> .) ]
+  ! ARITHMETICB     [ reduce using rule 39 (empty -> .) ]
+  ! OUT             [ reduce using rule 39 (empty -> .) ]
+  ! JUMP            [ reduce using rule 39 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 39 (empty -> .) ]
+
+    instruction                    shift and go to state 30
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mva_number                     shift and go to state 8
+    lxi_register_number            shift and go to state 9
+    load_variable_address          shift and go to state 10
+    store_value                    shift and go to state 11
+    arithmeticb                    shift and go to state 12
+    out_format_var                 shift and go to state 13
+    jump                           shift and go to state 14
+    variable                       shift and go to state 15
+    empty                          shift and go to state 16
+
+state 56
+
+    (22) mov_registers -> MOV REGISTER COMMA REGISTER .
+
+    MOV             reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    MVA             reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    LXI             reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    LOAD            reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    STORE           reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    ARITHMETICB     reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    OUT             reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    JUMP            reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    VARIABLE        reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    LABEL           reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    $end            reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    DEDENT          reduce using rule 22 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+
+
+state 57
+
+    (23) mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .
+
+    MOV             reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    MVA             reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    LXI             reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    LOAD            reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    STORE           reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    ARITHMETICB     reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    OUT             reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    JUMP            reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    VARIABLE        reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    LABEL           reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    $end            reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    DEDENT          reduce using rule 23 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+
+
+state 58
+
+    (24) mov_register_number -> MOV REGISTER COMMA VARIABLE .
+
+    MOV             reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    MVA             reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    LXI             reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    LOAD            reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    STORE           reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    ARITHMETICB     reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    OUT             reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    JUMP            reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    VARIABLE        reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    LABEL           reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    $end            reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+    DEDENT          reduce using rule 24 (mov_register_number -> MOV REGISTER COMMA VARIABLE .)
+
+
+state 59
+
+    (26) lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .
+
+    MOV             reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    MVA             reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    LXI             reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    LOAD            reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    STORE           reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    ARITHMETICB     reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    OUT             reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    JUMP            reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    VARIABLE        reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    LABEL           reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    $end            reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    DEDENT          reduce using rule 26 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+
+
+state 60
+
+    (27) load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .
+
+    MOV             reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    MVA             reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LXI             reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LOAD            reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    STORE           reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    ARITHMETICB     reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    OUT             reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    JUMP            reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    VARIABLE        reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LABEL           reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    $end            reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+    DEDENT          reduce using rule 27 (load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET .)
+
+
+state 61
+
+    (28) load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .
+
+    MOV             reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    MVA             reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LXI             reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOAD            reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    STORE           reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    ARITHMETICB     reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    OUT             reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    JUMP            reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    VARIABLE        reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LABEL           reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    $end            reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    DEDENT          reduce using rule 28 (load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+
+
+state 62
+
+    (29) store_value -> STORE REGISTER COMMA OPENBRACKET . VARIABLE CLOSEBRACKET
+    (30) store_value -> STORE REGISTER COMMA OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET
+
+    VARIABLE        shift and go to state 68
+    HEX_NUMBER_WORD shift and go to state 69
+
+
+state 63
+
+    (32) out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA . VARIABLE CLOSEPARENTHESIS
+
+    VARIABLE        shift and go to state 70
+
+
+state 64
+
+    (33) out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .
+
+    MOV             reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    MVA             reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    LXI             reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    LOAD            reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    STORE           reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    ARITHMETICB     reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    OUT             reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    JUMP            reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    VARIABLE        reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    LABEL           reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    $end            reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    DEDENT          reduce using rule 33 (out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+
+
+state 65
+
+    (35) jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .
+
+    MOV             reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    MVA             reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    LXI             reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    LOAD            reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    STORE           reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    ARITHMETICB     reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    OUT             reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    JUMP            reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    VARIABLE        reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    LABEL           reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    $end            reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    DEDENT          reduce using rule 35 (jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+
+
+state 66
+
+    (36) jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .
+
+    MOV             reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    MVA             reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LXI             reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOAD            reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    STORE           reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    ARITHMETICB     reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    OUT             reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    JUMP            reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    VARIABLE        reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LABEL           reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    $end            reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    DEDENT          reduce using rule 36 (jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+
+
+state 67
+
+    (6) label_instruction -> INDENT instructions DEDENT .
+
+    LABEL           reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    MOV             reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    MVA             reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    LXI             reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    LOAD            reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    STORE           reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    ARITHMETICB     reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    OUT             reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    JUMP            reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    VARIABLE        reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    $end            reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+
+
+state 68
+
+    (29) store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 71
+
+
+state 69
+
+    (30) store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 72
+
+
+state 70
+
+    (32) out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE . CLOSEPARENTHESIS
+
+    CLOSEPARENTHESIS shift and go to state 73
+
+
+state 71
+
+    (29) store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .
+
+    MOV             reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    MVA             reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LXI             reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LOAD            reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    STORE           reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    ARITHMETICB     reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    OUT             reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    JUMP            reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    VARIABLE        reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LABEL           reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    $end            reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    DEDENT          reduce using rule 29 (store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+
+
+state 72
+
+    (30) store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .
+
+    MOV             reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    MVA             reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LXI             reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOAD            reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    STORE           reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    ARITHMETICB     reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    OUT             reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    JUMP            reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    VARIABLE        reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LABEL           reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    $end            reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    DEDENT          reduce using rule 30 (store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+
+
+state 73
+
+    (32) out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .
+
+    MOV             reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    MVA             reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    LXI             reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    LOAD            reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    STORE           reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    ARITHMETICB     reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    OUT             reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    JUMP            reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    VARIABLE        reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    LABEL           reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    $end            reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    DEDENT          reduce using rule 32 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for MOV in state 0 resolved as shift
+WARNING: shift/reduce conflict for MVA in state 0 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 0 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 0 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 0 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETICB in state 0 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 0 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 0 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 0 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 2 resolved as shift
+WARNING: shift/reduce conflict for MVA in state 2 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 2 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 2 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 2 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETICB in state 2 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 2 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 2 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 2 resolved as shift
+WARNING: shift/reduce conflict for LABEL in state 2 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 4 resolved as shift
+WARNING: shift/reduce conflict for MVA in state 4 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 4 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 4 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 4 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETICB in state 4 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 4 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 4 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 4 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 4 resolved as shift
+WARNING: shift/reduce conflict for MVA in state 4 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 4 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 4 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 4 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETICB in state 4 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 4 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 4 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 4 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 41 resolved as shift
+WARNING: shift/reduce conflict for MVA in state 41 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 41 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 41 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 41 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETICB in state 41 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 41 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 41 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 41 resolved as shift
+WARNING: shift/reduce conflict for DEDENT in state 55 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 55 resolved as shift
+WARNING: shift/reduce conflict for MVA in state 55 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 55 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 55 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 55 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETICB in state 55 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 55 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 55 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 55 resolved as shift
+WARNING: reduce/reduce conflict in state 2 resolved using rule (program -> blocks)
+WARNING: rejected rule (empty -> <empty>) in state 2
+WARNING: reduce/reduce conflict in state 4 resolved using rule (block -> instructions)
+WARNING: rejected rule (empty -> <empty>) in state 4

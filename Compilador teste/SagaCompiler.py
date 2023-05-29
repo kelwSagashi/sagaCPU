@@ -142,7 +142,7 @@ class Lexer:
         code = ''.join(binary_codes)
         return code
 
-filename = 'c:/Users/kelwp/Downloads/pasta de programação/sagaCPU/Compiler/code.saga'
+filename = 'c:/Users/kelwp/Downloads/pasta de programação/sagaCPU/Compilador teste/code.saga'
 with open(filename, 'r') as file:
     lines = file.readlines()
     txtFormated = ''

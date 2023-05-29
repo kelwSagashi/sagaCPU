@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ADDRESS INSTRUCTION LABEL VAR\n    programa : lista_instrucoes\n             | lista_instrucoes LABEL\n    \n    lista_instrucoes : lista_instrucoes instrucao\n                     | instrucao\n    \n    instrucao : INSTRUCTION VAR ADDRESS\n              | INSTRUCTION VAR VAR\n    '
+_lr_signature = 'ARITHMETICB CLOSEBRACKET CLOSEPARENTHESIS COLON COMMA COMMENT DATAFORMAT DEDENT FORMAT HEX_NUMBER_BYTE HEX_NUMBER_WORD INDENT JUMP LABEL LOAD LXI MOV MVA OPENBRACKET OPENPARENTHESIS OUT REGISTER STORE STRING VARIABLE\n    program : blocks\n    \n    blocks : blocks block\n           | blocks label_block\n           | block\n    \n    label_block : label_colon label_instruction\n    \n    label_instruction : INDENT instructions DEDENT \n    \n    label_colon : LABEL COLON \n    \n    block : instructions\n    \n    instructions : instructions instruction\n                 | instruction\n    \n    instruction : mov_registers\n                | mov_register_number\n                | mva_number\n                | lxi_register_number\n                | load_variable_address\n                | store_value\n                | arithmeticb\n                | out_format_var\n                | jump\n                | variable\n                | empty\n    \n    mov_registers : MOV REGISTER COMMA REGISTER\n    \n    mov_register_number : MOV REGISTER COMMA HEX_NUMBER_BYTE\n                        | MOV REGISTER COMMA VARIABLE\n    \n    mva_number : MVA HEX_NUMBER_BYTE\n    \n    lxi_register_number : LXI REGISTER COMMA HEX_NUMBER_WORD\n    \n    load_variable_address : LOAD OPENBRACKET VARIABLE CLOSEBRACKET\n                          | LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET\n    \n    store_value : STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET\n                | STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET\n    \n    arithmeticb : ARITHMETICB REGISTER\n    \n    out_format_var : OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS\n                   | OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS\n                   | OUT OPENPARENTHESIS CLOSEPARENTHESIS\n    \n    jump : JUMP OPENBRACKET LABEL CLOSEBRACKET\n         | JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET\n    \n    variable : VARIABLE COLON HEX_NUMBER_WORD\n             | VARIABLE COLON STRING\n    \n    empty :\n    '
     
-_lr_action_items = {'INSTRUCTION':([0,2,3,6,8,9,],[4,4,-4,-3,-6,-5,]),'$end':([1,2,3,5,6,8,9,],[0,-1,-4,-2,-3,-6,-5,]),'LABEL':([2,3,6,8,9,],[5,-4,-3,-6,-5,]),'VAR':([4,7,],[7,8,]),'ADDRESS':([7,],[9,]),}
+_lr_action_items = {'MOV':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[17,17,-4,17,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,17,-37,-38,-34,17,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'MVA':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[19,19,-4,19,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,19,-37,-38,-34,19,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'LXI':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[20,20,-4,20,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,20,-37,-38,-34,20,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'LOAD':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[21,21,-4,21,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,21,-37,-38,-34,21,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'STORE':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[22,22,-4,22,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,22,-37,-38,-34,22,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'ARITHMETICB':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[23,23,-4,23,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,23,-37,-38,-34,23,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'OUT':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[24,24,-4,24,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,24,-37,-38,-34,24,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'JUMP':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,41,44,45,51,55,56,57,58,59,60,61,64,65,66,67,71,72,73,],[25,25,-4,25,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,25,-37,-38,-34,25,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'VARIABLE':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,35,37,40,41,43,44,45,51,55,56,57,58,59,60,61,62,63,64,65,66,67,71,72,73,],[18,18,-4,18,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,47,-31,-5,18,58,-37,-38,-34,18,-22,-23,-24,-26,-27,-28,68,70,-33,-35,-36,-6,-29,-30,-32,]),'LABEL':([0,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,39,40,44,45,51,56,57,58,59,60,61,64,65,66,67,71,72,73,],[-39,29,-4,-8,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,53,-5,-37,-38,-34,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'$end':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,26,27,30,33,37,40,44,45,51,56,57,58,59,60,61,64,65,66,67,71,72,73,],[-39,0,-1,-4,-8,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-2,-3,-9,-25,-31,-5,-37,-38,-34,-22,-23,-24,-26,-27,-28,-33,-35,-36,-6,-29,-30,-32,]),'DEDENT':([5,6,7,8,9,10,11,12,13,14,15,16,30,33,37,41,44,45,51,55,56,57,58,59,60,61,64,65,66,71,72,73,],[-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-9,-25,-31,-39,-37,-38,-34,67,-22,-23,-24,-26,-27,-28,-33,-35,-36,-29,-30,-32,]),'REGISTER':([17,20,22,23,43,],[31,34,36,37,56,]),'COLON':([18,29,],[32,42,]),'HEX_NUMBER_BYTE':([19,43,],[33,57,]),'OPENBRACKET':([21,25,49,],[35,39,62,]),'OPENPARENTHESIS':([24,],[38,]),'INDENT':([28,42,],[41,-7,]),'COMMA':([31,34,36,50,],[43,46,49,63,]),'HEX_NUMBER_WORD':([32,35,39,46,62,],[44,48,54,59,69,]),'STRING':([32,38,],[45,52,]),'FORMAT':([38,],[50,]),'CLOSEPARENTHESIS':([38,52,70,],[51,64,73,]),'CLOSEBRACKET':([47,48,53,54,68,69,],[60,61,65,66,71,72,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'programa':([0,],[1,]),'lista_instrucoes':([0,],[2,]),'instrucao':([0,2,],[3,6,]),}
+_lr_goto_items = {'program':([0,],[1,]),'blocks':([0,],[2,]),'block':([0,2,],[3,26,]),'instructions':([0,2,41,],[4,4,55,]),'instruction':([0,2,4,41,55,],[5,5,30,5,30,]),'mov_registers':([0,2,4,41,55,],[6,6,6,6,6,]),'mov_register_number':([0,2,4,41,55,],[7,7,7,7,7,]),'mva_number':([0,2,4,41,55,],[8,8,8,8,8,]),'lxi_register_number':([0,2,4,41,55,],[9,9,9,9,9,]),'load_variable_address':([0,2,4,41,55,],[10,10,10,10,10,]),'store_value':([0,2,4,41,55,],[11,11,11,11,11,]),'arithmeticb':([0,2,4,41,55,],[12,12,12,12,12,]),'out_format_var':([0,2,4,41,55,],[13,13,13,13,13,]),'jump':([0,2,4,41,55,],[14,14,14,14,14,]),'variable':([0,2,4,41,55,],[15,15,15,15,15,]),'empty':([0,2,4,41,55,],[16,16,16,16,16,]),'label_block':([2,],[27,]),'label_colon':([2,],[28,]),'label_instruction':([28,],[40,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,11 +26,44 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> programa","S'",1,None,None,None),
-  ('programa -> lista_instrucoes','programa',1,'p_programa','SagaCompiler.py',49),
-  ('programa -> lista_instrucoes LABEL','programa',2,'p_programa','SagaCompiler.py',50),
-  ('lista_instrucoes -> lista_instrucoes instrucao','lista_instrucoes',2,'p_lista_instrucoes','SagaCompiler.py',59),
-  ('lista_instrucoes -> instrucao','lista_instrucoes',1,'p_lista_instrucoes','SagaCompiler.py',60),
-  ('instrucao -> INSTRUCTION VAR ADDRESS','instrucao',3,'p_instrucao','SagaCompiler.py',69),
-  ('instrucao -> INSTRUCTION VAR VAR','instrucao',3,'p_instrucao','SagaCompiler.py',70),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> blocks','program',1,'p_program','testply.py',178),
+  ('blocks -> blocks block','blocks',2,'p_blocks','testply.py',185),
+  ('blocks -> blocks label_block','blocks',2,'p_blocks','testply.py',186),
+  ('blocks -> block','blocks',1,'p_blocks','testply.py',187),
+  ('label_block -> label_colon label_instruction','label_block',2,'p_label_block','testply.py',191),
+  ('label_instruction -> INDENT instructions DEDENT','label_instruction',3,'p_label_instruction','testply.py',195),
+  ('label_colon -> LABEL COLON','label_colon',2,'p_label_colon','testply.py',199),
+  ('block -> instructions','block',1,'p_block','testply.py',203),
+  ('instructions -> instructions instruction','instructions',2,'p_instructions','testply.py',207),
+  ('instructions -> instruction','instructions',1,'p_instructions','testply.py',208),
+  ('instruction -> mov_registers','instruction',1,'p_instruction','testply.py',212),
+  ('instruction -> mov_register_number','instruction',1,'p_instruction','testply.py',213),
+  ('instruction -> mva_number','instruction',1,'p_instruction','testply.py',214),
+  ('instruction -> lxi_register_number','instruction',1,'p_instruction','testply.py',215),
+  ('instruction -> load_variable_address','instruction',1,'p_instruction','testply.py',216),
+  ('instruction -> store_value','instruction',1,'p_instruction','testply.py',217),
+  ('instruction -> arithmeticb','instruction',1,'p_instruction','testply.py',218),
+  ('instruction -> out_format_var','instruction',1,'p_instruction','testply.py',219),
+  ('instruction -> jump','instruction',1,'p_instruction','testply.py',220),
+  ('instruction -> variable','instruction',1,'p_instruction','testply.py',221),
+  ('instruction -> empty','instruction',1,'p_instruction','testply.py',222),
+  ('mov_registers -> MOV REGISTER COMMA REGISTER','mov_registers',4,'p_mov_registers','testply.py',227),
+  ('mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE','mov_register_number',4,'p_mov_register_number','testply.py',231),
+  ('mov_register_number -> MOV REGISTER COMMA VARIABLE','mov_register_number',4,'p_mov_register_number','testply.py',232),
+  ('mva_number -> MVA HEX_NUMBER_BYTE','mva_number',2,'p_mva_number','testply.py',236),
+  ('lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD','lxi_register_number',4,'p_lxi_register_number','testply.py',240),
+  ('load_variable_address -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET','load_variable_address',4,'p_load_variable_address','testply.py',244),
+  ('load_variable_address -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET','load_variable_address',4,'p_load_variable_address','testply.py',245),
+  ('store_value -> STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET','store_value',6,'p_store_value','testply.py',249),
+  ('store_value -> STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET','store_value',6,'p_store_value','testply.py',250),
+  ('arithmeticb -> ARITHMETICB REGISTER','arithmeticb',2,'p_arithmeticb','testply.py',254),
+  ('out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS','out_format_var',6,'p_out_format_var','testply.py',258),
+  ('out_format_var -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS','out_format_var',4,'p_out_format_var','testply.py',259),
+  ('out_format_var -> OUT OPENPARENTHESIS CLOSEPARENTHESIS','out_format_var',3,'p_out_format_var','testply.py',260),
+  ('jump -> JUMP OPENBRACKET LABEL CLOSEBRACKET','jump',4,'p_jump','testply.py',264),
+  ('jump -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET','jump',4,'p_jump','testply.py',265),
+  ('variable -> VARIABLE COLON HEX_NUMBER_WORD','variable',3,'p_variable','testply.py',269),
+  ('variable -> VARIABLE COLON STRING','variable',3,'p_variable','testply.py',270),
+  ('empty -> <empty>','empty',0,'p_empty','testply.py',274),
 ]
