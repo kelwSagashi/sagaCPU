@@ -79,33 +79,33 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |Register|r|Any register|
 |Register Pair|r&r|Matches any of the 4 pairs of registers|
 |Accumulator|A|Almost all manipulated data in ALU will be stored in this register and replaced by another one, as it is a temporary register|
-|16 bits|WORD|All instruction with "WORD" works with 16 bits data, that means it will do a direct operation with 16 bits using whatever is in the F and G registers|
-|8 bits|BYTE|All instruction with "BYTE" works with 8 bits data, that means it will do a direct operation with 8 bits|
+|16 bits|16|All instruction with "16" works with 16 bits data, that means it will do a direct operation with 16 bits using whatever is in the F and G registers|
+|8 bits|8|All instruction with "8" works with 8 bits data, that means it will do a direct operation with 8 bits|
 
 
 | Mnemonic | Description |HexCode| D <sub>7</sub> | D <sub>6</sub> | D <sub>5</sub> | D <sub>4</sub> | D <sub>3</sub> | D <sub>2</sub> | D <sub>1</sub> | D <sub>0</sub> |
 |----------|-------------|----|---|---|---|---|---|---|---|---|
 |NOP| No operation |00| 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-|MOV **<sub>r1, r2</sub>** | <sub>r2</sub> is copied to <sub>r1</sub> |--| 0 | 1 | D | D | D | S | S | S |
+|MOV **<sub>r1, r2</sub>**| <sub>r2</sub> is copied to <sub>r1</sub> |--| 0 | 1 | D | D | D | S | S | S |
 |MOV M, **<sub>r</sub>**| The value of <sub>r</sub> is written to M (memory) |7-| 0 | 1 | 1 | 1 | 0 | S | S | S |
-|MOV **<sub>r</sub>**, M | The value read from M is copied to <sub>r</sub> |--| 0 | 1 | D | D | D | 1 | 1 | 0 |
-|MVI **<sub>r</sub>** | The value read from r is copied to Accumulator |7-| 0 | 1 | 1 | 1 | 1 | S | S | S |
-|MVA M | The value read from Memory is copied to Accumulator |7e| 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
+|MOV **<sub>r</sub>**, data| The value read from M is copied to <sub>r</sub> |--| 0 | 1 | D | D | D | 1 | 1 | 0 |
+|MOV A, **<sub>r</sub>**| The value read from r is copied to Accumulator. Only 8-bits. |7-| 0 | 1 | 1 | 1 | 1 | S | S | S |
+|LDA addr| The value read from Memory is copied to Accumulator |7e| 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
 |MOV **<sub>r</sub>**, A| The value of Accumulator is copied to <sub>r</sub> |0-| 0 | 0 | 0 | 0 | 1 | D | D | D |
-|MOVP pbx, M| Load imediate from memory (only 1 byte at a time) register pair **B & C** |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
-|MOVP pdx, M| Load imediate from memory (only 1 byte at a time) register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
-|MOVP phx, M| Load imediate from memory (only 1 byte at a time) register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
-|MOVP pwx, M| Load imediate from memory (only 1 byte at a time) temporary register pair **W & Z** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
+|MOVP pbx, data| Load data from memory (only 1 byte at a time) to register pair **B & C** |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
+|MOVP pdx, data| Load data from memory (only 1 byte at a time) to register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
+|MOVP phx, data| Load data from memory (only 1 byte at a time) to register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
+|MOVP pwx, data| Load data from memory (only 1 byte at a time) to register pair **W & Z** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
 |MOVP eax, r&r| Load data from register pair temporary to F register |18+| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
 |MOVP ebx, r&r| Load data from register pair temporary to G register |1d+| 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 |
-|ADD8| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
-|MUL8| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
-|OPA BYTE| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |9-| 1 | 0 | 0 | 1 | 0 | S | S | S |
-|DIV8| Divide A with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
-|ANA8| And operation A with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
-|XRA8| Xor operation A with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
-|ORA8| Or operation A with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
-|MOD8| Gives the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
+|ADD8 r| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
+|MUL8 r| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
+|CMP8 r| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |9-| 1 | 0 | 0 | 1 | 0 | S | S | S |
+|DIV8 r| Divide A with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
+|ANA8 r| And operation A with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
+|XRA8 r| Xor operation A with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
+|ORA8 r| Or operation A with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
+|MOD8 r| Gives the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
 |ADD16| Add F <sub>(16)</sub> plus G <sub>(16)</sub> |28+| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
 |MUL16| Multiplies F <sub>(16)</sub> by G <sub>(16)</sub> |29| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 |
 |CMP16| Returns A ignoring B. It can be used to generate flags, without performing an arithmetic operation |2a| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 |
@@ -114,20 +114,61 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |XRA16| Xor operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2d| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
 |ORA16| Or operation with F <sub>(16)</sub> and G <sub>(16)</sub> |2e| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 0 |
 |MOD16| Gives the remainder of dividing F <sub>(16)</sub> and G <sub>(16)</sub>|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
-|STORE [var]| Store 16 bits F register direct on memory |3e| 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 |
-|JMP | Jump unconditional |c3| 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 |
-|JZ | Jump on zero |c0| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-|JNZ | Jump if not zero |c8| 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
-|JM | Jump on minus |d0| 1 | 1 | 0 | 1 | 0 | 0 | 0 | 0 |
-|JP | Jump on positive |d8| 1 | 1 | 0 | 1 | 1 | 0 | 0 | 0 |
-|JG | Jump on greater, if A > B |e0| 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
-|JL | Jump on less, if A < B |e8| 1 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
-|JC | Jump on carry |f0| 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
-|JNC | Jump on not carry |f8| 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
-|LOAD [var] | Load value from memory block direct to HL register pair |c1| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
-|OUT | Print number or char elements |02+| 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
+|STORE addr| Store 16 bits F register direct on memory |3e| 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 |
+|JMP addr| Jump unconditional |c3| 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 |
+|JZ addr| Jump on zero |c0| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+|JNZ addr| Jump if not zero |c8| 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 |
+|JM addr| Jump on minus |d0| 1 | 1 | 0 | 1 | 0 | 0 | 0 | 0 |
+|JP addr| Jump on positive |d8| 1 | 1 | 0 | 1 | 1 | 0 | 0 | 0 |
+|JG addr| Jump on greater, if A > B |e0| 1 | 1 | 1 | 0 | 0 | 0 | 0 | 0 |
+|JL addr| Jump on less, if A < B |e8| 1 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
+|JC addr| Jump on carry |f0| 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
+|JNC addr| Jump on not carry |f8| 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
+|LOAD addr| Load value from memory block direct to HL register pair |c1| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+|OUT addr| Print number or char elements |02+| 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 
 # How does instructions works?
+
+## Data transfer instructions
+
+This group of instructions transfers data to and from
+registers and memory. Condition flags are not affected by
+any instruction in this group.
+
+## MOV r, data
+> ### **Instruction**
+> |0|0|D|D|D|1|1|0|
+> |-|-|-|-|-|-|-|-|
+> ### **Data**
+> |n|n|n|n|n|n|n|n|
+> |-|-|-|-|-|-|-|-|
+> ### The content of byte 2 (**Data**) of the instruction is moved to register r.
+
+## MOV r1, r2
+> ### **Instruction**
+> |0|0|D|D|D|S|S|S|
+> |-|-|-|-|-|-|-|-|
+> ### The content of r2 is moved to register r1.
+
+## MOV M, r
+> ### **Instruction**
+> |0|0|1|1|0|S|S|S|
+> |-|-|-|-|-|-|-|-|
+> ### The content of register r is moved to the memory loccation whose address is in SP register.
+
+## MOV r, A
+> ### **Instruction**
+> |0|0|0|0|1|D|D|D|
+> |-|-|-|-|-|-|-|-|
+> ### The content of Accumulator is moved to register r.
+
+## MOV A, r
+> ### **Instruction**
+> |0|0|0|0|1|D|D|D|
+> |-|-|-|-|-|-|-|-|
+> ### The content of r is moved to Accumulator. Only 8-bits.
+
+## Hexadecimal codes and code representations
 
 In the instruction set above, some instructions have a hexadecimal number with a + sign.
 

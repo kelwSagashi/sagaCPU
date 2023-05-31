@@ -2,19 +2,35 @@ import ply.lex as lex
 import ply.yacc as yacc
 from colorama import Fore, Style
 
+#variavei globais
+error_found = False
+error_lineno = None
+token_error = None
+production_error = False
+current_block = None
+lines = 0
+# Contador de indentação
+indent_count = 0
+last_line = 0
+
 # Lista de tokens
 tokens = [
     'HEX_NUMBER_WORD',
     'HEX_NUMBER_BYTE',
     'FORMAT',
-    'DATAFORMAT',
+    'BYTE',
+    'WORD',
+    'STR',
     'STRING',
     'COMMA',
     'COLON',
     'JUMP',
     'LABEL',
     'VARIABLE',
+    'REGISTERPAIR',
     'REGISTER',
+    'EXTENDEDREGISTER',
+    'MOVP',
     'MOV',
     'MVA',
     'LXI',
@@ -22,6 +38,8 @@ tokens = [
     'STORE',
     'ARITHMETICB',
     'OUT',
+    'OPENTAG',
+    'CLOSETAG',
     'OPENPARENTHESIS',
     'CLOSEPARENTHESIS',
     'OPENBRACKET',
@@ -41,11 +59,14 @@ def t_HEX_NUMBER_BYTE(t):
 def t_FORMAT(t):
     r'\"(%d|-%d|%s)\"'
     return t
-def t_DATAFORMAT(t):
-    r'\_[wbWB]'
-    t.value = '8-BITS'
-    if '_w' in t.value:
-        t.value = '16-BITS'
+def t_BYTE(t):
+    r'(byte)'
+    return t
+def t_WORD(t):
+    r'(word)'
+    return t
+def t_STR(t):
+    r'(str)'
     return t
 def t_STRING(t):
     r'"[^"\n]*"'
@@ -69,6 +90,9 @@ def t_LABEL(t):
 def t_VARIABLE(t):
     r'\$[a-zA-Z]+(?=:|$||\n)'
     return t
+def t_MOVP(t):
+    r'(MOVP|movp|Movp)'
+    return t
 def t_MOV(t):
     r'(MOV|mov|Mov)'
     return t
@@ -90,6 +114,12 @@ def t_ARITHMETICB(t):
 def t_OUT(t):
     r'(OUT|out|Out)'
     return t
+def t_OPENTAG(t):
+    r'<'
+    return t
+def t_CLOSETAG(t):
+    r'>'
+    return t
 def t_OPENPARENTHESIS(t):
     r'\('
     return t
@@ -102,16 +132,19 @@ def t_OPENBRACKET(t):
 def t_CLOSEBRACKET(t):
     r'\]'
     return t
+def t_EXTENDEDREGISTER(t):
+    r'(eax|EAX|ebx|EBX)'
+    return t
+def t_REGISTERPAIR(t):
+    r'((B|b|D|d|H|h|W|w)+(C|c|E|e|L|l|Z|z)|pbx|pdx|phx|pwx)'
+    return t
 def t_REGISTER(t):
-    r'(B|b|C|c|D|d|E|e|H|h|L|l|eax|EAX|ebx|EBX)'
+    r'(A|a|B|b|C|c|D|d|E|e|H|h|L|l|Z|z)'
     return t
 def t_COMMENT(t):
     r'//.*'
     #print(f'Comentario: {t.value}')
     pass
-# Contador de indentação
-indent_count = 0
-last_line = 0
 # Tratamento de indentação e desindentação
 def t_indent(t):
     r'\n[ \t]*'
@@ -135,13 +168,6 @@ def t_newline(t):
     t.lexer.lineno += 1
 # Ignorar espaços em branco
 t_ignore = ' '
-
-error_found = False
-error_lineno = None
-token_error = None
-production_error = False
-current_block = None
-lines = 0
 
 def countLines(data):
     global lines
@@ -211,14 +237,30 @@ def p_instruction(p):
     '''
     instruction : mov_registers
                 | mov_register_number
+                | mov_register_variable
+                | movp_register_pair_number
+                | movp_register_pair_variable
+                | movp_register_pair_register_pair
+                | movp_extended_register_pair_number
+                | movp_extended_register_pair_variable
+                | movp_extended_register_pair_register_pair
                 | mva_number
                 | lxi_register_number
-                | load_variable_address
-                | store_value
+                | load_variable_registerpair
+                | load_address_registerpair
+                | store_variable_register
+                | store_address_register
+                | store_address_extendedregister
+                | store_variable_extendedregister
                 | arithmeticb
                 | out_format_var
-                | jump
-                | variable
+                | out_string
+                | out
+                | jump_label
+                | jump_address
+                | variable_byte
+                | variable_word
+                | variable_str
                 | empty
     '''
 
@@ -229,7 +271,34 @@ def p_mov_registers(p):
 def p_mov_register_number(p):
     '''
     mov_register_number : MOV REGISTER COMMA HEX_NUMBER_BYTE
-                        | MOV REGISTER COMMA VARIABLE
+    '''
+def p_mov_register_variable(p):
+    '''
+    mov_register_variable : MOV REGISTER COMMA VARIABLE
+    '''
+def p_movp_register_pair_number(p):
+    '''
+    movp_register_pair_number : MOVP REGISTERPAIR COMMA HEX_NUMBER_WORD
+    '''
+def p_movp_register_pair_variable(p):
+    '''
+    movp_register_pair_variable : MOVP REGISTERPAIR COMMA VARIABLE
+    '''
+def p_movp_register_pair_register_pair(p):
+    '''
+    movp_register_pair_register_pair : MOVP REGISTERPAIR COMMA REGISTERPAIR
+    '''
+def p_movp_extended_register_pair_register_pair(p):
+    '''
+    movp_extended_register_pair_register_pair : MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
+    '''
+def p_movp_extended_register_pair_variable(p):
+    '''
+    movp_extended_register_pair_variable : MOVP EXTENDEDREGISTER COMMA VARIABLE
+    '''
+def p_movp_extended_register_pair_number(p):
+    '''
+    movp_extended_register_pair_number : MOVP EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
     '''
 def p_mva_number(p):
     '''
@@ -239,15 +308,29 @@ def p_lxi_register_number(p):
     '''
     lxi_register_number : LXI REGISTER COMMA HEX_NUMBER_WORD
     '''
-def p_load_variable_address(p):
+def p_load_variable_registerpair(p):
     '''
-    load_variable_address : LOAD OPENBRACKET VARIABLE CLOSEBRACKET
-                          | LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    load_variable_registerpair : LOAD OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
     '''
-def p_store_value(p):
+def p_load_address_registerpair(p):
     '''
-    store_value : STORE REGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
-                | STORE REGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    load_address_registerpair : LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    '''
+def p_store_variable_register(p):
+    '''
+    store_variable_register : STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTER
+    '''
+def p_store_address_register(p):
+    '''
+    store_address_register : STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTER
+    '''
+def p_store_variable_extendedregister(p):
+    '''
+    store_variable_extendedregister : STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+    '''
+def p_store_address_estendedregister(p):
+    '''
+    store_address_estendedregister : STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
     '''
 def p_arithmeticb(p):
     '''
@@ -256,25 +339,39 @@ def p_arithmeticb(p):
 def p_out_format_var(p):
     '''
     out_format_var : OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
-                   | OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
-                   | OUT OPENPARENTHESIS CLOSEPARENTHESIS
     '''
-def p_jump(p):
+def p_out_string(p):
     '''
-    jump : JUMP OPENBRACKET LABEL CLOSEBRACKET
-         | JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    out_string : OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
     '''
-def p_variable(p):
+def p_out(p):
     '''
-    variable : VARIABLE COLON HEX_NUMBER_WORD
-             | VARIABLE COLON STRING
+    out : OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    '''
+def p_jump_label(p):
+    '''
+    jump_label : JUMP OPENBRACKET LABEL CLOSEBRACKET
+    '''
+def p_jump_address(p):
+    '''
+    jump_address : JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    '''
+def p_variable_byte(p):
+    '''
+    variable_byte : VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    '''
+def p_variable_word(p):
+    '''
+    variable_word : VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD
+    '''
+def p_variable_str(p):
+    '''
+    variable_str : VARIABLE OPENTAG STR CLOSETAG COLON STRING
     '''
 def p_empty(p):
     '''
     empty :
     '''
-
-
 # Tratamento de erros
 def p_error(p):
     count = 0
@@ -296,17 +393,19 @@ def p_error(p):
     elif not p:
         print(f"Erro de sintaxe: \n\tFim inesperado na linha: {error_lineno}")
 
-# Criação do parser
-parser = yacc.yacc()
+def compile_data(data):
+    # Criação do parser
+    parser = yacc.yacc()
 
-# Teste
-data = '''
-load [$a]
-mov b, 0x00
-'''
-countLines(data)
-lexer.input(data)
-for token in lexer:
-    print(token)
+    #contar as linhas do codigo
+    countLines(data)
 
-parser.parse(data)
+    # Criação do lexer
+    lexer.input(data)
+
+    # tokenize
+    for token in lexer:
+        print(token)
+
+    # Análise sintática
+    parser.parse(data)
