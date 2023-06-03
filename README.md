@@ -136,7 +136,7 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 This group of instructions transfers data to and from registers and memory. Condition flags are not affected by any instruction in this group.
 
 > Note: Instructions with rx (eax or ebx) works with merged data of register pairs, for example:
-> If register B have 0x12 and register C have 0x34, when you want realize an arithmetic or logical operation with register pair BC=0x1234, 16 bits direct, the CPU will merge this pair to make operation.
+> If register B have 0x12 and register C have 0x34, when you want realize an arithmetic or logical operation with register pair BC=0x1234, 16 bits direct, the CPU, through some master instruction, will carry out the requested operation.
 
 
 ## MOV r, data
