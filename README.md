@@ -80,6 +80,7 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |Register Pair|rp|Matches any of the 4 pairs of registers|
 |Any Register|ar|Any 16-bit register. Accumulator, auxiliary registers, resgister pairs, ALU result|
 |Auxiliary Register|rx|rx is a 16-bit register that stores the merged contents of pairs of 8-bit registers|
+|bit|n|0 or 1|
 |Accumulator|A|Almost all manipulated data in ALU will be stored in this register and replaced by another one, as it is a temporary register|
 |16 bits|16|All instruction with "16" works with 16 bits data, that means it will do a direct operation with 16 bits using whatever is in the F and G registers|
 |8 bits|8|All instruction with "8" works with 8 bits data, that means it will do a direct operation with 8 bits|
@@ -94,28 +95,27 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 > |MOV A, **<sub>r</sub>**| The value read from r is copied to Accumulator. Only 8-bits. |7-| 0 | 1 | 1 | 1 | 1 | S | S | S |
 > |MOV A, data| The value read from Memory is copied to Accumulator |7e| 0 | 1 | 1 | 1 | 1 | 1 | 1 | 0 |
 > |MOV **<sub>r</sub>**, A| The value of Accumulator is copied to <sub>r</sub> |0-| 0 | 0 | 0 | 0 | 1 | D | D | D |
-> |MOVP rp, data| Load data from memory (only 1 byte at a time) to register pair **B & C** |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
-> |MOVP rp, data| Load data from memory (only 1 byte at a time) to register pair **D & E** |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
-> |MOVP rp, data| Load data from memory (only 1 byte at a time) to register pair **H & L** |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
-> |MOVP rp, data| Load data from memory (only 1 byte at a time) to register pair **W & Z** |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
-> |LDX eax, rp|Load data indirectly from rp to **eax** register|18+| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
-> |LDX ebx, rp|Load data indirectly from rp to **ebx** register|1d+| 0 | 0 | 0 | 1 | 1 | 1 | 0 | 1 |
-> |ADD A, r| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
-> |MUL A, r| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
-> |CMP A, r| Returns A. It can be used to generate flags, without performing an arithmetic operation|9-| 1 | 0 | 0 | 1 | 0 | S | S | S |
-> |DIV A, r| Divide A with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
-> |ANA A, r| And operation A with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
-> |XRA A, r| Xor operation A with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
-> |ORA A, r| Or operation A with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
-> |MOD A, r| Gives the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
-> |ADD eax, ebx| Add the value stored on **eax** plus **ebx** |28+| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
-> |MUL eax, ebx| Multiplies the value stored on **eax** by **ebx** |29| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 |
-> |CMP eax, ebx| Returns **eax**. It can be used to generate flags, without performing an arithmetic operation|2a| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 |
-> |DIV eax, ebx| Divide the value stored on **eax** by **ebx** |2b| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 |
-> |ANA eax, ebx| And operation with the value stored on **eax** and **ebx** |2c| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 |
-> |XRA eax, ebx| Xor operation with the value stored on **eax** and **ebx** |2d| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
-> |ORA eax, ebx| Or operation with the value stored on **eax** and **ebx** |2e| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 0 |
-> |MOD eax, ebx| Gives the remainder of dividing the value stored on **eax** and **ebx**|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
+> |LXI rp, data 16| Load register pair **B & C** immediate |06| 0 | 0 | 0 | 0 | 0 | 1 | 1 | 0 |
+> |LXI rp, data 16| Load register pair **D & E** immediate |16| 0 | 0 | 0 | 1 | 0 | 1 | 1 | 0 |
+> |LXI rp, data 16| Load register pair **H & L** immediate |26| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
+> |LXI rp, data 16| Load register pair **W & Z** immediate |36| 0 | 0 | 1 | 1 | 0 | 1 | 1 | 0 |
+> |MOVP (rx or rp), rp|The value of register pair is copied to rx or rp specified|18| 0 | 0 | 0 | 1 | 1 | 0 | 0 | 0 |
+> |ADD \<byte> A, r| Add A plus register |8-| 1 | 0 | 0 | 0 | 0 | S | S | S |
+> |MUL \<byte> A, r| Multiplies A with register |8-| 1 | 0 | 0 | 0 | 1 | S | S | S |
+> |CMP \<byte> A, r| Returns A. It can be used to generate flags, without performing an arithmetic operation|9-| 1 | 0 | 0 | 1 | 0 | S | S | S |
+> |DIV \<byte> A, r| Divide A with register|9-| 1 | 0 | 0 | 1 | 1 | S | S | S |
+> |ANA \<byte> A, r| And operation A with register |a-| 1 | 0 | 1 | 0 | 0 | S | S | S |
+> |XRA \<byte> A, r| Xor operation A with register |a-| 1 | 0 | 1 | 0 | 1 | S | S | S |
+> |ORA \<byte> A, r| Or operation A with register |b-| 1 | 0 | 1 | 1 | 0 | S | S | S |
+> |MOD \<byte> A, r| Gives the remainder of dividing ACC with register |b-| 1 | 0 | 1 | 1 | 1 | S | S | S |
+> |ADD \<word>| Add the value stored on **eax** plus **ebx** |28+| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 0 |
+> |MUL \<word>| Multiplies the value stored on **eax** by **ebx** |29| 0 | 0 | 1 | 0 | 1 | 0 | 0 | 1 |
+> |CMP \<word>| Returns **eax**. It can be used to generate flags, without performing an arithmetic operation|2a| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 |
+> |DIV \<word>| Divide the value stored on **eax** by **ebx** |2b| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 |
+> |ANA \<word>| And operation with the value stored on **eax** and **ebx** |2c| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 |
+> |XRA \<word>| Xor operation with the value stored on **eax** and **ebx** |2d| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
+> |ORA \<word>| Or operation with the value stored on **eax** and **ebx** |2e| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 0 |
+> |MOD \<word>| Gives the remainder of dividing the value stored on **eax** and **ebx**|2f| 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
 > |STW addr, ar| Stores 16-bit (word) value direct to memory|3e| 0 | 0 | 1 | 1 | 1 | 1 | 1 | 0 |
 > |JMP addr| Jump unconditional |c3| 1 | 1 | 0 | 0 | 0 | 0 | 1 | 1 |
 > |JZ addr| Jump on zero |c0| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -126,14 +126,18 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 > |JL addr| Jump on less, if A < B |e8| 1 | 1 | 1 | 0 | 1 | 0 | 0 | 0 |
 > |JC addr| Jump on carry |f0| 1 | 1 | 1 | 1 | 0 | 0 | 0 | 0 |
 > |JNC addr| Jump on not carry |f8| 1 | 1 | 1 | 1 | 1 | 0 | 0 | 0 |
-> |LOAD addr, ar| Load value from memory block direct to HL register pair |c1| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+> |LDW ar, addr| Load value from memory block direct to ar (any 16 bits registers, include resgister pairs) register pair |c1| 1 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
 > |OUT addr| Print number or char elements |02+| 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 |
 
 # How does instructions works?
 
-## Data transfer instructions
+## Data transfer group
 
 This group of instructions transfers data to and from registers and memory. Condition flags are not affected by any instruction in this group.
+
+> Note: Instructions with rx (eax or ebx) works with merged data of register pairs, for example:
+> If register B have 0x12 and register C have 0x34, when you want realize an arithmetic or logical operation with register pair BC=0x1234, 16 bits direct, the CPU will merge this pair to make operation.
+
 
 ## MOV r, data
 > ### **Instruction (Byte 1)**
@@ -168,29 +172,30 @@ This group of instructions transfers data to and from registers and memory. Cond
 > |-|-|-|-|-|-|-|-|
 > ### The content of r is moved to Accumulator. Only 8-bits.
 
-## MOVP rp, data 16
+## LXI rp, data 16
 > ### **Instruction 1 (Byte 1)**
-> |0|0|0|1|1|r|0|x|
+> |0|0|r|p|0|1|1|0|
 > |-|-|-|-|-|-|-|-|
 > ### **High-order data (Byte 2)**
 > |n|n|n|n|n|n|n|n|
 > |-|-|-|-|-|-|-|-|
 > ### **Instruction 2 (Byte 1)**
-> |0|0|0|1|1|r|0|x|
+> |0|0|r|p|0|1|1|0|
 > |-|-|-|-|-|-|-|-|
 > ### **Low-order data (Byte 2')**
 > |n|n|n|n|n|n|n|n|
 > |-|-|-|-|-|-|-|-|
 > ### Byte 2 of the instruction 1 is moved into the high-order register (rh) of the register pair rp. Byte 2' of the instruction 2 is moved into the low-order register (rl) of the register pair rp.
 
-## LDX rx, rp
+## MOVP (rx or rp), rp
 > ### **Instruction (Byte 1)**
-> |0|0|0|1|1|r|0|x|
+> |0|0|0|1|1|0|0|0|
 > |-|-|-|-|-|-|-|-|
 > ### **Sub Instruction (Byte 2)**
-> |0|0|0|0|0|0|r|p|
+> |0|0|D|D|D|D|S|S|
 > |-|-|-|-|-|-|-|-|
-> ### The content of the the register pair rp, is moved to register A. Note: only auxiliary register rx=eax (Auxiliary 16-bit Accumulator) or rx=ebx (Auxiliary 16-bit register) may be specified. 
+> ### The content of the the register pair rp, is moved to rx or rp register. Note: DDDD=00(rp) is movp rp1, rp2; DDDD=0100 is movp eax, rp; DDDD=1000 is movp ebx, rp. SS=00 (BC), SS=01 (DE), SS=10 (HL), SS=11 (WZ)
+
 
 ## STW addr, ar
 > ### **Instruction (Byte 1)**
@@ -225,73 +230,57 @@ out("%s", data) //To Print characters.
 ```
 In hexadecimal the instructions would be: 
 
-> ### 02 + 83 => 0283 - out ("-%d", number)
+> ### out("-%d", number)
 > |0|0|0|0|0|0|1|0| |1|0|0|0|0|0|1|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### 02 + 03 => 0203 - out ("%d", number)
+> ### out("%d", number)
 > |0|0|0|0|0|0|1|0| |0|0|0|0|0|0|1|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### 02 + 00 => 0200 - out ("%s", string)
+> ### out("%s", string)
 > |0|0|0|1|1|0|0|0| |0|0|0|0|0|0|0|0|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
-**Obs: Remember that I'm not adding, just concatenating**
-
-That is, 02 is the output instruction, and the rest are instruction complements.
-
 Let's see another example that happens:
 
-## **LDX eax, rp** -> can be written in the following ways.
+## **MOVP (rx or rp), rp** -> can be written in the following ways.
 
-### The 2 least significant bits of byte 2 says which pair to load
+### Byte 2 complement the instruction
 
-> ### 1800 -> Loads the pair BC.
-> |0|0|0|1|1|0|0|0| |n|n|n|n|n|n|0|0|
+> ### movp rp, B&C
+> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|0|0|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### 1801 -> Loads the DE pair.
-> |0|0|0|1|1|0|0|0| |n|n|n|n|n|n|0|1|
+> ### movp rp, D&E
+> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|0|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### 1802 -> Loads of HL pair.
-> |0|0|0|1|1|0|0|0| |n|n|n|n|n|n|1|0|
+> ### movp rp, H&L
+> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|1|0|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### 1803 -> Loads of the WZ pair.
-> |0|0|0|1|1|0|0|0| |n|n|n|n|n|n|1|1|
+> ### movp rp, W&Z
+> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|1|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-
-## **LDX ebx, rp** -> can be written in the following ways.
-
-### The 2 least significant bits of byte 2 says which pair to load
-
-> ### 1d00 -> Loads the BC pair.
-> |0|0|0|1|1|1|0|1| |n|n|n|n|n|n|0|0|
+> 
+> ### movp eax, rp
+> |0|0|0|1|1|0|0|0| |n|n|0|1|0|0|r|p|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 >
-> ### 1d01 -> Loads the DE pair.
-> |0|0|0|1|1|1|0|1| |n|n|n|n|n|n|0|1|
-> |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
->
-> ### 1d02 -> Loads the HL pair.
-> |0|0|0|1|1|1|0|1| |n|n|n|n|n|n|1|0|
-> |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
->
-> ### 1d03 -> Loads the WZ pair.
-> |0|0|0|1|1|1|0|1| |n|n|n|n|n|n|1|1|
+> ### movp ebx, rp
+> |0|0|0|1|1|0|0|0| |n|n|1|0|0|0|r|p|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
 **Add** Instruction:
 
 ### The most significant bit of byte 2 says if is addition or subtraction
 
-> ### 2800 -> Addition x+y
+> ### Addition x+y
 > |0|0|1|0|1|0|0|0| |0|n|n|n|n|n|n|n|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### 2880 -> Addition x+(-y)
+> ### Addition x+(-y)
 > |0|0|1|0|1|0|0|0| |1|n|n|n|n|n|n|n|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
@@ -322,8 +311,8 @@ Word storage consists of two characters in 1 block of memory, if there is a row 
 # Fibonacci algorithm
 
 ```
-3600 3638 0200 0600 0601 5000 5900 1801
-1d02 3600 362c 0200 3600 3634 3e00 0203
+3600 3638 0200 0600 0601 5000 5900 1811
+1822 3600 362c 0200 3600 3634 3e00 0203
 2800 6200 6b00 5000 5900 3600 3607 c300
 0000 0000 0000 0000 0000 0000 0000 0000
 0000 0000 0000 0000 0000 0000 0000 0000

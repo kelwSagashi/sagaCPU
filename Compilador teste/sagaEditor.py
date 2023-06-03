@@ -19,19 +19,18 @@ reserved_words = {
     (r'\$[a-zA-Z]', "#C35817"),
     (r'(MOVP|movp|Movp)', "#3090C7"),
     (r'(MOV|mov|Mov)', "#3090C7"),
-    (r'(MVA|mva|Mva)', "#3090C7"),
     (r'(LXI|lxi|Lxi)', "#56A5EC"),
-    (r'(LOAD|load|Load)', "#7CFC00"),
-    (r'(STORE|store|Store)', "#7CFC00"),
-    (r'(ADD8|add8|SUB8|sub8|MUL8|mul8|DIV8|div8|MOD8|mod8)', "#C2E5D3"),
+    (r'(LDW|ldw|Ldw)', "#7CFC00"),
+    (r'(STW|stw|Stw)', "#7CFC00"),
+    (r'(ADD|add|SUB|sub|MUL|mul|DIV|div|MOD|mod|CMP|cmp|ANA|ana|ORA|ora|XRA|xra)', "#C2E5D3"),
     (r'(OUT|out|Out)', "#E9AB17"),
     (r'(<|>)', "#E799A3"),
     (r'(\(|\))', "yellow"),
     (r'(\[|\])', "#E799A3"),
-    (r'(eax|EAX|ebx|EBX)', "red"),
-    (r'(((B|b|D|d|H|h|W|w)+(C|c|E|e|L|l|Z|z))|pbx|pdx|phx|pwx)', "red"),
+    (r'(((B|b|D|d|H|h|W|w)+(C|c|E|e|L|l|Z|z))|pbx|pdx|phx|pwx|eax|EAX|ebx|EBX)', "red"),
     (r'(A|a|B|b|C|c|D|d|E|e|H|h|L|l|Z|z)', "#FF6700"),
-    (r'//.*', "#5EFB6E")
+    (r'//.*', "#5EFB6E"),
+    (r'[a-zA-Z0-9]+\:', "yellow")
 }
 def open_file():
     filename = askopenfilename(filetypes=[("Arquivos de Texto", "*.txt"), ("Todos os Arquivos", "*.*")])
@@ -41,6 +40,7 @@ def open_file():
                 text.delete("1.0", tk.END)
                 text.insert(tk.END, file.read())
                 update_line_numbers()
+                highlight_reserved_words()
         except Exception as e:
             messagebox.showerror("Erro", str(e))
 
@@ -83,8 +83,8 @@ frame = tk.Frame(root)
 frame.pack(fill=tk.BOTH, expand=True)
 
 # Números das linhas
-line_numbers = tk.Text(frame, width=6, fg="gray50", background="#1f1f1f", font=("Consolas", 14, "normal"), state=tk.DISABLED)
-line_numbers.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+line_numbers = tk.Text(frame, width=4, fg="gray50", background="#1f1f1f", font=("Consolas", 14, "normal"), state=tk.DISABLED)
+line_numbers.pack(side=tk.LEFT, fill=tk.BOTH, expand=False)
 
 # Texto principal
 text = tk.Text(frame, wrap=tk.NONE, fg="white", background="#1f1f1f", insertbackground="white", font=("Consolas", 14, "normal"))

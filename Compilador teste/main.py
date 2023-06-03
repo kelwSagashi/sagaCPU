@@ -1,11 +1,7 @@
 import testply as compilador
 
 data = '''
-_data:
-    $x <word>: 0x1234
-    out("%d", $x)
-    load [$x], eax
-    store [$x], b
+ldw bc, [$a]
 '''
 
 compilador.compile_data(data)

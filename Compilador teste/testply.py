@@ -32,11 +32,11 @@ tokens = [
     'EXTENDEDREGISTER',
     'MOVP',
     'MOV',
-    'MVA',
     'LXI',
     'LOAD',
     'STORE',
-    'ARITHMETICB',
+    'ARITHMETIC',
+    'LOGIC',
     'OUT',
     'OPENTAG',
     'CLOSETAG',
@@ -73,7 +73,6 @@ def t_STRING(t):
     return t
 def t_COMMA(t):
     r','
-    #t.lexer.skip(1)
     return t
 def t_COLON(t):
     r':'
@@ -96,20 +95,20 @@ def t_MOVP(t):
 def t_MOV(t):
     r'(MOV|mov|Mov)'
     return t
-def t_MVA(t):
-    r'(MVA|mva|Mva)'
-    return t
 def t_LXI(t):
     r'(LXI|lxi|Lxi)'
     return t
 def t_LOAD(t):
-    r'(LOAD|load|Load)'
+    r'(LDW|ldw|Ldw)'
     return t
 def t_STORE(t):
-    r'(STORE|store|Store)'
+    r'(STW|stw|Stw)'
     return t
-def t_ARITHMETICB(t):
-    r'(ADD8|add8|SUB8|sub8|MUL8|mul8|DIV8|div8|MOD8|mod8)'
+def t_ARITHMETIC(t):
+    r'(ADD|add|SUB|sub|MUL|mul|DIV|div|MOD|mod)'
+    return t
+def t_LOCIC(t):
+    r'(CMP|cmp|ANA|ana|XRA|xra|ORA|ora)'
     return t
 def t_OUT(t):
     r'(OUT|out|Out)'
@@ -143,7 +142,6 @@ def t_REGISTER(t):
     return t
 def t_COMMENT(t):
     r'//.*'
-    #print(f'Comentario: {t.value}')
     pass
 # Tratamento de indentação e desindentação
 def t_indent(t):
@@ -238,21 +236,21 @@ def p_instruction(p):
     instruction : mov_registers
                 | mov_register_number
                 | mov_register_variable
-                | movp_register_pair_number
-                | movp_register_pair_variable
-                | movp_register_pair_register_pair
-                | movp_extended_register_pair_number
-                | movp_extended_register_pair_variable
-                | movp_extended_register_pair_register_pair
-                | mva_number
+                | movp_registerpair_registerpair
+                | movp_extendedregister_registerpair
                 | lxi_register_number
-                | load_variable_registerpair
-                | load_address_registerpair
-                | store_variable_register
-                | store_address_register
+                | load_registerpair_variable
+                | load_registerpair_address
+                | load_extendedregister_address
+                | load_extendedregister_variable
+                | load_registerpair_number
+                | load_extendedregister_number
+                | store_variable_registerpair
+                | store_address_registerpair
                 | store_address_extendedregister
                 | store_variable_extendedregister
-                | arithmeticb
+                | arithmetic_byte_register_register
+                | logic_byte_register_register
                 | out_format_var
                 | out_string
                 | out
@@ -276,65 +274,65 @@ def p_mov_register_variable(p):
     '''
     mov_register_variable : MOV REGISTER COMMA VARIABLE
     '''
-def p_movp_register_pair_number(p):
+def p_movp_registerpair_registerpair(p):
     '''
-    movp_register_pair_number : MOVP REGISTERPAIR COMMA HEX_NUMBER_WORD
+    movp_registerpair_registerpair : MOVP REGISTERPAIR COMMA REGISTERPAIR
     '''
-def p_movp_register_pair_variable(p):
+def p_movp_extendedregister_registerpair(p):
     '''
-    movp_register_pair_variable : MOVP REGISTERPAIR COMMA VARIABLE
-    '''
-def p_movp_register_pair_register_pair(p):
-    '''
-    movp_register_pair_register_pair : MOVP REGISTERPAIR COMMA REGISTERPAIR
-    '''
-def p_movp_extended_register_pair_register_pair(p):
-    '''
-    movp_extended_register_pair_register_pair : MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
-    '''
-def p_movp_extended_register_pair_variable(p):
-    '''
-    movp_extended_register_pair_variable : MOVP EXTENDEDREGISTER COMMA VARIABLE
-    '''
-def p_movp_extended_register_pair_number(p):
-    '''
-    movp_extended_register_pair_number : MOVP EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
-    '''
-def p_mva_number(p):
-    '''
-    mva_number : MVA HEX_NUMBER_BYTE
+    movp_extendedregister_registerpair : MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
     '''
 def p_lxi_register_number(p):
     '''
     lxi_register_number : LXI REGISTER COMMA HEX_NUMBER_WORD
     '''
-def p_load_variable_registerpair(p):
+def p_load_registerpair_variabl(p):
     '''
-    load_variable_registerpair : LOAD OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    load_registerpair_variable : LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
     '''
-def p_load_address_registerpair(p):
+def p_load_registerpair_address(p):
     '''
-    load_address_registerpair : LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    load_registerpair_address : LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
     '''
-def p_store_variable_register(p):
+def p_load_extendedregister_address(p):
     '''
-    store_variable_register : STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTER
+    load_extendedregister_address : LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
     '''
-def p_store_address_register(p):
+def p_load_extendedregister_variable(p):
     '''
-    store_address_register : STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTER
+    load_extendedregister_variable : LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    '''
+def p_load_registerpair_number(p):
+    '''
+    load_registerpair_number : LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD 
+    '''
+def p_load_extendedregister_number(p):
+    '''
+    load_extendedregister_number : LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD 
+    '''
+def p_store_variable_registerpair(p):
+    '''
+    store_variable_registerpair : STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    '''
+def p_store_address_registerpair(p):
+    '''
+    store_address_registerpair : STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
     '''
 def p_store_variable_extendedregister(p):
     '''
     store_variable_extendedregister : STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
     '''
-def p_store_address_estendedregister(p):
+def p_store_address_extendedregister(p):
     '''
-    store_address_estendedregister : STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    store_address_extendedregister : STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
     '''
-def p_arithmeticb(p):
+def p_arithmetic_byte_register_register(p):
     '''
-    arithmeticb : ARITHMETICB REGISTER
+    arithmetic_byte_register_register : ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    '''
+def p_logic_byte_register_register(p):
+    '''
+    logic_byte_register_register : LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
     '''
 def p_out_format_var(p):
     '''
@@ -372,7 +370,7 @@ def p_empty(p):
     '''
     empty :
     '''
-# Tratamento de erros
+# Tratamento de erros das regras de produção
 def p_error(p):
     count = 0
     errorWords = ''
@@ -396,16 +394,12 @@ def p_error(p):
 def compile_data(data):
     # Criação do parser
     parser = yacc.yacc()
-
     #contar as linhas do codigo
     countLines(data)
-
     # Criação do lexer
     lexer.input(data)
-
     # tokenize
     for token in lexer:
         print(token)
-
     # Análise sintática
     parser.parse(data)

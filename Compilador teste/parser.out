@@ -20,21 +20,21 @@ Rule 10    instructions -> instruction
 Rule 11    instruction -> mov_registers
 Rule 12    instruction -> mov_register_number
 Rule 13    instruction -> mov_register_variable
-Rule 14    instruction -> movp_register_pair_number
-Rule 15    instruction -> movp_register_pair_variable
-Rule 16    instruction -> movp_register_pair_register_pair
-Rule 17    instruction -> movp_extended_register_pair_number
-Rule 18    instruction -> movp_extended_register_pair_variable
-Rule 19    instruction -> movp_extended_register_pair_register_pair
-Rule 20    instruction -> mva_number
-Rule 21    instruction -> lxi_register_number
-Rule 22    instruction -> load_variable_registerpair
-Rule 23    instruction -> load_address_registerpair
-Rule 24    instruction -> store_variable_register
-Rule 25    instruction -> store_address_register
-Rule 26    instruction -> store_address_extendedregister
-Rule 27    instruction -> store_variable_extendedregister
-Rule 28    instruction -> arithmeticb
+Rule 14    instruction -> movp_registerpair_registerpair
+Rule 15    instruction -> movp_extendedregister_registerpair
+Rule 16    instruction -> lxi_register_number
+Rule 17    instruction -> load_registerpair_variable
+Rule 18    instruction -> load_registerpair_address
+Rule 19    instruction -> load_extendedregister_address
+Rule 20    instruction -> load_extendedregister_variable
+Rule 21    instruction -> load_registerpair_number
+Rule 22    instruction -> load_extendedregister_number
+Rule 23    instruction -> store_variable_registerpair
+Rule 24    instruction -> store_address_registerpair
+Rule 25    instruction -> store_address_extendedregister
+Rule 26    instruction -> store_variable_extendedregister
+Rule 27    instruction -> arithmetic_byte_register_register
+Rule 28    instruction -> logic_byte_register_register
 Rule 29    instruction -> out_format_var
 Rule 30    instruction -> out_string
 Rule 31    instruction -> out
@@ -47,21 +47,21 @@ Rule 37    instruction -> empty
 Rule 38    mov_registers -> MOV REGISTER COMMA REGISTER
 Rule 39    mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE
 Rule 40    mov_register_variable -> MOV REGISTER COMMA VARIABLE
-Rule 41    movp_register_pair_number -> MOVP REGISTERPAIR COMMA HEX_NUMBER_WORD
-Rule 42    movp_register_pair_variable -> MOVP REGISTERPAIR COMMA VARIABLE
-Rule 43    movp_register_pair_register_pair -> MOVP REGISTERPAIR COMMA REGISTERPAIR
-Rule 44    movp_extended_register_pair_register_pair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
-Rule 45    movp_extended_register_pair_variable -> MOVP EXTENDEDREGISTER COMMA VARIABLE
-Rule 46    movp_extended_register_pair_number -> MOVP EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
-Rule 47    mva_number -> MVA HEX_NUMBER_BYTE
-Rule 48    lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD
-Rule 49    load_variable_registerpair -> LOAD OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
-Rule 50    load_address_registerpair -> LOAD OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
-Rule 51    store_variable_register -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTER
-Rule 52    store_address_register -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTER
-Rule 53    store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
-Rule 54    store_address_estendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
-Rule 55    arithmeticb -> ARITHMETICB REGISTER
+Rule 41    movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR
+Rule 42    movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
+Rule 43    lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD
+Rule 44    load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+Rule 45    load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+Rule 46    load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+Rule 47    load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+Rule 48    load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD
+Rule 49    load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
+Rule 50    store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+Rule 51    store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+Rule 52    store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+Rule 53    store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+Rule 54    arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+Rule 55    logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
 Rule 56    out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
 Rule 57    out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
 Rule 58    out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS
@@ -74,43 +74,43 @@ Rule 64    empty -> <empty>
 
 Terminals, with rules where they appear
 
-ARITHMETICB          : 55
-BYTE                 : 61
-CLOSEBRACKET         : 49 50 51 52 53 54 59 60
+ARITHMETIC           : 54
+BYTE                 : 54 55 61
+CLOSEBRACKET         : 44 45 46 47 50 51 52 53 59 60
 CLOSEPARENTHESIS     : 56 57 58
-CLOSETAG             : 61 62 63
+CLOSETAG             : 54 55 61 62 63
 COLON                : 7 61 62 63
-COMMA                : 38 39 40 41 42 43 44 45 46 48 49 50 51 52 53 54 56
+COMMA                : 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56
 COMMENT              : 
 DEDENT               : 6
-EXTENDEDREGISTER     : 44 45 46 53 54
+EXTENDEDREGISTER     : 42 46 47 49 52 53
 FORMAT               : 56
-HEX_NUMBER_BYTE      : 39 47 61
-HEX_NUMBER_WORD      : 41 46 48 50 52 54 60 62
+HEX_NUMBER_BYTE      : 39 61
+HEX_NUMBER_WORD      : 43 45 46 48 49 51 53 60 62
 INDENT               : 6
 JUMP                 : 59 60
 LABEL                : 7 59
-LOAD                 : 49 50
-LXI                  : 48
+LOAD                 : 44 45 46 47 48 49
+LOGIC                : 55
+LXI                  : 43
 MOV                  : 38 39 40
-MOVP                 : 41 42 43 44 45 46
-MVA                  : 47
-OPENBRACKET          : 49 50 51 52 53 54 59 60
+MOVP                 : 41 42
+OPENBRACKET          : 44 45 46 47 50 51 52 53 59 60
 OPENPARENTHESIS      : 56 57 58
-OPENTAG              : 61 62 63
+OPENTAG              : 54 55 61 62 63
 OUT                  : 56 57 58
-REGISTER             : 38 38 39 40 48 51 52 55
-REGISTERPAIR         : 41 42 43 43 44 49 50
-STORE                : 51 52 53 54
+REGISTER             : 38 38 39 40 43 54 54 55 55
+REGISTERPAIR         : 41 41 42 44 45 48 50 51
+STORE                : 50 51 52 53
 STR                  : 63
 STRING               : 57 63
-VARIABLE             : 40 42 45 49 51 53 56 61 62 63
+VARIABLE             : 40 44 47 50 52 56 61 62 63
 WORD                 : 62
 error                : 
 
 Nonterminals, with rules where they appear
 
-arithmeticb          : 28
+arithmetic_byte_register_register : 27
 block                : 2 4
 blocks               : 1 2 3
 empty                : 37
@@ -121,29 +121,2423 @@ jump_label           : 32
 label_block          : 3
 label_colon          : 5
 label_instruction    : 5
-load_address_registerpair : 23
-load_variable_registerpair : 22
-lxi_register_number  : 21
+load_extendedregister_address : 19
+load_extendedregister_number : 22
+load_extendedregister_variable : 20
+load_registerpair_address : 18
+load_registerpair_number : 21
+load_registerpair_variable : 17
+logic_byte_register_register : 28
+lxi_register_number  : 16
 mov_register_number  : 12
 mov_register_variable : 13
 mov_registers        : 11
-movp_extended_register_pair_number : 17
-movp_extended_register_pair_register_pair : 19
-movp_extended_register_pair_variable : 18
-movp_register_pair_number : 14
-movp_register_pair_register_pair : 16
-movp_register_pair_variable : 15
-mva_number           : 20
+movp_extendedregister_registerpair : 15
+movp_registerpair_registerpair : 14
 out                  : 31
 out_format_var       : 29
 out_string           : 30
 program              : 0
-store_address_estendedregister : 
-store_address_extendedregister : 26
-store_address_register : 25
-store_variable_extendedregister : 27
-store_variable_register : 24
+store_address_extendedregister : 25
+store_address_registerpair : 24
+store_variable_extendedregister : 26
+store_variable_registerpair : 23
 variable_byte        : 34
 variable_str         : 36
 variable_word        : 35
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . blocks
+    (2) blocks -> . blocks block
+    (3) blocks -> . blocks label_block
+    (4) blocks -> . block
+    (8) block -> . instructions
+    (9) instructions -> . instructions instruction
+    (10) instructions -> . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mov_register_variable
+    (14) instruction -> . movp_registerpair_registerpair
+    (15) instruction -> . movp_extendedregister_registerpair
+    (16) instruction -> . lxi_register_number
+    (17) instruction -> . load_registerpair_variable
+    (18) instruction -> . load_registerpair_address
+    (19) instruction -> . load_extendedregister_address
+    (20) instruction -> . load_extendedregister_variable
+    (21) instruction -> . load_registerpair_number
+    (22) instruction -> . load_extendedregister_number
+    (23) instruction -> . store_variable_registerpair
+    (24) instruction -> . store_address_registerpair
+    (25) instruction -> . store_address_extendedregister
+    (26) instruction -> . store_variable_extendedregister
+    (27) instruction -> . arithmetic_byte_register_register
+    (28) instruction -> . logic_byte_register_register
+    (29) instruction -> . out_format_var
+    (30) instruction -> . out_string
+    (31) instruction -> . out
+    (32) instruction -> . jump_label
+    (33) instruction -> . jump_address
+    (34) instruction -> . variable_byte
+    (35) instruction -> . variable_word
+    (36) instruction -> . variable_str
+    (37) instruction -> . empty
+    (38) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (39) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (40) mov_register_variable -> . MOV REGISTER COMMA VARIABLE
+    (41) movp_registerpair_registerpair -> . MOVP REGISTERPAIR COMMA REGISTERPAIR
+    (42) movp_extendedregister_registerpair -> . MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
+    (43) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (44) load_registerpair_variable -> . LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> . LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (46) load_extendedregister_address -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (48) load_registerpair_number -> . LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD
+    (49) load_extendedregister_number -> . LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
+    (50) store_variable_registerpair -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    (51) store_address_registerpair -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (52) store_variable_extendedregister -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (54) arithmetic_byte_register_register -> . ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (55) logic_byte_register_register -> . LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (56) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (57) out_string -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (58) out -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (59) jump_label -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (60) jump_address -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (61) variable_byte -> . VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    (62) variable_word -> . VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD
+    (63) variable_str -> . VARIABLE OPENTAG STR CLOSETAG COLON STRING
+    (64) empty -> .
+
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MOVP resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETIC resolved as shift
+  ! shift/reduce conflict for LOGIC resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+    MOV             shift and go to state 33
+    MOVP            shift and go to state 35
+    LXI             shift and go to state 36
+    LOAD            shift and go to state 37
+    STORE           shift and go to state 38
+    ARITHMETIC      shift and go to state 39
+    LOGIC           shift and go to state 40
+    OUT             shift and go to state 41
+    JUMP            shift and go to state 42
+    VARIABLE        shift and go to state 34
+    LABEL           reduce using rule 64 (empty -> .)
+    $end            reduce using rule 64 (empty -> .)
+
+  ! MOV             [ reduce using rule 64 (empty -> .) ]
+  ! MOVP            [ reduce using rule 64 (empty -> .) ]
+  ! LXI             [ reduce using rule 64 (empty -> .) ]
+  ! LOAD            [ reduce using rule 64 (empty -> .) ]
+  ! STORE           [ reduce using rule 64 (empty -> .) ]
+  ! ARITHMETIC      [ reduce using rule 64 (empty -> .) ]
+  ! LOGIC           [ reduce using rule 64 (empty -> .) ]
+  ! OUT             [ reduce using rule 64 (empty -> .) ]
+  ! JUMP            [ reduce using rule 64 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 64 (empty -> .) ]
+
+    program                        shift and go to state 1
+    blocks                         shift and go to state 2
+    block                          shift and go to state 3
+    instructions                   shift and go to state 4
+    instruction                    shift and go to state 5
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mov_register_variable          shift and go to state 8
+    movp_registerpair_registerpair shift and go to state 9
+    movp_extendedregister_registerpair shift and go to state 10
+    lxi_register_number            shift and go to state 11
+    load_registerpair_variable     shift and go to state 12
+    load_registerpair_address      shift and go to state 13
+    load_extendedregister_address  shift and go to state 14
+    load_extendedregister_variable shift and go to state 15
+    load_registerpair_number       shift and go to state 16
+    load_extendedregister_number   shift and go to state 17
+    store_variable_registerpair    shift and go to state 18
+    store_address_registerpair     shift and go to state 19
+    store_address_extendedregister shift and go to state 20
+    store_variable_extendedregister shift and go to state 21
+    arithmetic_byte_register_register shift and go to state 22
+    logic_byte_register_register   shift and go to state 23
+    out_format_var                 shift and go to state 24
+    out_string                     shift and go to state 25
+    out                            shift and go to state 26
+    jump_label                     shift and go to state 27
+    jump_address                   shift and go to state 28
+    variable_byte                  shift and go to state 29
+    variable_word                  shift and go to state 30
+    variable_str                   shift and go to state 31
+    empty                          shift and go to state 32
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> blocks .
+    (2) blocks -> blocks . block
+    (3) blocks -> blocks . label_block
+    (8) block -> . instructions
+    (5) label_block -> . label_colon label_instruction
+    (9) instructions -> . instructions instruction
+    (10) instructions -> . instruction
+    (7) label_colon -> . LABEL COLON
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mov_register_variable
+    (14) instruction -> . movp_registerpair_registerpair
+    (15) instruction -> . movp_extendedregister_registerpair
+    (16) instruction -> . lxi_register_number
+    (17) instruction -> . load_registerpair_variable
+    (18) instruction -> . load_registerpair_address
+    (19) instruction -> . load_extendedregister_address
+    (20) instruction -> . load_extendedregister_variable
+    (21) instruction -> . load_registerpair_number
+    (22) instruction -> . load_extendedregister_number
+    (23) instruction -> . store_variable_registerpair
+    (24) instruction -> . store_address_registerpair
+    (25) instruction -> . store_address_extendedregister
+    (26) instruction -> . store_variable_extendedregister
+    (27) instruction -> . arithmetic_byte_register_register
+    (28) instruction -> . logic_byte_register_register
+    (29) instruction -> . out_format_var
+    (30) instruction -> . out_string
+    (31) instruction -> . out
+    (32) instruction -> . jump_label
+    (33) instruction -> . jump_address
+    (34) instruction -> . variable_byte
+    (35) instruction -> . variable_word
+    (36) instruction -> . variable_str
+    (37) instruction -> . empty
+    (38) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (39) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (40) mov_register_variable -> . MOV REGISTER COMMA VARIABLE
+    (41) movp_registerpair_registerpair -> . MOVP REGISTERPAIR COMMA REGISTERPAIR
+    (42) movp_extendedregister_registerpair -> . MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
+    (43) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (44) load_registerpair_variable -> . LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> . LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (46) load_extendedregister_address -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (48) load_registerpair_number -> . LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD
+    (49) load_extendedregister_number -> . LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
+    (50) store_variable_registerpair -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    (51) store_address_registerpair -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (52) store_variable_extendedregister -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (54) arithmetic_byte_register_register -> . ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (55) logic_byte_register_register -> . LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (56) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (57) out_string -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (58) out -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (59) jump_label -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (60) jump_address -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (61) variable_byte -> . VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    (62) variable_word -> . VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD
+    (63) variable_str -> . VARIABLE OPENTAG STR CLOSETAG COLON STRING
+    (64) empty -> .
+
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MOVP resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETIC resolved as shift
+  ! shift/reduce conflict for LOGIC resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for LABEL resolved as shift
+  ! reduce/reduce conflict for $end resolved using rule 1 (program -> blocks .)
+    $end            reduce using rule 1 (program -> blocks .)
+    LABEL           shift and go to state 46
+    MOV             shift and go to state 33
+    MOVP            shift and go to state 35
+    LXI             shift and go to state 36
+    LOAD            shift and go to state 37
+    STORE           shift and go to state 38
+    ARITHMETIC      shift and go to state 39
+    LOGIC           shift and go to state 40
+    OUT             shift and go to state 41
+    JUMP            shift and go to state 42
+    VARIABLE        shift and go to state 34
+
+  ! MOV             [ reduce using rule 64 (empty -> .) ]
+  ! MOVP            [ reduce using rule 64 (empty -> .) ]
+  ! LXI             [ reduce using rule 64 (empty -> .) ]
+  ! LOAD            [ reduce using rule 64 (empty -> .) ]
+  ! STORE           [ reduce using rule 64 (empty -> .) ]
+  ! ARITHMETIC      [ reduce using rule 64 (empty -> .) ]
+  ! LOGIC           [ reduce using rule 64 (empty -> .) ]
+  ! OUT             [ reduce using rule 64 (empty -> .) ]
+  ! JUMP            [ reduce using rule 64 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 64 (empty -> .) ]
+  ! LABEL           [ reduce using rule 64 (empty -> .) ]
+  ! $end            [ reduce using rule 64 (empty -> .) ]
+
+    block                          shift and go to state 43
+    label_block                    shift and go to state 44
+    instructions                   shift and go to state 4
+    label_colon                    shift and go to state 45
+    instruction                    shift and go to state 5
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mov_register_variable          shift and go to state 8
+    movp_registerpair_registerpair shift and go to state 9
+    movp_extendedregister_registerpair shift and go to state 10
+    lxi_register_number            shift and go to state 11
+    load_registerpair_variable     shift and go to state 12
+    load_registerpair_address      shift and go to state 13
+    load_extendedregister_address  shift and go to state 14
+    load_extendedregister_variable shift and go to state 15
+    load_registerpair_number       shift and go to state 16
+    load_extendedregister_number   shift and go to state 17
+    store_variable_registerpair    shift and go to state 18
+    store_address_registerpair     shift and go to state 19
+    store_address_extendedregister shift and go to state 20
+    store_variable_extendedregister shift and go to state 21
+    arithmetic_byte_register_register shift and go to state 22
+    logic_byte_register_register   shift and go to state 23
+    out_format_var                 shift and go to state 24
+    out_string                     shift and go to state 25
+    out                            shift and go to state 26
+    jump_label                     shift and go to state 27
+    jump_address                   shift and go to state 28
+    variable_byte                  shift and go to state 29
+    variable_word                  shift and go to state 30
+    variable_str                   shift and go to state 31
+    empty                          shift and go to state 32
+
+state 3
+
+    (4) blocks -> block .
+
+    LABEL           reduce using rule 4 (blocks -> block .)
+    MOV             reduce using rule 4 (blocks -> block .)
+    MOVP            reduce using rule 4 (blocks -> block .)
+    LXI             reduce using rule 4 (blocks -> block .)
+    LOAD            reduce using rule 4 (blocks -> block .)
+    STORE           reduce using rule 4 (blocks -> block .)
+    ARITHMETIC      reduce using rule 4 (blocks -> block .)
+    LOGIC           reduce using rule 4 (blocks -> block .)
+    OUT             reduce using rule 4 (blocks -> block .)
+    JUMP            reduce using rule 4 (blocks -> block .)
+    VARIABLE        reduce using rule 4 (blocks -> block .)
+    $end            reduce using rule 4 (blocks -> block .)
+
+
+state 4
+
+    (8) block -> instructions .
+    (9) instructions -> instructions . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mov_register_variable
+    (14) instruction -> . movp_registerpair_registerpair
+    (15) instruction -> . movp_extendedregister_registerpair
+    (16) instruction -> . lxi_register_number
+    (17) instruction -> . load_registerpair_variable
+    (18) instruction -> . load_registerpair_address
+    (19) instruction -> . load_extendedregister_address
+    (20) instruction -> . load_extendedregister_variable
+    (21) instruction -> . load_registerpair_number
+    (22) instruction -> . load_extendedregister_number
+    (23) instruction -> . store_variable_registerpair
+    (24) instruction -> . store_address_registerpair
+    (25) instruction -> . store_address_extendedregister
+    (26) instruction -> . store_variable_extendedregister
+    (27) instruction -> . arithmetic_byte_register_register
+    (28) instruction -> . logic_byte_register_register
+    (29) instruction -> . out_format_var
+    (30) instruction -> . out_string
+    (31) instruction -> . out
+    (32) instruction -> . jump_label
+    (33) instruction -> . jump_address
+    (34) instruction -> . variable_byte
+    (35) instruction -> . variable_word
+    (36) instruction -> . variable_str
+    (37) instruction -> . empty
+    (38) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (39) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (40) mov_register_variable -> . MOV REGISTER COMMA VARIABLE
+    (41) movp_registerpair_registerpair -> . MOVP REGISTERPAIR COMMA REGISTERPAIR
+    (42) movp_extendedregister_registerpair -> . MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
+    (43) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (44) load_registerpair_variable -> . LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> . LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (46) load_extendedregister_address -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (48) load_registerpair_number -> . LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD
+    (49) load_extendedregister_number -> . LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
+    (50) store_variable_registerpair -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    (51) store_address_registerpair -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (52) store_variable_extendedregister -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (54) arithmetic_byte_register_register -> . ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (55) logic_byte_register_register -> . LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (56) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (57) out_string -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (58) out -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (59) jump_label -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (60) jump_address -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (61) variable_byte -> . VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    (62) variable_word -> . VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD
+    (63) variable_str -> . VARIABLE OPENTAG STR CLOSETAG COLON STRING
+    (64) empty -> .
+
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MOVP resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETIC resolved as shift
+  ! shift/reduce conflict for LOGIC resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MOVP resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETIC resolved as shift
+  ! shift/reduce conflict for LOGIC resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! reduce/reduce conflict for LABEL resolved using rule 8 (block -> instructions .)
+  ! reduce/reduce conflict for $end resolved using rule 8 (block -> instructions .)
+    LABEL           reduce using rule 8 (block -> instructions .)
+    $end            reduce using rule 8 (block -> instructions .)
+    MOV             shift and go to state 33
+    MOVP            shift and go to state 35
+    LXI             shift and go to state 36
+    LOAD            shift and go to state 37
+    STORE           shift and go to state 38
+    ARITHMETIC      shift and go to state 39
+    LOGIC           shift and go to state 40
+    OUT             shift and go to state 41
+    JUMP            shift and go to state 42
+    VARIABLE        shift and go to state 34
+
+  ! MOV             [ reduce using rule 8 (block -> instructions .) ]
+  ! MOVP            [ reduce using rule 8 (block -> instructions .) ]
+  ! LXI             [ reduce using rule 8 (block -> instructions .) ]
+  ! LOAD            [ reduce using rule 8 (block -> instructions .) ]
+  ! STORE           [ reduce using rule 8 (block -> instructions .) ]
+  ! ARITHMETIC      [ reduce using rule 8 (block -> instructions .) ]
+  ! LOGIC           [ reduce using rule 8 (block -> instructions .) ]
+  ! OUT             [ reduce using rule 8 (block -> instructions .) ]
+  ! JUMP            [ reduce using rule 8 (block -> instructions .) ]
+  ! VARIABLE        [ reduce using rule 8 (block -> instructions .) ]
+  ! MOV             [ reduce using rule 64 (empty -> .) ]
+  ! MOVP            [ reduce using rule 64 (empty -> .) ]
+  ! LXI             [ reduce using rule 64 (empty -> .) ]
+  ! LOAD            [ reduce using rule 64 (empty -> .) ]
+  ! STORE           [ reduce using rule 64 (empty -> .) ]
+  ! ARITHMETIC      [ reduce using rule 64 (empty -> .) ]
+  ! LOGIC           [ reduce using rule 64 (empty -> .) ]
+  ! OUT             [ reduce using rule 64 (empty -> .) ]
+  ! JUMP            [ reduce using rule 64 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 64 (empty -> .) ]
+  ! LABEL           [ reduce using rule 64 (empty -> .) ]
+  ! $end            [ reduce using rule 64 (empty -> .) ]
+
+    instruction                    shift and go to state 47
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mov_register_variable          shift and go to state 8
+    movp_registerpair_registerpair shift and go to state 9
+    movp_extendedregister_registerpair shift and go to state 10
+    lxi_register_number            shift and go to state 11
+    load_registerpair_variable     shift and go to state 12
+    load_registerpair_address      shift and go to state 13
+    load_extendedregister_address  shift and go to state 14
+    load_extendedregister_variable shift and go to state 15
+    load_registerpair_number       shift and go to state 16
+    load_extendedregister_number   shift and go to state 17
+    store_variable_registerpair    shift and go to state 18
+    store_address_registerpair     shift and go to state 19
+    store_address_extendedregister shift and go to state 20
+    store_variable_extendedregister shift and go to state 21
+    arithmetic_byte_register_register shift and go to state 22
+    logic_byte_register_register   shift and go to state 23
+    out_format_var                 shift and go to state 24
+    out_string                     shift and go to state 25
+    out                            shift and go to state 26
+    jump_label                     shift and go to state 27
+    jump_address                   shift and go to state 28
+    variable_byte                  shift and go to state 29
+    variable_word                  shift and go to state 30
+    variable_str                   shift and go to state 31
+    empty                          shift and go to state 32
+
+state 5
+
+    (10) instructions -> instruction .
+
+    MOV             reduce using rule 10 (instructions -> instruction .)
+    MOVP            reduce using rule 10 (instructions -> instruction .)
+    LXI             reduce using rule 10 (instructions -> instruction .)
+    LOAD            reduce using rule 10 (instructions -> instruction .)
+    STORE           reduce using rule 10 (instructions -> instruction .)
+    ARITHMETIC      reduce using rule 10 (instructions -> instruction .)
+    LOGIC           reduce using rule 10 (instructions -> instruction .)
+    OUT             reduce using rule 10 (instructions -> instruction .)
+    JUMP            reduce using rule 10 (instructions -> instruction .)
+    VARIABLE        reduce using rule 10 (instructions -> instruction .)
+    LABEL           reduce using rule 10 (instructions -> instruction .)
+    $end            reduce using rule 10 (instructions -> instruction .)
+    DEDENT          reduce using rule 10 (instructions -> instruction .)
+
+
+state 6
+
+    (11) instruction -> mov_registers .
+
+    MOV             reduce using rule 11 (instruction -> mov_registers .)
+    MOVP            reduce using rule 11 (instruction -> mov_registers .)
+    LXI             reduce using rule 11 (instruction -> mov_registers .)
+    LOAD            reduce using rule 11 (instruction -> mov_registers .)
+    STORE           reduce using rule 11 (instruction -> mov_registers .)
+    ARITHMETIC      reduce using rule 11 (instruction -> mov_registers .)
+    LOGIC           reduce using rule 11 (instruction -> mov_registers .)
+    OUT             reduce using rule 11 (instruction -> mov_registers .)
+    JUMP            reduce using rule 11 (instruction -> mov_registers .)
+    VARIABLE        reduce using rule 11 (instruction -> mov_registers .)
+    LABEL           reduce using rule 11 (instruction -> mov_registers .)
+    $end            reduce using rule 11 (instruction -> mov_registers .)
+    DEDENT          reduce using rule 11 (instruction -> mov_registers .)
+
+
+state 7
+
+    (12) instruction -> mov_register_number .
+
+    MOV             reduce using rule 12 (instruction -> mov_register_number .)
+    MOVP            reduce using rule 12 (instruction -> mov_register_number .)
+    LXI             reduce using rule 12 (instruction -> mov_register_number .)
+    LOAD            reduce using rule 12 (instruction -> mov_register_number .)
+    STORE           reduce using rule 12 (instruction -> mov_register_number .)
+    ARITHMETIC      reduce using rule 12 (instruction -> mov_register_number .)
+    LOGIC           reduce using rule 12 (instruction -> mov_register_number .)
+    OUT             reduce using rule 12 (instruction -> mov_register_number .)
+    JUMP            reduce using rule 12 (instruction -> mov_register_number .)
+    VARIABLE        reduce using rule 12 (instruction -> mov_register_number .)
+    LABEL           reduce using rule 12 (instruction -> mov_register_number .)
+    $end            reduce using rule 12 (instruction -> mov_register_number .)
+    DEDENT          reduce using rule 12 (instruction -> mov_register_number .)
+
+
+state 8
+
+    (13) instruction -> mov_register_variable .
+
+    MOV             reduce using rule 13 (instruction -> mov_register_variable .)
+    MOVP            reduce using rule 13 (instruction -> mov_register_variable .)
+    LXI             reduce using rule 13 (instruction -> mov_register_variable .)
+    LOAD            reduce using rule 13 (instruction -> mov_register_variable .)
+    STORE           reduce using rule 13 (instruction -> mov_register_variable .)
+    ARITHMETIC      reduce using rule 13 (instruction -> mov_register_variable .)
+    LOGIC           reduce using rule 13 (instruction -> mov_register_variable .)
+    OUT             reduce using rule 13 (instruction -> mov_register_variable .)
+    JUMP            reduce using rule 13 (instruction -> mov_register_variable .)
+    VARIABLE        reduce using rule 13 (instruction -> mov_register_variable .)
+    LABEL           reduce using rule 13 (instruction -> mov_register_variable .)
+    $end            reduce using rule 13 (instruction -> mov_register_variable .)
+    DEDENT          reduce using rule 13 (instruction -> mov_register_variable .)
+
+
+state 9
+
+    (14) instruction -> movp_registerpair_registerpair .
+
+    MOV             reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    MOVP            reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    LXI             reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    LOAD            reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    STORE           reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    ARITHMETIC      reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    LOGIC           reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    OUT             reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    JUMP            reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    VARIABLE        reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    LABEL           reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    $end            reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+    DEDENT          reduce using rule 14 (instruction -> movp_registerpair_registerpair .)
+
+
+state 10
+
+    (15) instruction -> movp_extendedregister_registerpair .
+
+    MOV             reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    MOVP            reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    LXI             reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    LOAD            reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    STORE           reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    ARITHMETIC      reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    LOGIC           reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    OUT             reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    JUMP            reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    VARIABLE        reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    LABEL           reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    $end            reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+    DEDENT          reduce using rule 15 (instruction -> movp_extendedregister_registerpair .)
+
+
+state 11
+
+    (16) instruction -> lxi_register_number .
+
+    MOV             reduce using rule 16 (instruction -> lxi_register_number .)
+    MOVP            reduce using rule 16 (instruction -> lxi_register_number .)
+    LXI             reduce using rule 16 (instruction -> lxi_register_number .)
+    LOAD            reduce using rule 16 (instruction -> lxi_register_number .)
+    STORE           reduce using rule 16 (instruction -> lxi_register_number .)
+    ARITHMETIC      reduce using rule 16 (instruction -> lxi_register_number .)
+    LOGIC           reduce using rule 16 (instruction -> lxi_register_number .)
+    OUT             reduce using rule 16 (instruction -> lxi_register_number .)
+    JUMP            reduce using rule 16 (instruction -> lxi_register_number .)
+    VARIABLE        reduce using rule 16 (instruction -> lxi_register_number .)
+    LABEL           reduce using rule 16 (instruction -> lxi_register_number .)
+    $end            reduce using rule 16 (instruction -> lxi_register_number .)
+    DEDENT          reduce using rule 16 (instruction -> lxi_register_number .)
+
+
+state 12
+
+    (17) instruction -> load_registerpair_variable .
+
+    MOV             reduce using rule 17 (instruction -> load_registerpair_variable .)
+    MOVP            reduce using rule 17 (instruction -> load_registerpair_variable .)
+    LXI             reduce using rule 17 (instruction -> load_registerpair_variable .)
+    LOAD            reduce using rule 17 (instruction -> load_registerpair_variable .)
+    STORE           reduce using rule 17 (instruction -> load_registerpair_variable .)
+    ARITHMETIC      reduce using rule 17 (instruction -> load_registerpair_variable .)
+    LOGIC           reduce using rule 17 (instruction -> load_registerpair_variable .)
+    OUT             reduce using rule 17 (instruction -> load_registerpair_variable .)
+    JUMP            reduce using rule 17 (instruction -> load_registerpair_variable .)
+    VARIABLE        reduce using rule 17 (instruction -> load_registerpair_variable .)
+    LABEL           reduce using rule 17 (instruction -> load_registerpair_variable .)
+    $end            reduce using rule 17 (instruction -> load_registerpair_variable .)
+    DEDENT          reduce using rule 17 (instruction -> load_registerpair_variable .)
+
+
+state 13
+
+    (18) instruction -> load_registerpair_address .
+
+    MOV             reduce using rule 18 (instruction -> load_registerpair_address .)
+    MOVP            reduce using rule 18 (instruction -> load_registerpair_address .)
+    LXI             reduce using rule 18 (instruction -> load_registerpair_address .)
+    LOAD            reduce using rule 18 (instruction -> load_registerpair_address .)
+    STORE           reduce using rule 18 (instruction -> load_registerpair_address .)
+    ARITHMETIC      reduce using rule 18 (instruction -> load_registerpair_address .)
+    LOGIC           reduce using rule 18 (instruction -> load_registerpair_address .)
+    OUT             reduce using rule 18 (instruction -> load_registerpair_address .)
+    JUMP            reduce using rule 18 (instruction -> load_registerpair_address .)
+    VARIABLE        reduce using rule 18 (instruction -> load_registerpair_address .)
+    LABEL           reduce using rule 18 (instruction -> load_registerpair_address .)
+    $end            reduce using rule 18 (instruction -> load_registerpair_address .)
+    DEDENT          reduce using rule 18 (instruction -> load_registerpair_address .)
+
+
+state 14
+
+    (19) instruction -> load_extendedregister_address .
+
+    MOV             reduce using rule 19 (instruction -> load_extendedregister_address .)
+    MOVP            reduce using rule 19 (instruction -> load_extendedregister_address .)
+    LXI             reduce using rule 19 (instruction -> load_extendedregister_address .)
+    LOAD            reduce using rule 19 (instruction -> load_extendedregister_address .)
+    STORE           reduce using rule 19 (instruction -> load_extendedregister_address .)
+    ARITHMETIC      reduce using rule 19 (instruction -> load_extendedregister_address .)
+    LOGIC           reduce using rule 19 (instruction -> load_extendedregister_address .)
+    OUT             reduce using rule 19 (instruction -> load_extendedregister_address .)
+    JUMP            reduce using rule 19 (instruction -> load_extendedregister_address .)
+    VARIABLE        reduce using rule 19 (instruction -> load_extendedregister_address .)
+    LABEL           reduce using rule 19 (instruction -> load_extendedregister_address .)
+    $end            reduce using rule 19 (instruction -> load_extendedregister_address .)
+    DEDENT          reduce using rule 19 (instruction -> load_extendedregister_address .)
+
+
+state 15
+
+    (20) instruction -> load_extendedregister_variable .
+
+    MOV             reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    MOVP            reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    LXI             reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    LOAD            reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    STORE           reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    ARITHMETIC      reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    LOGIC           reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    OUT             reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    JUMP            reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    VARIABLE        reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    LABEL           reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    $end            reduce using rule 20 (instruction -> load_extendedregister_variable .)
+    DEDENT          reduce using rule 20 (instruction -> load_extendedregister_variable .)
+
+
+state 16
+
+    (21) instruction -> load_registerpair_number .
+
+    MOV             reduce using rule 21 (instruction -> load_registerpair_number .)
+    MOVP            reduce using rule 21 (instruction -> load_registerpair_number .)
+    LXI             reduce using rule 21 (instruction -> load_registerpair_number .)
+    LOAD            reduce using rule 21 (instruction -> load_registerpair_number .)
+    STORE           reduce using rule 21 (instruction -> load_registerpair_number .)
+    ARITHMETIC      reduce using rule 21 (instruction -> load_registerpair_number .)
+    LOGIC           reduce using rule 21 (instruction -> load_registerpair_number .)
+    OUT             reduce using rule 21 (instruction -> load_registerpair_number .)
+    JUMP            reduce using rule 21 (instruction -> load_registerpair_number .)
+    VARIABLE        reduce using rule 21 (instruction -> load_registerpair_number .)
+    LABEL           reduce using rule 21 (instruction -> load_registerpair_number .)
+    $end            reduce using rule 21 (instruction -> load_registerpair_number .)
+    DEDENT          reduce using rule 21 (instruction -> load_registerpair_number .)
+
+
+state 17
+
+    (22) instruction -> load_extendedregister_number .
+
+    MOV             reduce using rule 22 (instruction -> load_extendedregister_number .)
+    MOVP            reduce using rule 22 (instruction -> load_extendedregister_number .)
+    LXI             reduce using rule 22 (instruction -> load_extendedregister_number .)
+    LOAD            reduce using rule 22 (instruction -> load_extendedregister_number .)
+    STORE           reduce using rule 22 (instruction -> load_extendedregister_number .)
+    ARITHMETIC      reduce using rule 22 (instruction -> load_extendedregister_number .)
+    LOGIC           reduce using rule 22 (instruction -> load_extendedregister_number .)
+    OUT             reduce using rule 22 (instruction -> load_extendedregister_number .)
+    JUMP            reduce using rule 22 (instruction -> load_extendedregister_number .)
+    VARIABLE        reduce using rule 22 (instruction -> load_extendedregister_number .)
+    LABEL           reduce using rule 22 (instruction -> load_extendedregister_number .)
+    $end            reduce using rule 22 (instruction -> load_extendedregister_number .)
+    DEDENT          reduce using rule 22 (instruction -> load_extendedregister_number .)
+
+
+state 18
+
+    (23) instruction -> store_variable_registerpair .
+
+    MOV             reduce using rule 23 (instruction -> store_variable_registerpair .)
+    MOVP            reduce using rule 23 (instruction -> store_variable_registerpair .)
+    LXI             reduce using rule 23 (instruction -> store_variable_registerpair .)
+    LOAD            reduce using rule 23 (instruction -> store_variable_registerpair .)
+    STORE           reduce using rule 23 (instruction -> store_variable_registerpair .)
+    ARITHMETIC      reduce using rule 23 (instruction -> store_variable_registerpair .)
+    LOGIC           reduce using rule 23 (instruction -> store_variable_registerpair .)
+    OUT             reduce using rule 23 (instruction -> store_variable_registerpair .)
+    JUMP            reduce using rule 23 (instruction -> store_variable_registerpair .)
+    VARIABLE        reduce using rule 23 (instruction -> store_variable_registerpair .)
+    LABEL           reduce using rule 23 (instruction -> store_variable_registerpair .)
+    $end            reduce using rule 23 (instruction -> store_variable_registerpair .)
+    DEDENT          reduce using rule 23 (instruction -> store_variable_registerpair .)
+
+
+state 19
+
+    (24) instruction -> store_address_registerpair .
+
+    MOV             reduce using rule 24 (instruction -> store_address_registerpair .)
+    MOVP            reduce using rule 24 (instruction -> store_address_registerpair .)
+    LXI             reduce using rule 24 (instruction -> store_address_registerpair .)
+    LOAD            reduce using rule 24 (instruction -> store_address_registerpair .)
+    STORE           reduce using rule 24 (instruction -> store_address_registerpair .)
+    ARITHMETIC      reduce using rule 24 (instruction -> store_address_registerpair .)
+    LOGIC           reduce using rule 24 (instruction -> store_address_registerpair .)
+    OUT             reduce using rule 24 (instruction -> store_address_registerpair .)
+    JUMP            reduce using rule 24 (instruction -> store_address_registerpair .)
+    VARIABLE        reduce using rule 24 (instruction -> store_address_registerpair .)
+    LABEL           reduce using rule 24 (instruction -> store_address_registerpair .)
+    $end            reduce using rule 24 (instruction -> store_address_registerpair .)
+    DEDENT          reduce using rule 24 (instruction -> store_address_registerpair .)
+
+
+state 20
+
+    (25) instruction -> store_address_extendedregister .
+
+    MOV             reduce using rule 25 (instruction -> store_address_extendedregister .)
+    MOVP            reduce using rule 25 (instruction -> store_address_extendedregister .)
+    LXI             reduce using rule 25 (instruction -> store_address_extendedregister .)
+    LOAD            reduce using rule 25 (instruction -> store_address_extendedregister .)
+    STORE           reduce using rule 25 (instruction -> store_address_extendedregister .)
+    ARITHMETIC      reduce using rule 25 (instruction -> store_address_extendedregister .)
+    LOGIC           reduce using rule 25 (instruction -> store_address_extendedregister .)
+    OUT             reduce using rule 25 (instruction -> store_address_extendedregister .)
+    JUMP            reduce using rule 25 (instruction -> store_address_extendedregister .)
+    VARIABLE        reduce using rule 25 (instruction -> store_address_extendedregister .)
+    LABEL           reduce using rule 25 (instruction -> store_address_extendedregister .)
+    $end            reduce using rule 25 (instruction -> store_address_extendedregister .)
+    DEDENT          reduce using rule 25 (instruction -> store_address_extendedregister .)
+
+
+state 21
+
+    (26) instruction -> store_variable_extendedregister .
+
+    MOV             reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    MOVP            reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    LXI             reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    LOAD            reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    STORE           reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    ARITHMETIC      reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    LOGIC           reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    OUT             reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    JUMP            reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    VARIABLE        reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    LABEL           reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    $end            reduce using rule 26 (instruction -> store_variable_extendedregister .)
+    DEDENT          reduce using rule 26 (instruction -> store_variable_extendedregister .)
+
+
+state 22
+
+    (27) instruction -> arithmetic_byte_register_register .
+
+    MOV             reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    MOVP            reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    LXI             reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    LOAD            reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    STORE           reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    ARITHMETIC      reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    LOGIC           reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    OUT             reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    JUMP            reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    VARIABLE        reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    LABEL           reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    $end            reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+    DEDENT          reduce using rule 27 (instruction -> arithmetic_byte_register_register .)
+
+
+state 23
+
+    (28) instruction -> logic_byte_register_register .
+
+    MOV             reduce using rule 28 (instruction -> logic_byte_register_register .)
+    MOVP            reduce using rule 28 (instruction -> logic_byte_register_register .)
+    LXI             reduce using rule 28 (instruction -> logic_byte_register_register .)
+    LOAD            reduce using rule 28 (instruction -> logic_byte_register_register .)
+    STORE           reduce using rule 28 (instruction -> logic_byte_register_register .)
+    ARITHMETIC      reduce using rule 28 (instruction -> logic_byte_register_register .)
+    LOGIC           reduce using rule 28 (instruction -> logic_byte_register_register .)
+    OUT             reduce using rule 28 (instruction -> logic_byte_register_register .)
+    JUMP            reduce using rule 28 (instruction -> logic_byte_register_register .)
+    VARIABLE        reduce using rule 28 (instruction -> logic_byte_register_register .)
+    LABEL           reduce using rule 28 (instruction -> logic_byte_register_register .)
+    $end            reduce using rule 28 (instruction -> logic_byte_register_register .)
+    DEDENT          reduce using rule 28 (instruction -> logic_byte_register_register .)
+
+
+state 24
+
+    (29) instruction -> out_format_var .
+
+    MOV             reduce using rule 29 (instruction -> out_format_var .)
+    MOVP            reduce using rule 29 (instruction -> out_format_var .)
+    LXI             reduce using rule 29 (instruction -> out_format_var .)
+    LOAD            reduce using rule 29 (instruction -> out_format_var .)
+    STORE           reduce using rule 29 (instruction -> out_format_var .)
+    ARITHMETIC      reduce using rule 29 (instruction -> out_format_var .)
+    LOGIC           reduce using rule 29 (instruction -> out_format_var .)
+    OUT             reduce using rule 29 (instruction -> out_format_var .)
+    JUMP            reduce using rule 29 (instruction -> out_format_var .)
+    VARIABLE        reduce using rule 29 (instruction -> out_format_var .)
+    LABEL           reduce using rule 29 (instruction -> out_format_var .)
+    $end            reduce using rule 29 (instruction -> out_format_var .)
+    DEDENT          reduce using rule 29 (instruction -> out_format_var .)
+
+
+state 25
+
+    (30) instruction -> out_string .
+
+    MOV             reduce using rule 30 (instruction -> out_string .)
+    MOVP            reduce using rule 30 (instruction -> out_string .)
+    LXI             reduce using rule 30 (instruction -> out_string .)
+    LOAD            reduce using rule 30 (instruction -> out_string .)
+    STORE           reduce using rule 30 (instruction -> out_string .)
+    ARITHMETIC      reduce using rule 30 (instruction -> out_string .)
+    LOGIC           reduce using rule 30 (instruction -> out_string .)
+    OUT             reduce using rule 30 (instruction -> out_string .)
+    JUMP            reduce using rule 30 (instruction -> out_string .)
+    VARIABLE        reduce using rule 30 (instruction -> out_string .)
+    LABEL           reduce using rule 30 (instruction -> out_string .)
+    $end            reduce using rule 30 (instruction -> out_string .)
+    DEDENT          reduce using rule 30 (instruction -> out_string .)
+
+
+state 26
+
+    (31) instruction -> out .
+
+    MOV             reduce using rule 31 (instruction -> out .)
+    MOVP            reduce using rule 31 (instruction -> out .)
+    LXI             reduce using rule 31 (instruction -> out .)
+    LOAD            reduce using rule 31 (instruction -> out .)
+    STORE           reduce using rule 31 (instruction -> out .)
+    ARITHMETIC      reduce using rule 31 (instruction -> out .)
+    LOGIC           reduce using rule 31 (instruction -> out .)
+    OUT             reduce using rule 31 (instruction -> out .)
+    JUMP            reduce using rule 31 (instruction -> out .)
+    VARIABLE        reduce using rule 31 (instruction -> out .)
+    LABEL           reduce using rule 31 (instruction -> out .)
+    $end            reduce using rule 31 (instruction -> out .)
+    DEDENT          reduce using rule 31 (instruction -> out .)
+
+
+state 27
+
+    (32) instruction -> jump_label .
+
+    MOV             reduce using rule 32 (instruction -> jump_label .)
+    MOVP            reduce using rule 32 (instruction -> jump_label .)
+    LXI             reduce using rule 32 (instruction -> jump_label .)
+    LOAD            reduce using rule 32 (instruction -> jump_label .)
+    STORE           reduce using rule 32 (instruction -> jump_label .)
+    ARITHMETIC      reduce using rule 32 (instruction -> jump_label .)
+    LOGIC           reduce using rule 32 (instruction -> jump_label .)
+    OUT             reduce using rule 32 (instruction -> jump_label .)
+    JUMP            reduce using rule 32 (instruction -> jump_label .)
+    VARIABLE        reduce using rule 32 (instruction -> jump_label .)
+    LABEL           reduce using rule 32 (instruction -> jump_label .)
+    $end            reduce using rule 32 (instruction -> jump_label .)
+    DEDENT          reduce using rule 32 (instruction -> jump_label .)
+
+
+state 28
+
+    (33) instruction -> jump_address .
+
+    MOV             reduce using rule 33 (instruction -> jump_address .)
+    MOVP            reduce using rule 33 (instruction -> jump_address .)
+    LXI             reduce using rule 33 (instruction -> jump_address .)
+    LOAD            reduce using rule 33 (instruction -> jump_address .)
+    STORE           reduce using rule 33 (instruction -> jump_address .)
+    ARITHMETIC      reduce using rule 33 (instruction -> jump_address .)
+    LOGIC           reduce using rule 33 (instruction -> jump_address .)
+    OUT             reduce using rule 33 (instruction -> jump_address .)
+    JUMP            reduce using rule 33 (instruction -> jump_address .)
+    VARIABLE        reduce using rule 33 (instruction -> jump_address .)
+    LABEL           reduce using rule 33 (instruction -> jump_address .)
+    $end            reduce using rule 33 (instruction -> jump_address .)
+    DEDENT          reduce using rule 33 (instruction -> jump_address .)
+
+
+state 29
+
+    (34) instruction -> variable_byte .
+
+    MOV             reduce using rule 34 (instruction -> variable_byte .)
+    MOVP            reduce using rule 34 (instruction -> variable_byte .)
+    LXI             reduce using rule 34 (instruction -> variable_byte .)
+    LOAD            reduce using rule 34 (instruction -> variable_byte .)
+    STORE           reduce using rule 34 (instruction -> variable_byte .)
+    ARITHMETIC      reduce using rule 34 (instruction -> variable_byte .)
+    LOGIC           reduce using rule 34 (instruction -> variable_byte .)
+    OUT             reduce using rule 34 (instruction -> variable_byte .)
+    JUMP            reduce using rule 34 (instruction -> variable_byte .)
+    VARIABLE        reduce using rule 34 (instruction -> variable_byte .)
+    LABEL           reduce using rule 34 (instruction -> variable_byte .)
+    $end            reduce using rule 34 (instruction -> variable_byte .)
+    DEDENT          reduce using rule 34 (instruction -> variable_byte .)
+
+
+state 30
+
+    (35) instruction -> variable_word .
+
+    MOV             reduce using rule 35 (instruction -> variable_word .)
+    MOVP            reduce using rule 35 (instruction -> variable_word .)
+    LXI             reduce using rule 35 (instruction -> variable_word .)
+    LOAD            reduce using rule 35 (instruction -> variable_word .)
+    STORE           reduce using rule 35 (instruction -> variable_word .)
+    ARITHMETIC      reduce using rule 35 (instruction -> variable_word .)
+    LOGIC           reduce using rule 35 (instruction -> variable_word .)
+    OUT             reduce using rule 35 (instruction -> variable_word .)
+    JUMP            reduce using rule 35 (instruction -> variable_word .)
+    VARIABLE        reduce using rule 35 (instruction -> variable_word .)
+    LABEL           reduce using rule 35 (instruction -> variable_word .)
+    $end            reduce using rule 35 (instruction -> variable_word .)
+    DEDENT          reduce using rule 35 (instruction -> variable_word .)
+
+
+state 31
+
+    (36) instruction -> variable_str .
+
+    MOV             reduce using rule 36 (instruction -> variable_str .)
+    MOVP            reduce using rule 36 (instruction -> variable_str .)
+    LXI             reduce using rule 36 (instruction -> variable_str .)
+    LOAD            reduce using rule 36 (instruction -> variable_str .)
+    STORE           reduce using rule 36 (instruction -> variable_str .)
+    ARITHMETIC      reduce using rule 36 (instruction -> variable_str .)
+    LOGIC           reduce using rule 36 (instruction -> variable_str .)
+    OUT             reduce using rule 36 (instruction -> variable_str .)
+    JUMP            reduce using rule 36 (instruction -> variable_str .)
+    VARIABLE        reduce using rule 36 (instruction -> variable_str .)
+    LABEL           reduce using rule 36 (instruction -> variable_str .)
+    $end            reduce using rule 36 (instruction -> variable_str .)
+    DEDENT          reduce using rule 36 (instruction -> variable_str .)
+
+
+state 32
+
+    (37) instruction -> empty .
+
+    MOV             reduce using rule 37 (instruction -> empty .)
+    MOVP            reduce using rule 37 (instruction -> empty .)
+    LXI             reduce using rule 37 (instruction -> empty .)
+    LOAD            reduce using rule 37 (instruction -> empty .)
+    STORE           reduce using rule 37 (instruction -> empty .)
+    ARITHMETIC      reduce using rule 37 (instruction -> empty .)
+    LOGIC           reduce using rule 37 (instruction -> empty .)
+    OUT             reduce using rule 37 (instruction -> empty .)
+    JUMP            reduce using rule 37 (instruction -> empty .)
+    VARIABLE        reduce using rule 37 (instruction -> empty .)
+    LABEL           reduce using rule 37 (instruction -> empty .)
+    $end            reduce using rule 37 (instruction -> empty .)
+    DEDENT          reduce using rule 37 (instruction -> empty .)
+
+
+state 33
+
+    (38) mov_registers -> MOV . REGISTER COMMA REGISTER
+    (39) mov_register_number -> MOV . REGISTER COMMA HEX_NUMBER_BYTE
+    (40) mov_register_variable -> MOV . REGISTER COMMA VARIABLE
+
+    REGISTER        shift and go to state 48
+
+
+state 34
+
+    (61) variable_byte -> VARIABLE . OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    (62) variable_word -> VARIABLE . OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD
+    (63) variable_str -> VARIABLE . OPENTAG STR CLOSETAG COLON STRING
+
+    OPENTAG         shift and go to state 49
+
+
+state 35
+
+    (41) movp_registerpair_registerpair -> MOVP . REGISTERPAIR COMMA REGISTERPAIR
+    (42) movp_extendedregister_registerpair -> MOVP . EXTENDEDREGISTER COMMA REGISTERPAIR
+
+    REGISTERPAIR    shift and go to state 50
+    EXTENDEDREGISTER shift and go to state 51
+
+
+state 36
+
+    (43) lxi_register_number -> LXI . REGISTER COMMA HEX_NUMBER_WORD
+
+    REGISTER        shift and go to state 52
+
+
+state 37
+
+    (44) load_registerpair_variable -> LOAD . REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> LOAD . REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (46) load_extendedregister_address -> LOAD . EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> LOAD . EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (48) load_registerpair_number -> LOAD . REGISTERPAIR COMMA HEX_NUMBER_WORD
+    (49) load_extendedregister_number -> LOAD . EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
+
+    REGISTERPAIR    shift and go to state 53
+    EXTENDEDREGISTER shift and go to state 54
+
+
+state 38
+
+    (50) store_variable_registerpair -> STORE . OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    (51) store_address_registerpair -> STORE . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> STORE . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (52) store_variable_extendedregister -> STORE . OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+
+    OPENBRACKET     shift and go to state 55
+
+
+state 39
+
+    (54) arithmetic_byte_register_register -> ARITHMETIC . OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+
+    OPENTAG         shift and go to state 56
+
+
+state 40
+
+    (55) logic_byte_register_register -> LOGIC . OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+
+    OPENTAG         shift and go to state 57
+
+
+state 41
+
+    (56) out_format_var -> OUT . OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (57) out_string -> OUT . OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (58) out -> OUT . OPENPARENTHESIS CLOSEPARENTHESIS
+
+    OPENPARENTHESIS shift and go to state 58
+
+
+state 42
+
+    (59) jump_label -> JUMP . OPENBRACKET LABEL CLOSEBRACKET
+    (60) jump_address -> JUMP . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+
+    OPENBRACKET     shift and go to state 59
+
+
+state 43
+
+    (2) blocks -> blocks block .
+
+    LABEL           reduce using rule 2 (blocks -> blocks block .)
+    MOV             reduce using rule 2 (blocks -> blocks block .)
+    MOVP            reduce using rule 2 (blocks -> blocks block .)
+    LXI             reduce using rule 2 (blocks -> blocks block .)
+    LOAD            reduce using rule 2 (blocks -> blocks block .)
+    STORE           reduce using rule 2 (blocks -> blocks block .)
+    ARITHMETIC      reduce using rule 2 (blocks -> blocks block .)
+    LOGIC           reduce using rule 2 (blocks -> blocks block .)
+    OUT             reduce using rule 2 (blocks -> blocks block .)
+    JUMP            reduce using rule 2 (blocks -> blocks block .)
+    VARIABLE        reduce using rule 2 (blocks -> blocks block .)
+    $end            reduce using rule 2 (blocks -> blocks block .)
+
+
+state 44
+
+    (3) blocks -> blocks label_block .
+
+    LABEL           reduce using rule 3 (blocks -> blocks label_block .)
+    MOV             reduce using rule 3 (blocks -> blocks label_block .)
+    MOVP            reduce using rule 3 (blocks -> blocks label_block .)
+    LXI             reduce using rule 3 (blocks -> blocks label_block .)
+    LOAD            reduce using rule 3 (blocks -> blocks label_block .)
+    STORE           reduce using rule 3 (blocks -> blocks label_block .)
+    ARITHMETIC      reduce using rule 3 (blocks -> blocks label_block .)
+    LOGIC           reduce using rule 3 (blocks -> blocks label_block .)
+    OUT             reduce using rule 3 (blocks -> blocks label_block .)
+    JUMP            reduce using rule 3 (blocks -> blocks label_block .)
+    VARIABLE        reduce using rule 3 (blocks -> blocks label_block .)
+    $end            reduce using rule 3 (blocks -> blocks label_block .)
+
+
+state 45
+
+    (5) label_block -> label_colon . label_instruction
+    (6) label_instruction -> . INDENT instructions DEDENT
+
+    INDENT          shift and go to state 61
+
+    label_instruction              shift and go to state 60
+
+state 46
+
+    (7) label_colon -> LABEL . COLON
+
+    COLON           shift and go to state 62
+
+
+state 47
+
+    (9) instructions -> instructions instruction .
+
+    MOV             reduce using rule 9 (instructions -> instructions instruction .)
+    MOVP            reduce using rule 9 (instructions -> instructions instruction .)
+    LXI             reduce using rule 9 (instructions -> instructions instruction .)
+    LOAD            reduce using rule 9 (instructions -> instructions instruction .)
+    STORE           reduce using rule 9 (instructions -> instructions instruction .)
+    ARITHMETIC      reduce using rule 9 (instructions -> instructions instruction .)
+    LOGIC           reduce using rule 9 (instructions -> instructions instruction .)
+    OUT             reduce using rule 9 (instructions -> instructions instruction .)
+    JUMP            reduce using rule 9 (instructions -> instructions instruction .)
+    VARIABLE        reduce using rule 9 (instructions -> instructions instruction .)
+    LABEL           reduce using rule 9 (instructions -> instructions instruction .)
+    $end            reduce using rule 9 (instructions -> instructions instruction .)
+    DEDENT          reduce using rule 9 (instructions -> instructions instruction .)
+
+
+state 48
+
+    (38) mov_registers -> MOV REGISTER . COMMA REGISTER
+    (39) mov_register_number -> MOV REGISTER . COMMA HEX_NUMBER_BYTE
+    (40) mov_register_variable -> MOV REGISTER . COMMA VARIABLE
+
+    COMMA           shift and go to state 63
+
+
+state 49
+
+    (61) variable_byte -> VARIABLE OPENTAG . BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    (62) variable_word -> VARIABLE OPENTAG . WORD CLOSETAG COLON HEX_NUMBER_WORD
+    (63) variable_str -> VARIABLE OPENTAG . STR CLOSETAG COLON STRING
+
+    BYTE            shift and go to state 64
+    WORD            shift and go to state 65
+    STR             shift and go to state 66
+
+
+state 50
+
+    (41) movp_registerpair_registerpair -> MOVP REGISTERPAIR . COMMA REGISTERPAIR
+
+    COMMA           shift and go to state 67
+
+
+state 51
+
+    (42) movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER . COMMA REGISTERPAIR
+
+    COMMA           shift and go to state 68
+
+
+state 52
+
+    (43) lxi_register_number -> LXI REGISTER . COMMA HEX_NUMBER_WORD
+
+    COMMA           shift and go to state 69
+
+
+state 53
+
+    (44) load_registerpair_variable -> LOAD REGISTERPAIR . COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> LOAD REGISTERPAIR . COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (48) load_registerpair_number -> LOAD REGISTERPAIR . COMMA HEX_NUMBER_WORD
+
+    COMMA           shift and go to state 70
+
+
+state 54
+
+    (46) load_extendedregister_address -> LOAD EXTENDEDREGISTER . COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> LOAD EXTENDEDREGISTER . COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (49) load_extendedregister_number -> LOAD EXTENDEDREGISTER . COMMA HEX_NUMBER_WORD
+
+    COMMA           shift and go to state 71
+
+
+state 55
+
+    (50) store_variable_registerpair -> STORE OPENBRACKET . VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    (51) store_address_registerpair -> STORE OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> STORE OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (52) store_variable_extendedregister -> STORE OPENBRACKET . VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+
+    VARIABLE        shift and go to state 72
+    HEX_NUMBER_WORD shift and go to state 73
+
+
+state 56
+
+    (54) arithmetic_byte_register_register -> ARITHMETIC OPENTAG . BYTE CLOSETAG REGISTER COMMA REGISTER
+
+    BYTE            shift and go to state 74
+
+
+state 57
+
+    (55) logic_byte_register_register -> LOGIC OPENTAG . BYTE CLOSETAG REGISTER COMMA REGISTER
+
+    BYTE            shift and go to state 75
+
+
+state 58
+
+    (56) out_format_var -> OUT OPENPARENTHESIS . FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (57) out_string -> OUT OPENPARENTHESIS . STRING CLOSEPARENTHESIS
+    (58) out -> OUT OPENPARENTHESIS . CLOSEPARENTHESIS
+
+    FORMAT          shift and go to state 76
+    STRING          shift and go to state 78
+    CLOSEPARENTHESIS shift and go to state 77
+
+
+state 59
+
+    (59) jump_label -> JUMP OPENBRACKET . LABEL CLOSEBRACKET
+    (60) jump_address -> JUMP OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET
+
+    LABEL           shift and go to state 79
+    HEX_NUMBER_WORD shift and go to state 80
+
+
+state 60
+
+    (5) label_block -> label_colon label_instruction .
+
+    LABEL           reduce using rule 5 (label_block -> label_colon label_instruction .)
+    MOV             reduce using rule 5 (label_block -> label_colon label_instruction .)
+    MOVP            reduce using rule 5 (label_block -> label_colon label_instruction .)
+    LXI             reduce using rule 5 (label_block -> label_colon label_instruction .)
+    LOAD            reduce using rule 5 (label_block -> label_colon label_instruction .)
+    STORE           reduce using rule 5 (label_block -> label_colon label_instruction .)
+    ARITHMETIC      reduce using rule 5 (label_block -> label_colon label_instruction .)
+    LOGIC           reduce using rule 5 (label_block -> label_colon label_instruction .)
+    OUT             reduce using rule 5 (label_block -> label_colon label_instruction .)
+    JUMP            reduce using rule 5 (label_block -> label_colon label_instruction .)
+    VARIABLE        reduce using rule 5 (label_block -> label_colon label_instruction .)
+    $end            reduce using rule 5 (label_block -> label_colon label_instruction .)
+
+
+state 61
+
+    (6) label_instruction -> INDENT . instructions DEDENT
+    (9) instructions -> . instructions instruction
+    (10) instructions -> . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mov_register_variable
+    (14) instruction -> . movp_registerpair_registerpair
+    (15) instruction -> . movp_extendedregister_registerpair
+    (16) instruction -> . lxi_register_number
+    (17) instruction -> . load_registerpair_variable
+    (18) instruction -> . load_registerpair_address
+    (19) instruction -> . load_extendedregister_address
+    (20) instruction -> . load_extendedregister_variable
+    (21) instruction -> . load_registerpair_number
+    (22) instruction -> . load_extendedregister_number
+    (23) instruction -> . store_variable_registerpair
+    (24) instruction -> . store_address_registerpair
+    (25) instruction -> . store_address_extendedregister
+    (26) instruction -> . store_variable_extendedregister
+    (27) instruction -> . arithmetic_byte_register_register
+    (28) instruction -> . logic_byte_register_register
+    (29) instruction -> . out_format_var
+    (30) instruction -> . out_string
+    (31) instruction -> . out
+    (32) instruction -> . jump_label
+    (33) instruction -> . jump_address
+    (34) instruction -> . variable_byte
+    (35) instruction -> . variable_word
+    (36) instruction -> . variable_str
+    (37) instruction -> . empty
+    (38) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (39) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (40) mov_register_variable -> . MOV REGISTER COMMA VARIABLE
+    (41) movp_registerpair_registerpair -> . MOVP REGISTERPAIR COMMA REGISTERPAIR
+    (42) movp_extendedregister_registerpair -> . MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
+    (43) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (44) load_registerpair_variable -> . LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> . LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (46) load_extendedregister_address -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (48) load_registerpair_number -> . LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD
+    (49) load_extendedregister_number -> . LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
+    (50) store_variable_registerpair -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    (51) store_address_registerpair -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (52) store_variable_extendedregister -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (54) arithmetic_byte_register_register -> . ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (55) logic_byte_register_register -> . LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (56) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (57) out_string -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (58) out -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (59) jump_label -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (60) jump_address -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (61) variable_byte -> . VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    (62) variable_word -> . VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD
+    (63) variable_str -> . VARIABLE OPENTAG STR CLOSETAG COLON STRING
+    (64) empty -> .
+
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MOVP resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETIC resolved as shift
+  ! shift/reduce conflict for LOGIC resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+    MOV             shift and go to state 33
+    MOVP            shift and go to state 35
+    LXI             shift and go to state 36
+    LOAD            shift and go to state 37
+    STORE           shift and go to state 38
+    ARITHMETIC      shift and go to state 39
+    LOGIC           shift and go to state 40
+    OUT             shift and go to state 41
+    JUMP            shift and go to state 42
+    VARIABLE        shift and go to state 34
+    DEDENT          reduce using rule 64 (empty -> .)
+
+  ! MOV             [ reduce using rule 64 (empty -> .) ]
+  ! MOVP            [ reduce using rule 64 (empty -> .) ]
+  ! LXI             [ reduce using rule 64 (empty -> .) ]
+  ! LOAD            [ reduce using rule 64 (empty -> .) ]
+  ! STORE           [ reduce using rule 64 (empty -> .) ]
+  ! ARITHMETIC      [ reduce using rule 64 (empty -> .) ]
+  ! LOGIC           [ reduce using rule 64 (empty -> .) ]
+  ! OUT             [ reduce using rule 64 (empty -> .) ]
+  ! JUMP            [ reduce using rule 64 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 64 (empty -> .) ]
+
+    instructions                   shift and go to state 81
+    instruction                    shift and go to state 5
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mov_register_variable          shift and go to state 8
+    movp_registerpair_registerpair shift and go to state 9
+    movp_extendedregister_registerpair shift and go to state 10
+    lxi_register_number            shift and go to state 11
+    load_registerpair_variable     shift and go to state 12
+    load_registerpair_address      shift and go to state 13
+    load_extendedregister_address  shift and go to state 14
+    load_extendedregister_variable shift and go to state 15
+    load_registerpair_number       shift and go to state 16
+    load_extendedregister_number   shift and go to state 17
+    store_variable_registerpair    shift and go to state 18
+    store_address_registerpair     shift and go to state 19
+    store_address_extendedregister shift and go to state 20
+    store_variable_extendedregister shift and go to state 21
+    arithmetic_byte_register_register shift and go to state 22
+    logic_byte_register_register   shift and go to state 23
+    out_format_var                 shift and go to state 24
+    out_string                     shift and go to state 25
+    out                            shift and go to state 26
+    jump_label                     shift and go to state 27
+    jump_address                   shift and go to state 28
+    variable_byte                  shift and go to state 29
+    variable_word                  shift and go to state 30
+    variable_str                   shift and go to state 31
+    empty                          shift and go to state 32
+
+state 62
+
+    (7) label_colon -> LABEL COLON .
+
+    INDENT          reduce using rule 7 (label_colon -> LABEL COLON .)
+
+
+state 63
+
+    (38) mov_registers -> MOV REGISTER COMMA . REGISTER
+    (39) mov_register_number -> MOV REGISTER COMMA . HEX_NUMBER_BYTE
+    (40) mov_register_variable -> MOV REGISTER COMMA . VARIABLE
+
+    REGISTER        shift and go to state 82
+    HEX_NUMBER_BYTE shift and go to state 83
+    VARIABLE        shift and go to state 84
+
+
+state 64
+
+    (61) variable_byte -> VARIABLE OPENTAG BYTE . CLOSETAG COLON HEX_NUMBER_BYTE
+
+    CLOSETAG        shift and go to state 85
+
+
+state 65
+
+    (62) variable_word -> VARIABLE OPENTAG WORD . CLOSETAG COLON HEX_NUMBER_WORD
+
+    CLOSETAG        shift and go to state 86
+
+
+state 66
+
+    (63) variable_str -> VARIABLE OPENTAG STR . CLOSETAG COLON STRING
+
+    CLOSETAG        shift and go to state 87
+
+
+state 67
+
+    (41) movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA . REGISTERPAIR
+
+    REGISTERPAIR    shift and go to state 88
+
+
+state 68
+
+    (42) movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA . REGISTERPAIR
+
+    REGISTERPAIR    shift and go to state 89
+
+
+state 69
+
+    (43) lxi_register_number -> LXI REGISTER COMMA . HEX_NUMBER_WORD
+
+    HEX_NUMBER_WORD shift and go to state 90
+
+
+state 70
+
+    (44) load_registerpair_variable -> LOAD REGISTERPAIR COMMA . OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> LOAD REGISTERPAIR COMMA . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (48) load_registerpair_number -> LOAD REGISTERPAIR COMMA . HEX_NUMBER_WORD
+
+    OPENBRACKET     shift and go to state 91
+    HEX_NUMBER_WORD shift and go to state 92
+
+
+state 71
+
+    (46) load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA . OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA . OPENBRACKET VARIABLE CLOSEBRACKET
+    (49) load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA . HEX_NUMBER_WORD
+
+    OPENBRACKET     shift and go to state 93
+    HEX_NUMBER_WORD shift and go to state 94
+
+
+state 72
+
+    (50) store_variable_registerpair -> STORE OPENBRACKET VARIABLE . CLOSEBRACKET COMMA REGISTERPAIR
+    (52) store_variable_extendedregister -> STORE OPENBRACKET VARIABLE . CLOSEBRACKET COMMA EXTENDEDREGISTER
+
+    CLOSEBRACKET    shift and go to state 95
+
+
+state 73
+
+    (51) store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET COMMA EXTENDEDREGISTER
+
+    CLOSEBRACKET    shift and go to state 96
+
+
+state 74
+
+    (54) arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE . CLOSETAG REGISTER COMMA REGISTER
+
+    CLOSETAG        shift and go to state 97
+
+
+state 75
+
+    (55) logic_byte_register_register -> LOGIC OPENTAG BYTE . CLOSETAG REGISTER COMMA REGISTER
+
+    CLOSETAG        shift and go to state 98
+
+
+state 76
+
+    (56) out_format_var -> OUT OPENPARENTHESIS FORMAT . COMMA VARIABLE CLOSEPARENTHESIS
+
+    COMMA           shift and go to state 99
+
+
+state 77
+
+    (58) out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .
+
+    MOV             reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    MOVP            reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    LXI             reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    LOAD            reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    STORE           reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    ARITHMETIC      reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    LOGIC           reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    OUT             reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    JUMP            reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    VARIABLE        reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    LABEL           reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    $end            reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+    DEDENT          reduce using rule 58 (out -> OUT OPENPARENTHESIS CLOSEPARENTHESIS .)
+
+
+state 78
+
+    (57) out_string -> OUT OPENPARENTHESIS STRING . CLOSEPARENTHESIS
+
+    CLOSEPARENTHESIS shift and go to state 100
+
+
+state 79
+
+    (59) jump_label -> JUMP OPENBRACKET LABEL . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 101
+
+
+state 80
+
+    (60) jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 102
+
+
+state 81
+
+    (6) label_instruction -> INDENT instructions . DEDENT
+    (9) instructions -> instructions . instruction
+    (11) instruction -> . mov_registers
+    (12) instruction -> . mov_register_number
+    (13) instruction -> . mov_register_variable
+    (14) instruction -> . movp_registerpair_registerpair
+    (15) instruction -> . movp_extendedregister_registerpair
+    (16) instruction -> . lxi_register_number
+    (17) instruction -> . load_registerpair_variable
+    (18) instruction -> . load_registerpair_address
+    (19) instruction -> . load_extendedregister_address
+    (20) instruction -> . load_extendedregister_variable
+    (21) instruction -> . load_registerpair_number
+    (22) instruction -> . load_extendedregister_number
+    (23) instruction -> . store_variable_registerpair
+    (24) instruction -> . store_address_registerpair
+    (25) instruction -> . store_address_extendedregister
+    (26) instruction -> . store_variable_extendedregister
+    (27) instruction -> . arithmetic_byte_register_register
+    (28) instruction -> . logic_byte_register_register
+    (29) instruction -> . out_format_var
+    (30) instruction -> . out_string
+    (31) instruction -> . out
+    (32) instruction -> . jump_label
+    (33) instruction -> . jump_address
+    (34) instruction -> . variable_byte
+    (35) instruction -> . variable_word
+    (36) instruction -> . variable_str
+    (37) instruction -> . empty
+    (38) mov_registers -> . MOV REGISTER COMMA REGISTER
+    (39) mov_register_number -> . MOV REGISTER COMMA HEX_NUMBER_BYTE
+    (40) mov_register_variable -> . MOV REGISTER COMMA VARIABLE
+    (41) movp_registerpair_registerpair -> . MOVP REGISTERPAIR COMMA REGISTERPAIR
+    (42) movp_extendedregister_registerpair -> . MOVP EXTENDEDREGISTER COMMA REGISTERPAIR
+    (43) lxi_register_number -> . LXI REGISTER COMMA HEX_NUMBER_WORD
+    (44) load_registerpair_variable -> . LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> . LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (46) load_extendedregister_address -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> . LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET
+    (48) load_registerpair_number -> . LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD
+    (49) load_extendedregister_number -> . LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD
+    (50) store_variable_registerpair -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR
+    (51) store_address_registerpair -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> . STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (52) store_variable_extendedregister -> . STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER
+    (54) arithmetic_byte_register_register -> . ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (55) logic_byte_register_register -> . LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER
+    (56) out_format_var -> . OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS
+    (57) out_string -> . OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS
+    (58) out -> . OUT OPENPARENTHESIS CLOSEPARENTHESIS
+    (59) jump_label -> . JUMP OPENBRACKET LABEL CLOSEBRACKET
+    (60) jump_address -> . JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET
+    (61) variable_byte -> . VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE
+    (62) variable_word -> . VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD
+    (63) variable_str -> . VARIABLE OPENTAG STR CLOSETAG COLON STRING
+    (64) empty -> .
+
+  ! shift/reduce conflict for DEDENT resolved as shift
+  ! shift/reduce conflict for MOV resolved as shift
+  ! shift/reduce conflict for MOVP resolved as shift
+  ! shift/reduce conflict for LXI resolved as shift
+  ! shift/reduce conflict for LOAD resolved as shift
+  ! shift/reduce conflict for STORE resolved as shift
+  ! shift/reduce conflict for ARITHMETIC resolved as shift
+  ! shift/reduce conflict for LOGIC resolved as shift
+  ! shift/reduce conflict for OUT resolved as shift
+  ! shift/reduce conflict for JUMP resolved as shift
+  ! shift/reduce conflict for VARIABLE resolved as shift
+    DEDENT          shift and go to state 103
+    MOV             shift and go to state 33
+    MOVP            shift and go to state 35
+    LXI             shift and go to state 36
+    LOAD            shift and go to state 37
+    STORE           shift and go to state 38
+    ARITHMETIC      shift and go to state 39
+    LOGIC           shift and go to state 40
+    OUT             shift and go to state 41
+    JUMP            shift and go to state 42
+    VARIABLE        shift and go to state 34
+
+  ! DEDENT          [ reduce using rule 64 (empty -> .) ]
+  ! MOV             [ reduce using rule 64 (empty -> .) ]
+  ! MOVP            [ reduce using rule 64 (empty -> .) ]
+  ! LXI             [ reduce using rule 64 (empty -> .) ]
+  ! LOAD            [ reduce using rule 64 (empty -> .) ]
+  ! STORE           [ reduce using rule 64 (empty -> .) ]
+  ! ARITHMETIC      [ reduce using rule 64 (empty -> .) ]
+  ! LOGIC           [ reduce using rule 64 (empty -> .) ]
+  ! OUT             [ reduce using rule 64 (empty -> .) ]
+  ! JUMP            [ reduce using rule 64 (empty -> .) ]
+  ! VARIABLE        [ reduce using rule 64 (empty -> .) ]
+
+    instruction                    shift and go to state 47
+    mov_registers                  shift and go to state 6
+    mov_register_number            shift and go to state 7
+    mov_register_variable          shift and go to state 8
+    movp_registerpair_registerpair shift and go to state 9
+    movp_extendedregister_registerpair shift and go to state 10
+    lxi_register_number            shift and go to state 11
+    load_registerpair_variable     shift and go to state 12
+    load_registerpair_address      shift and go to state 13
+    load_extendedregister_address  shift and go to state 14
+    load_extendedregister_variable shift and go to state 15
+    load_registerpair_number       shift and go to state 16
+    load_extendedregister_number   shift and go to state 17
+    store_variable_registerpair    shift and go to state 18
+    store_address_registerpair     shift and go to state 19
+    store_address_extendedregister shift and go to state 20
+    store_variable_extendedregister shift and go to state 21
+    arithmetic_byte_register_register shift and go to state 22
+    logic_byte_register_register   shift and go to state 23
+    out_format_var                 shift and go to state 24
+    out_string                     shift and go to state 25
+    out                            shift and go to state 26
+    jump_label                     shift and go to state 27
+    jump_address                   shift and go to state 28
+    variable_byte                  shift and go to state 29
+    variable_word                  shift and go to state 30
+    variable_str                   shift and go to state 31
+    empty                          shift and go to state 32
+
+state 82
+
+    (38) mov_registers -> MOV REGISTER COMMA REGISTER .
+
+    MOV             reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    MOVP            reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    LXI             reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    LOAD            reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    STORE           reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    ARITHMETIC      reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    LOGIC           reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    OUT             reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    JUMP            reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    VARIABLE        reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    LABEL           reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    $end            reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+    DEDENT          reduce using rule 38 (mov_registers -> MOV REGISTER COMMA REGISTER .)
+
+
+state 83
+
+    (39) mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .
+
+    MOV             reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    MOVP            reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    LXI             reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    LOAD            reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    STORE           reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    ARITHMETIC      reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    LOGIC           reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    OUT             reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    JUMP            reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    VARIABLE        reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    LABEL           reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    $end            reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+    DEDENT          reduce using rule 39 (mov_register_number -> MOV REGISTER COMMA HEX_NUMBER_BYTE .)
+
+
+state 84
+
+    (40) mov_register_variable -> MOV REGISTER COMMA VARIABLE .
+
+    MOV             reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    MOVP            reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    LXI             reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    LOAD            reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    STORE           reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    ARITHMETIC      reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    LOGIC           reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    OUT             reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    JUMP            reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    VARIABLE        reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    LABEL           reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    $end            reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+    DEDENT          reduce using rule 40 (mov_register_variable -> MOV REGISTER COMMA VARIABLE .)
+
+
+state 85
+
+    (61) variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG . COLON HEX_NUMBER_BYTE
+
+    COLON           shift and go to state 104
+
+
+state 86
+
+    (62) variable_word -> VARIABLE OPENTAG WORD CLOSETAG . COLON HEX_NUMBER_WORD
+
+    COLON           shift and go to state 105
+
+
+state 87
+
+    (63) variable_str -> VARIABLE OPENTAG STR CLOSETAG . COLON STRING
+
+    COLON           shift and go to state 106
+
+
+state 88
+
+    (41) movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .
+
+    MOV             reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    MOVP            reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    LXI             reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    LOAD            reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    STORE           reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    ARITHMETIC      reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    LOGIC           reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    OUT             reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    JUMP            reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    VARIABLE        reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    LABEL           reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    $end            reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+    DEDENT          reduce using rule 41 (movp_registerpair_registerpair -> MOVP REGISTERPAIR COMMA REGISTERPAIR .)
+
+
+state 89
+
+    (42) movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .
+
+    MOV             reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    MOVP            reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    LXI             reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    LOAD            reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    STORE           reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    ARITHMETIC      reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    LOGIC           reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    OUT             reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    JUMP            reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    VARIABLE        reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    LABEL           reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    $end            reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+    DEDENT          reduce using rule 42 (movp_extendedregister_registerpair -> MOVP EXTENDEDREGISTER COMMA REGISTERPAIR .)
+
+
+state 90
+
+    (43) lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .
+
+    MOV             reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    MOVP            reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    LXI             reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    LOAD            reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    STORE           reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    ARITHMETIC      reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    LOGIC           reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    OUT             reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    JUMP            reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    VARIABLE        reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    LABEL           reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    $end            reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+    DEDENT          reduce using rule 43 (lxi_register_number -> LXI REGISTER COMMA HEX_NUMBER_WORD .)
+
+
+state 91
+
+    (44) load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET . VARIABLE CLOSEBRACKET
+    (45) load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET
+
+    VARIABLE        shift and go to state 107
+    HEX_NUMBER_WORD shift and go to state 108
+
+
+state 92
+
+    (48) load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .
+
+    MOV             reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    MOVP            reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    LXI             reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    LOAD            reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    STORE           reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    ARITHMETIC      reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    LOGIC           reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    OUT             reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    JUMP            reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    VARIABLE        reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    LABEL           reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    $end            reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+    DEDENT          reduce using rule 48 (load_registerpair_number -> LOAD REGISTERPAIR COMMA HEX_NUMBER_WORD .)
+
+
+state 93
+
+    (46) load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET . HEX_NUMBER_WORD CLOSEBRACKET
+    (47) load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET . VARIABLE CLOSEBRACKET
+
+    HEX_NUMBER_WORD shift and go to state 109
+    VARIABLE        shift and go to state 110
+
+
+state 94
+
+    (49) load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .
+
+    MOV             reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    MOVP            reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    LXI             reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    LOAD            reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    STORE           reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    ARITHMETIC      reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    LOGIC           reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    OUT             reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    JUMP            reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    VARIABLE        reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    LABEL           reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    $end            reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+    DEDENT          reduce using rule 49 (load_extendedregister_number -> LOAD EXTENDEDREGISTER COMMA HEX_NUMBER_WORD .)
+
+
+state 95
+
+    (50) store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET . COMMA REGISTERPAIR
+    (52) store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET . COMMA EXTENDEDREGISTER
+
+    COMMA           shift and go to state 111
+
+
+state 96
+
+    (51) store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET . COMMA REGISTERPAIR
+    (53) store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET . COMMA EXTENDEDREGISTER
+
+    COMMA           shift and go to state 112
+
+
+state 97
+
+    (54) arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG . REGISTER COMMA REGISTER
+
+    REGISTER        shift and go to state 113
+
+
+state 98
+
+    (55) logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG . REGISTER COMMA REGISTER
+
+    REGISTER        shift and go to state 114
+
+
+state 99
+
+    (56) out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA . VARIABLE CLOSEPARENTHESIS
+
+    VARIABLE        shift and go to state 115
+
+
+state 100
+
+    (57) out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .
+
+    MOV             reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    MOVP            reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    LXI             reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    LOAD            reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    STORE           reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    ARITHMETIC      reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    LOGIC           reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    OUT             reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    JUMP            reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    VARIABLE        reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    LABEL           reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    $end            reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+    DEDENT          reduce using rule 57 (out_string -> OUT OPENPARENTHESIS STRING CLOSEPARENTHESIS .)
+
+
+state 101
+
+    (59) jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .
+
+    MOV             reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    MOVP            reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    LXI             reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    LOAD            reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    STORE           reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    ARITHMETIC      reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    LOGIC           reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    OUT             reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    JUMP            reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    VARIABLE        reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    LABEL           reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    $end            reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+    DEDENT          reduce using rule 59 (jump_label -> JUMP OPENBRACKET LABEL CLOSEBRACKET .)
+
+
+state 102
+
+    (60) jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .
+
+    MOV             reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    MOVP            reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LXI             reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOAD            reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    STORE           reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    ARITHMETIC      reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOGIC           reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    OUT             reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    JUMP            reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    VARIABLE        reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LABEL           reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    $end            reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    DEDENT          reduce using rule 60 (jump_address -> JUMP OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+
+
+state 103
+
+    (6) label_instruction -> INDENT instructions DEDENT .
+
+    LABEL           reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    MOV             reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    MOVP            reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    LXI             reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    LOAD            reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    STORE           reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    ARITHMETIC      reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    LOGIC           reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    OUT             reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    JUMP            reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    VARIABLE        reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+    $end            reduce using rule 6 (label_instruction -> INDENT instructions DEDENT .)
+
+
+state 104
+
+    (61) variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON . HEX_NUMBER_BYTE
+
+    HEX_NUMBER_BYTE shift and go to state 116
+
+
+state 105
+
+    (62) variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON . HEX_NUMBER_WORD
+
+    HEX_NUMBER_WORD shift and go to state 117
+
+
+state 106
+
+    (63) variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON . STRING
+
+    STRING          shift and go to state 118
+
+
+state 107
+
+    (44) load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 119
+
+
+state 108
+
+    (45) load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 120
+
+
+state 109
+
+    (46) load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 121
+
+
+state 110
+
+    (47) load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE . CLOSEBRACKET
+
+    CLOSEBRACKET    shift and go to state 122
+
+
+state 111
+
+    (50) store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA . REGISTERPAIR
+    (52) store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA . EXTENDEDREGISTER
+
+    REGISTERPAIR    shift and go to state 123
+    EXTENDEDREGISTER shift and go to state 124
+
+
+state 112
+
+    (51) store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA . REGISTERPAIR
+    (53) store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA . EXTENDEDREGISTER
+
+    REGISTERPAIR    shift and go to state 125
+    EXTENDEDREGISTER shift and go to state 126
+
+
+state 113
+
+    (54) arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER . COMMA REGISTER
+
+    COMMA           shift and go to state 127
+
+
+state 114
+
+    (55) logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER . COMMA REGISTER
+
+    COMMA           shift and go to state 128
+
+
+state 115
+
+    (56) out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE . CLOSEPARENTHESIS
+
+    CLOSEPARENTHESIS shift and go to state 129
+
+
+state 116
+
+    (61) variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .
+
+    MOV             reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    MOVP            reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    LXI             reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    LOAD            reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    STORE           reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    ARITHMETIC      reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    LOGIC           reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    OUT             reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    JUMP            reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    VARIABLE        reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    LABEL           reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    $end            reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+    DEDENT          reduce using rule 61 (variable_byte -> VARIABLE OPENTAG BYTE CLOSETAG COLON HEX_NUMBER_BYTE .)
+
+
+state 117
+
+    (62) variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .
+
+    MOV             reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    MOVP            reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    LXI             reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    LOAD            reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    STORE           reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    ARITHMETIC      reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    LOGIC           reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    OUT             reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    JUMP            reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    VARIABLE        reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    LABEL           reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    $end            reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+    DEDENT          reduce using rule 62 (variable_word -> VARIABLE OPENTAG WORD CLOSETAG COLON HEX_NUMBER_WORD .)
+
+
+state 118
+
+    (63) variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .
+
+    MOV             reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    MOVP            reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    LXI             reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    LOAD            reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    STORE           reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    ARITHMETIC      reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    LOGIC           reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    OUT             reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    JUMP            reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    VARIABLE        reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    LABEL           reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    $end            reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+    DEDENT          reduce using rule 63 (variable_str -> VARIABLE OPENTAG STR CLOSETAG COLON STRING .)
+
+
+state 119
+
+    (44) load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .
+
+    MOV             reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    MOVP            reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LXI             reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LOAD            reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    STORE           reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    ARITHMETIC      reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LOGIC           reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    OUT             reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    JUMP            reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    VARIABLE        reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LABEL           reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    $end            reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    DEDENT          reduce using rule 44 (load_registerpair_variable -> LOAD REGISTERPAIR COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+
+
+state 120
+
+    (45) load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .
+
+    MOV             reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    MOVP            reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LXI             reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOAD            reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    STORE           reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    ARITHMETIC      reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOGIC           reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    OUT             reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    JUMP            reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    VARIABLE        reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LABEL           reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    $end            reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    DEDENT          reduce using rule 45 (load_registerpair_address -> LOAD REGISTERPAIR COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+
+
+state 121
+
+    (46) load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .
+
+    MOV             reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    MOVP            reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LXI             reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOAD            reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    STORE           reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    ARITHMETIC      reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LOGIC           reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    OUT             reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    JUMP            reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    VARIABLE        reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    LABEL           reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    $end            reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+    DEDENT          reduce using rule 46 (load_extendedregister_address -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET .)
+
+
+state 122
+
+    (47) load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .
+
+    MOV             reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    MOVP            reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LXI             reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LOAD            reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    STORE           reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    ARITHMETIC      reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LOGIC           reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    OUT             reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    JUMP            reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    VARIABLE        reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    LABEL           reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    $end            reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+    DEDENT          reduce using rule 47 (load_extendedregister_variable -> LOAD EXTENDEDREGISTER COMMA OPENBRACKET VARIABLE CLOSEBRACKET .)
+
+
+state 123
+
+    (50) store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .
+
+    MOV             reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    MOVP            reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    LXI             reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    LOAD            reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    STORE           reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    ARITHMETIC      reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    LOGIC           reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    OUT             reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    JUMP            reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    VARIABLE        reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    LABEL           reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    $end            reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+    DEDENT          reduce using rule 50 (store_variable_registerpair -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA REGISTERPAIR .)
+
+
+state 124
+
+    (52) store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .
+
+    MOV             reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    MOVP            reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LXI             reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LOAD            reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    STORE           reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    ARITHMETIC      reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LOGIC           reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    OUT             reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    JUMP            reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    VARIABLE        reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LABEL           reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    $end            reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    DEDENT          reduce using rule 52 (store_variable_extendedregister -> STORE OPENBRACKET VARIABLE CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+
+
+state 125
+
+    (51) store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .
+
+    MOV             reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    MOVP            reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    LXI             reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    LOAD            reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    STORE           reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    ARITHMETIC      reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    LOGIC           reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    OUT             reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    JUMP            reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    VARIABLE        reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    LABEL           reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    $end            reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+    DEDENT          reduce using rule 51 (store_address_registerpair -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA REGISTERPAIR .)
+
+
+state 126
+
+    (53) store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .
+
+    MOV             reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    MOVP            reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LXI             reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LOAD            reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    STORE           reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    ARITHMETIC      reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LOGIC           reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    OUT             reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    JUMP            reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    VARIABLE        reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    LABEL           reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    $end            reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+    DEDENT          reduce using rule 53 (store_address_extendedregister -> STORE OPENBRACKET HEX_NUMBER_WORD CLOSEBRACKET COMMA EXTENDEDREGISTER .)
+
+
+state 127
+
+    (54) arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA . REGISTER
+
+    REGISTER        shift and go to state 130
+
+
+state 128
+
+    (55) logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA . REGISTER
+
+    REGISTER        shift and go to state 131
+
+
+state 129
+
+    (56) out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .
+
+    MOV             reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    MOVP            reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    LXI             reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    LOAD            reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    STORE           reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    ARITHMETIC      reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    LOGIC           reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    OUT             reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    JUMP            reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    VARIABLE        reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    LABEL           reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    $end            reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+    DEDENT          reduce using rule 56 (out_format_var -> OUT OPENPARENTHESIS FORMAT COMMA VARIABLE CLOSEPARENTHESIS .)
+
+
+state 130
+
+    (54) arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .
+
+    MOV             reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    MOVP            reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LXI             reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LOAD            reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    STORE           reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    ARITHMETIC      reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LOGIC           reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    OUT             reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    JUMP            reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    VARIABLE        reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LABEL           reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    $end            reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    DEDENT          reduce using rule 54 (arithmetic_byte_register_register -> ARITHMETIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+
+
+state 131
+
+    (55) logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .
+
+    MOV             reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    MOVP            reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LXI             reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LOAD            reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    STORE           reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    ARITHMETIC      reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LOGIC           reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    OUT             reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    JUMP            reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    VARIABLE        reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    LABEL           reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    $end            reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+    DEDENT          reduce using rule 55 (logic_byte_register_register -> LOGIC OPENTAG BYTE CLOSETAG REGISTER COMMA REGISTER .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for MOV in state 0 resolved as shift
+WARNING: shift/reduce conflict for MOVP in state 0 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 0 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 0 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 0 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETIC in state 0 resolved as shift
+WARNING: shift/reduce conflict for LOGIC in state 0 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 0 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 0 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 0 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 2 resolved as shift
+WARNING: shift/reduce conflict for MOVP in state 2 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 2 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 2 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 2 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETIC in state 2 resolved as shift
+WARNING: shift/reduce conflict for LOGIC in state 2 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 2 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 2 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 2 resolved as shift
+WARNING: shift/reduce conflict for LABEL in state 2 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 4 resolved as shift
+WARNING: shift/reduce conflict for MOVP in state 4 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 4 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 4 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 4 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETIC in state 4 resolved as shift
+WARNING: shift/reduce conflict for LOGIC in state 4 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 4 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 4 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 4 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 4 resolved as shift
+WARNING: shift/reduce conflict for MOVP in state 4 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 4 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 4 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 4 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETIC in state 4 resolved as shift
+WARNING: shift/reduce conflict for LOGIC in state 4 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 4 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 4 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 4 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 61 resolved as shift
+WARNING: shift/reduce conflict for MOVP in state 61 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 61 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 61 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 61 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETIC in state 61 resolved as shift
+WARNING: shift/reduce conflict for LOGIC in state 61 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 61 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 61 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 61 resolved as shift
+WARNING: shift/reduce conflict for DEDENT in state 81 resolved as shift
+WARNING: shift/reduce conflict for MOV in state 81 resolved as shift
+WARNING: shift/reduce conflict for MOVP in state 81 resolved as shift
+WARNING: shift/reduce conflict for LXI in state 81 resolved as shift
+WARNING: shift/reduce conflict for LOAD in state 81 resolved as shift
+WARNING: shift/reduce conflict for STORE in state 81 resolved as shift
+WARNING: shift/reduce conflict for ARITHMETIC in state 81 resolved as shift
+WARNING: shift/reduce conflict for LOGIC in state 81 resolved as shift
+WARNING: shift/reduce conflict for OUT in state 81 resolved as shift
+WARNING: shift/reduce conflict for JUMP in state 81 resolved as shift
+WARNING: shift/reduce conflict for VARIABLE in state 81 resolved as shift
+WARNING: reduce/reduce conflict in state 2 resolved using rule (program -> blocks)
+WARNING: rejected rule (empty -> <empty>) in state 2
+WARNING: reduce/reduce conflict in state 4 resolved using rule (block -> instructions)
+WARNING: rejected rule (empty -> <empty>) in state 4
