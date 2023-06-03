@@ -82,7 +82,7 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |Auxiliary Register|rx|rx is a 16-bit register that stores the merged contents of pairs of 8-bit registers|
 |bit|n|0 or 1|
 |Accumulator|A|Almost all manipulated data in ALU will be stored in this register and replaced by another one, as it is a temporary register|
-|16 bits|16|All instruction with "16" works with 16 bits data, that means it will do a direct operation with 16 bits using whatever is in the F and G registers|
+|16 bits|16|All instruction with "16" works with 16 bits data, that means it will do a direct operation with 16 bits using whatever is in the eax and ebx, auxiliary registers|
 |8 bits|8|All instruction with "8" works with 8 bits data, that means it will do a direct operation with 8 bits|
 
 
