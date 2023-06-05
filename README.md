@@ -82,8 +82,8 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |Auxiliary Register|rx|rx is a 16-bit register that stores the merged contents of pairs of 8-bit registers|
 |bit|n|0 or 1|
 |Accumulator|A|Almost all manipulated data in ALU will be stored in this register and replaced by another one, as it is a temporary register|
-|16 bits|word|Mnemonic instructions with <word> work with 16-bit data, that is, they will do a direct 16-bit operation using whatever is in the auxiliary registers eax and ebx|
-|8 bits|byte|Mnemonic instructions with <byte> work with 8-bit data, that is, they will do a direct operation with 8 bits|
+|16 bits|word|Mnemonic instructions with \<word> work with 16-bit data, that is, they will do a direct 16-bit operation using whatever is in the auxiliary registers eax and ebx|
+|8 bits|byte|Mnemonic instructions with \<byte> work with 8-bit data, that is, they will do a direct operation with 8 bits|
 
 
 > | Mnemonic | Description |HexCode| D <sub>7</sub> | D <sub>6</sub> | D <sub>5</sub> | D <sub>4</sub> | D <sub>3</sub> | D <sub>2</sub> | D <sub>1</sub> | D <sub>0</sub> |
