@@ -244,32 +244,12 @@ In hexadecimal the instructions would be:
 
 Let's see another example that happens:
 
-## **MOVP (rx or rp), rp** -> can be written in the following ways.
+## **MOVP (rx or rp or SP or A), (rx or rp or SP or A)** -> can be written in the following ways.
 
 ### Byte 2 complement the instruction
 
-> ### movp rp, B&C
-> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|0|0|
-> |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-> 
-> ### movp rp, D&E
-> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|0|1|
-> |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-> 
-> ### movp rp, H&L
-> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|1|0|
-> |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-> 
-> ### movp rp, W&Z
-> |0|0|0|1|1|0|0|0| |n|n|0|0|r|p|1|1|
-> |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-> 
-> ### movp eax, rp
-> |0|0|0|1|1|0|0|0| |n|n|0|1|0|0|r|p|
-> |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
->
-> ### movp ebx, rp
-> |0|0|0|1|1|0|0|0| |n|n|1|0|0|0|r|p|
+> ### movp
+> |0|0|0|1|1|0|0|0| |n|n|D|D|D|S|S|S|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
 **Add** Instruction:
@@ -353,7 +333,26 @@ I'll try to explain the hex code above in the space bellow.
 
 **Observation:** This form of language was defined by me and has nothing to do with any language nor does it try to imitate any known language. I think you can understand what this "programming" means.
 
+# Print Array of integers using **for**
 
+```
+0600 062c 1600 1600 1838 1827 1829 2800
+1838 0203 020a 1600 1601 1821 182a 1600
+1600 2800 1810 1600 1604 1822 1829 2a00
+1807 3600 3604 1600 1601 e800 0000 0000
+0000 0000 0000 0000 0000 0000 0000 0000
+0000 0000 0000 0000 0134 0228 0034 0045
+8100
+```
+
+## Translated, this looks like
+
+``` c
+int array = [304, 552, 52, 69, 33024];
+for(int i = 0; i < 4; i++){
+	print("%d", array[i]);
+}
+```
 
 # Char table
 
