@@ -291,8 +291,8 @@ Word storage consists of two characters in 1 block of memory, if there is a row 
 # Fibonacci algorithm
 
 ```
-3600 3638 0200 0600 0601 5000 5900 1811
-1822 3600 362c 0200 3600 3634 3e00 0203
+3600 3638 0200 0600 0601 5000 5900 1821
+182a 3600 362c 0200 3600 3634 3e00 0203
 2800 6200 6b00 5000 5900 3600 3607 c300
 0000 0000 0000 0000 0000 0000 0000 0000
 0000 0000 0000 0000 0000 0000 0000 0000
@@ -313,14 +313,14 @@ I'll try to explain the hex code above in the space bellow.
 <p style="color: #FFC0CB">0600 0601 Loads 1 at BC pair</p>
 <p style="color: #FFA500">5000 MOV D, B
                       <br/>5900 MOV E, C</p>
-<p style="color: #FFFFFF">1811 merge D and E register pair in eax
-                      <br/>1822 merge H and L register pair in ebx</p>
+<p style="color: #FFFFFF">1821 merge D and E register pair in eax
+                      <br/>182a merge H and L register pair in ebx</p>
 <p style="color: yellow">3600 362c Loads the stack address where the word "\n" is</p>
 <p style="color: #40E0D0">0200 Prints characters to which the stack address is pointing</p>
 <p style="color: yellow">3600 3634 Loads the stack address where i'll store fibonacci number</p>
 <p style="color: #00BFFF">3e00 Store fibonacci number</p>
 <p style="color: #40E0D0">0203 Prints the stored fibonacci number</p>
-<p style="color: #00FF00">2800 Add F+G. The result is stored in the BC pair automatically</p>
+<p style="color: #00FF00">2800 Add eax+ebx. The result is stored in the BC pair</p>
 <p style="color: #FFA500">6200 MOV H, D
                       <br/>6b00 MOV L, E</p>
 <p style="color: #FFA500">5000 MOV D, B
@@ -337,18 +337,49 @@ I'll try to explain the hex code above in the space bellow.
 
 ```
 0600 062c 1600 1600 1838 1827 1829 2800
-1838 0203 020a 1600 1601 1821 182a 1600
-1600 2800 1810 1600 1604 1822 1829 2a00
-1807 3600 3604 1600 1601 e800 0000 0000
+1838 0203 020a 1600 1601 1821 182a 2800
+1810 1600 1604 1822 1829 2a00 1807 1600
+1601 3600 3604 e800 0000 0000 0000 0000
 0000 0000 0000 0000 0000 0000 0000 0000
 0000 0000 0000 0000 0134 0228 0034 0045
 8100
 ```
 
-## Translated, this looks like
+
+## translating to assembly language of this CPU would look like this
+
+``` r
+$array <Array>: [308, 552, 52, 69, 33024]
+lxi bc, &array
+lxi de, 0x0000
+lxi hl, 0x0000
+movp sp, bc
+_forPrintArray:
+    movp eax, sp
+    movp ebx, de
+    add bc, eax, ebx
+    movp sp, bc
+    out("%d", $array)
+    out()
+    lxi de, 0x0001
+    movp eax, de
+    movp ebx, hl
+    add bc, eax, ebx
+    movp hl, bc
+    lxi de, 0x0004
+    movp eax, hl
+    movp ebx, bc
+    cmp eax, ebx
+    movp bc, sp
+    lxi de, 0x0001
+    jl [_forPrintArray]
+    
+```
+
+## translating to c would look like this
 
 ``` c
-int array = [304, 552, 52, 69, 33024];
+int array = [308, 552, 52, 69, 33024];
 for(int i = 0; i < 4; i++){
 	print("%d", array[i]);
 }
