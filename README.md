@@ -187,14 +187,16 @@ This group of instructions transfers data to and from registers and memory. Cond
 > |-|-|-|-|-|-|-|-|
 > ### Byte 2 of the instruction 1 is moved into the high-order register (rh) of the register pair rp. Byte 2' of the instruction 2 is moved into the low-order register (rl) of the register pair rp.
 
-## MOVP (rx or rp), rp
+## MOVP ar, ar
 > ### **Instruction (Byte 1)**
 > |0|0|0|1|1|0|0|0|
 > |-|-|-|-|-|-|-|-|
 > ### **Sub Instruction (Byte 2)**
-> |0|0|D|D|D|D|S|S|
+> |0|0|D|D|D|S|S|S|
 > |-|-|-|-|-|-|-|-|
-> ### The content of the the register pair rp, is moved to rx or rp register. Note: DDDD=00(rp) is movp rp1, rp2; DDDD=0100 is movp eax, rp; DDDD=1000 is movp ebx, rp. SS=00 (BC), SS=01 (DE), SS=10 (HL), SS=11 (WZ)
+> ### The content of the the register pair rp, is moved to rx or rp register.
+> Note: DDD=100 (eax), DDD=101
+> rp: SSS=000 (BC), SSS=001 (DE), SSS=010 (HL), SSS=011 (WZ)
 
 
 ## STW addr, ar
