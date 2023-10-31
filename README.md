@@ -232,15 +232,15 @@ out("%s", data) //To Print characters.
 ```
 In hexadecimal the instructions would be: 
 
-> ### out("-%d", number)
+> ### out("%sd", number) : signed int
 > |0|0|0|0|0|0|1|0| |1|0|0|0|0|0|1|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### out("%d", number)
+> ### out("%d", number) : unsigned int
 > |0|0|0|0|0|0|1|0| |0|0|0|0|0|0|1|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### out("%s", string)
+> ### out("%s", string) : string
 > |0|0|0|1|1|0|0|0| |0|0|0|0|0|0|0|0|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
@@ -361,7 +361,7 @@ _forPrintArray:
     movp ebx, de
     add bc, eax, ebx
     movp sp, bc
-    out("%d", $array)
+    out("%ud", $array)
     out()
     lxi de, 0x0001
     movp eax, de
