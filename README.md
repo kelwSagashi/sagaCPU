@@ -187,14 +187,16 @@ This group of instructions transfers data to and from registers and memory. Cond
 > |-|-|-|-|-|-|-|-|
 > ### Byte 2 of the instruction 1 is moved into the high-order register (rh) of the register pair rp. Byte 2' of the instruction 2 is moved into the low-order register (rl) of the register pair rp.
 
-## MOVP (rx or rp), rp
+## MOVP ar, ar
 > ### **Instruction (Byte 1)**
 > |0|0|0|1|1|0|0|0|
 > |-|-|-|-|-|-|-|-|
 > ### **Sub Instruction (Byte 2)**
-> |0|0|D|D|D|D|S|S|
+> |0|0|D|D|D|S|S|S|
 > |-|-|-|-|-|-|-|-|
-> ### The content of the the register pair rp, is moved to rx or rp register. Note: DDDD=00(rp) is movp rp1, rp2; DDDD=0100 is movp eax, rp; DDDD=1000 is movp ebx, rp. SS=00 (BC), SS=01 (DE), SS=10 (HL), SS=11 (WZ)
+> ### The content of the the register pair rp, is moved to rx or rp register.
+> Note: DDD=100 (eax), DDD=101
+> rp: SSS=000 (BC), SSS=001 (DE), SSS=010 (HL), SSS=011 (WZ)
 
 
 ## STW addr, ar
@@ -230,15 +232,15 @@ out("%s", data) //To Print characters.
 ```
 In hexadecimal the instructions would be: 
 
-> ### out("-%d", number)
+> ### out("%sd", number) : signed int
 > |0|0|0|0|0|0|1|0| |1|0|0|0|0|0|1|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### out("%d", number)
+> ### out("%d", number) : unsigned int
 > |0|0|0|0|0|0|1|0| |0|0|0|0|0|0|1|1|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 > 
-> ### out("%s", string)
+> ### out("%s", string) : string
 > |0|0|0|1|1|0|0|0| |0|0|0|0|0|0|0|0|
 > |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 
@@ -339,7 +341,7 @@ I'll try to explain the hex code above in the space bellow.
 0600 062c 1600 1600 1838 1827 1829 2800
 1838 0203 020a 1600 1601 1821 182a 2800
 1810 1600 1604 1822 1829 2a00 1807 1600
-1601 3600 3604 e800 0000 0000 0000 0000
+1601 3600 3604 e800 3600 361e c300 0000
 0000 0000 0000 0000 0000 0000 0000 0000
 0000 0000 0000 0000 0134 0228 0034 0045
 8100
@@ -359,7 +361,7 @@ _forPrintArray:
     movp ebx, de
     add bc, eax, ebx
     movp sp, bc
-    out("%d", $array)
+    out("%ud", $array)
     out()
     lxi de, 0x0001
     movp eax, de
