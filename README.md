@@ -53,7 +53,7 @@ The registers section consists of 8-bits registers and 16-bit registers:
 - Six 8-bit general purpose registers arranged in pairs,
 referred to as B,C; D,E; and H,L
 
-- A temporary register pair called W,Z, which also loads the address to the SP
+- A temporary register pair called W,Z
 
 The program counter maintains the memory address of the current program instruction and is incremented automatically during every instruction fetch. The stack pointer contains an address of the location of some available stack in memory. The stack pointer can be initialized to read or write memory, it can also be used to load a character stack.
 
@@ -68,7 +68,6 @@ Notes: This CPU allows the creation of chars and strings, which are only for vis
 |Main registers|000 - B|001 - C|
 |Main registers|010 - D|011 - E|
 |Main registers|100 - H|101 - L|
-|Stack pointer registers|W|Z|
 |16-bit auxiliary and temporary registers|EAX|EBX|
 
 |Meaning|Acronym|Description|
@@ -195,8 +194,9 @@ This group of instructions transfers data to and from registers and memory. Cond
 > |0|0|D|D|D|S|S|S|
 > |-|-|-|-|-|-|-|-|
 > ### The content of the the register pair rp, is moved to rx or rp register.
-> Note: DDD=100 (eax), DDD=101
-> rp: SSS=000 (BC), SSS=001 (DE), SSS=010 (HL), SSS=011 (WZ)
+> Note:
+> rx: DDD|SSS=100 (eax), DDD|SSS=101 (ebx), DDD|SSS=110 (acc), DDD|SSS=111 (SP)
+> rp: DDD|SSS=000 (BC), DDD|SSS=001 (DE), DDD|SSS=010 (HL), DDD|SSS=011 (WZ)
 
 
 ## STW addr, ar
